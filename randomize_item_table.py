@@ -161,12 +161,12 @@ def transmute_itemlotparts_to_bk_replacement(itemlotpart, random_source):
                     str(cons_id) + ")")
     return itemlotpart
    
-def transmute_itemlotpart_to_boss_item(itemlotpart, random_source):
+def transmute_itemlotpart_to_boss_item(itemlotpart, random_source, transpose_chance):
     if itemlotpart.items:
         for itemlotentry in itemlotpart.items:
             if (itemlotentry.item_type == item_s.ITEM_TYPE.ITEM and 
              itemlotentry.item_id in item_s.BOSS_SOUL_ITEMS):
-                if random_source.random() < 0.75:
+                if random_source.random() < (transpose_chance / 100.0):
                     boss_item_list_to_use = random_source.choice(item_s.BOSS_SOUL_ITEMS[itemlotentry.item_id])
                     (boss_item_type, boss_item_id) = random_source.choice(sorted(boss_item_list_to_use))
                     itemlotentry.item_type = boss_item_type
@@ -175,12 +175,12 @@ def transmute_itemlotpart_to_boss_item(itemlotpart, random_source):
                      str(boss_item_id) + ")")
     return itemlotpart
 
-def ascend_itemlotpart_to_ascended_item(itemlotpart, random_source):
+def ascend_itemlotpart_to_ascended_item(itemlotpart, random_source, ascend_chance):
     if itemlotpart.items:
         for itemlotentry in itemlotpart.items:
             if itemlotentry.item_type == item_s.ITEM_TYPE.WEAPON and \
                itemlotentry.item_id in item_s.ASCENDABLE_WEAPONS:
-                if random_source.random() < .25:
+                if random_source.random() < (ascend_chance / 100.0):
                     entry = item_s.ASCENDABLE_WEAPONS[itemlotentry.item_id]
                     if entry[1] == True:
                         add = random_source.choice([1,2,3,4,5,6,7,8,9])
@@ -392,7 +392,7 @@ def place_non_key_fixed_items(table, rand_options, random_source, item_list):
                 item = transmute_itemlotpart_to_consumable(item, random_source)
         if item.diff == item_s.ITEM_DIF.BOSS_SOUL:
             if rand_options.soul_items_diff == rng_opt.RandOptSoulItemsDifficulty.TRANSPOSE:
-                item = transmute_itemlotpart_to_boss_item(item, random_source)
+                item = transmute_itemlotpart_to_boss_item(item, random_source, rand_options.boss_soul_transpose_chance)
                 
         # Fix count on infinitely-sold items.
         if item.diff in [item_s.ITEM_DIF.SALABLE_EASY, item_s.ITEM_DIF.SALABLE_MEDIUM, 
@@ -401,7 +401,7 @@ def place_non_key_fixed_items(table, rand_options, random_source, item_list):
 
         # Optionally randomly ascend weapons.
         if rand_options.ascend_weapons == True:
-            item = ascend_itemlotpart_to_ascended_item(item, random_source)
+            item = ascend_itemlotpart_to_ascended_item(item, random_source, rand_options.ascend_weapons_chance)
 
         # Remove Black Knight weapons
         if rand_options.no_black_knight_weapons:

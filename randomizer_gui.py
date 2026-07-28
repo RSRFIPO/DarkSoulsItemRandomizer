@@ -31,7 +31,7 @@ INI_FILE = "randomizer.ini"
 
 MAX_SEED_LENGTH = 64
 
-VERSION_NUM = "0.9.0"
+VERSION_NUM = "0.9.2"
 # only add versions compatible RNG-wise, IE when fixing GUI stuff
 COMPATIBLE_VERSIONS = [VERSION_NUM, ]
 
@@ -67,7 +67,11 @@ DESC_DICT = {
             "  See README for list of locations to check. Read this list ahead of time.\n")},
     "souls_diff": {rngopts.RandOptSoulItemsDifficulty.SHUFFLE: "* Soul items are shuffled into the item pool like other items.\n",
         rngopts.RandOptSoulItemsDifficulty.CONSUMABLE: "* Lesser soul items are replaced with a random consumable before shuffling.\n",
-        rngopts.RandOptSoulItemsDifficulty.TRANSPOSE:  "* Boss souls have a 75% chance to be transposed to one of their boss items.\n"},
+        rngopts.RandOptSoulItemsDifficulty.TRANSPOSE:  "* Boss souls can be transposed to one of their boss items.\n"},
+    "boss_soul_transpose_chance": {10: "* Boss souls have a 10% chance to be transposed.\n",
+        25: "* Boss souls have a 25% chance to be transposed.\n",
+        50: "* Boss souls have a 50% chance to be transposed.\n",
+        75: "* Boss souls have a 75% chance to be transposed.\n"},
     "start_items": {rngopts.RandOptStartItemsDifficulty.SHIELD_AND_1H: ("* Player starts with random class-usable (L) shield & (R) weapon.\n" + 
             "  The weapon is usable one-handed with base stats.\n"),
         rngopts.RandOptStartItemsDifficulty.SHIELD_AND_2H: ("* Player starts with random class-usable (L) shield & (R) weapon.\n" + 
@@ -83,8 +87,11 @@ DESC_DICT = {
         rngopts.RandOptLordvesselLocation.FIRELINK: "* The Lordvessel is at Firelink Shrine.\n   Difficulty is easy.\n"},
     "use_lord_souls": {True: "* The 4 Lord Souls ARE included in the randomized keys.\n   Difficulty ranges from much easier to much harder.\n", 
         False: "* The 4 Lord Souls ARE NOT included in the randomized keys.\n   Difficulty is standard. Lord Souls are dropped by their normal bosses.\n"},
-    "ascend_weapons": {True: "* Normal weapons have a 5% chance to be ascended with a random ember.\n",
+    "ascend_weapons": {True: "* Normal weapons can be ascended with a random ember.\n",
         False: "* Normal weapons drop as expected.\n"},
+    "ascend_weapons_chance": {5: "* Eager Smiths ascends normal weapons 5% of the time.\n",
+        15: "* Eager Smiths ascends normal weapons 15% of the time.\n",
+        25: "* Eager Smiths ascends normal weapons 25% of the time.\n"},
     "set_up_hints": {True: "* The dev messages visibile with Seek Guidance will have \n   hints automatically added in.\n", 
         False: "* There are no hints that are added to the seed via Seek Guidance.\n\n"},
     "keys_not_in_dlc": {True: "* Key items will NOT be in DLC (Painted World, Artorias of the Abyss).\n",
@@ -94,7 +101,7 @@ DESC_DICT = {
     "npc_weapons": {True: "* NPC weapons, shields, catalysts, talismans, and pyromancy flames ARE randomized.\n",
         False: "* NPC weapons, shields, catalysts, talismans, and pyromancy flames are not changed.\n"}
 }
-DESC_ORDER = ["diff", "key_diff", "souls_diff", "keys_not_in_dlc", "start_items", "fashion", "npc_armor", "npc_weapons", "use_lv", "use_lord_souls", "ascend_weapons", "set_up_hints", "no_black_knight_weapons"]
+DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "keys_not_in_dlc", "start_items", "fashion", "npc_armor", "npc_weapons", "use_lv", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "no_black_knight_weapons"]
 
 
 def resource_path(rel_path):
@@ -246,6 +253,19 @@ class MainGUI:
         self.gui_soul_diff.bind("<<ComboboxSelected>>", lambda _: self.soul_diff.set(rngopts.RandOptSoulItemsDifficulty.from_string(self.soul_diff_as_string.get())))
         self.gui_soul_diff.grid(row=0, column=0, sticky='W')
         self.setup_hover_events(self.gui_soul_diff, {"souls_diff": None}, no_emph = True)
+        self.boss_soul_transpose_chance = tk.IntVar()
+        self.boss_soul_transpose_chance_as_string = tk.StringVar()
+        self.boss_soul_transpose_chance.set(rngopts.RandOptBossSoulTransposeChance.verify(init_options.getint("boss_soul_transpose_chance", fallback=rngopts.RandOptBossSoulTransposeChance.CHANCE_75)))
+        self.boss_soul_transpose_chance_as_string.set(rngopts.RandOptBossSoulTransposeChance.as_string(self.boss_soul_transpose_chance.get()))
+        self.boss_soul_transpose_chance.trace('w', lambda name, index, mode: self.update())
+        self.gui_boss_soul_transpose_chance = ttk.Combobox(self.soul_frame,
+                                            values=rngopts.RandOptBossSoulTransposeChance.as_strings(),
+                                            textvariable=self.boss_soul_transpose_chance_as_string,
+                                            width=13,
+                                            state="readonly")
+        self.gui_boss_soul_transpose_chance.bind("<<ComboboxSelected>>", lambda _: self.boss_soul_transpose_chance.set(rngopts.RandOptBossSoulTransposeChance.from_string(self.boss_soul_transpose_chance_as_string.get())))
+        self.gui_boss_soul_transpose_chance.grid(row=1, column=0, sticky='W')
+        self.setup_hover_events(self.gui_boss_soul_transpose_chance, {"boss_soul_transpose_chance": None}, no_emph = True)
 
         self.use_lordvessel_frame = tk.LabelFrame(text="Lordvessel:", bd=0)
         self.use_lordvessel_frame.grid(row=5, column=3, sticky='NS', padx=2, pady=2)
@@ -316,6 +336,19 @@ class MainGUI:
          width=20, anchor=tk.W)
         self.ascend_weapons_check.grid(row=3, column=0, sticky='W')
         self.setup_hover_events(self.ascend_weapons_check, {"ascend_weapons": None}, no_emph = True)
+        self.ascend_weapons_chance = tk.IntVar()
+        self.ascend_weapons_chance_as_string = tk.StringVar()
+        self.ascend_weapons_chance.set(rngopts.RandOptAscendWeaponsChance.verify(init_options.getint("ascend_weapons_chance", fallback=rngopts.RandOptAscendWeaponsChance.CHANCE_25)))
+        self.ascend_weapons_chance_as_string.set(rngopts.RandOptAscendWeaponsChance.as_string(self.ascend_weapons_chance.get()))
+        self.ascend_weapons_chance.trace('w', lambda name, index, mode: self.update())
+        self.gui_ascend_weapons_chance = ttk.Combobox(self.misc_flags_frame,
+                                            values=rngopts.RandOptAscendWeaponsChance.as_strings(),
+                                            textvariable=self.ascend_weapons_chance_as_string,
+                                            width=5,
+                                            state="readonly")
+        self.gui_ascend_weapons_chance.bind("<<ComboboxSelected>>", lambda _: self.ascend_weapons_chance.set(rngopts.RandOptAscendWeaponsChance.from_string(self.ascend_weapons_chance_as_string.get())))
+        self.gui_ascend_weapons_chance.grid(row=3, column=1, sticky='W')
+        self.setup_hover_events(self.gui_ascend_weapons_chance, {"ascend_weapons_chance": None}, no_emph = True)
 
         self.set_up_hints = tk.BooleanVar()
         self.set_up_hints.set(ini_parser.get_option_value(init_options, "set_up_hints"))
@@ -372,6 +405,7 @@ class MainGUI:
             SettingsVariable(name='diff', variable=self.diff, options=DESC_DICT['diff'].keys()),
             SettingsVariable(name='kd', variable=self.key_diff, options=DESC_DICT['key_diff'].keys()),
             SettingsVariable(name='sd', variable=self.soul_diff, options=DESC_DICT['souls_diff'].keys()),
+            SettingsVariable(name='bstc', variable=self.boss_soul_transpose_chance, options=DESC_DICT['boss_soul_transpose_chance'].keys()),
             SettingsVariable(name='id', variable=self.start_items_diff, options=DESC_DICT['start_items'].keys()),
             SettingsVariable(name='fs', variable=self.fashion_bool, options=DESC_DICT['fashion'].keys()),
             SettingsVariable(name='npc', variable=self.npc_armor_bool, options=DESC_DICT['npc_armor'].keys()),
@@ -379,6 +413,7 @@ class MainGUI:
             SettingsVariable(name='ls', variable=self.use_lord_souls, options=DESC_DICT['use_lord_souls'].keys()),
             SettingsVariable(name='nodlc', variable=self.keys_not_in_dlc, options=DESC_DICT['keys_not_in_dlc'].keys()),
             SettingsVariable(name='aw', variable=self.ascend_weapons_bool, options=DESC_DICT['ascend_weapons'].keys()),
+            SettingsVariable(name='awc', variable=self.ascend_weapons_chance, options=DESC_DICT['ascend_weapons_chance'].keys()),
             SettingsVariable(name='hints', variable=self.set_up_hints, options=DESC_DICT['set_up_hints'].keys()),
             SettingsVariable(name='nobkw', variable=self.no_black_knight_weapons, options=DESC_DICT['no_black_knight_weapons'].keys()),
             SettingsVariable(name='npcw', variable=self.npc_weapons_bool, options=DESC_DICT['npc_weapons'].keys()),
@@ -519,6 +554,7 @@ class MainGUI:
             "diff": (self.diff.get(), DescriptionState.NORMAL),
             "key_diff": (self.key_diff.get(), DescriptionState.NORMAL),
             "souls_diff": (self.soul_diff.get(), DescriptionState.NORMAL),
+            "boss_soul_transpose_chance": (self.boss_soul_transpose_chance.get(), DescriptionState.NORMAL),
             "start_items": (self.start_items_diff.get(), DescriptionState.NORMAL),
             "fashion": (self.fashion_bool.get(), DescriptionState.NORMAL),
             "npc_armor": (self.npc_armor_bool.get(), DescriptionState.NORMAL),
@@ -526,6 +562,7 @@ class MainGUI:
             "use_lv": (self.use_lordvessel.get(), DescriptionState.NORMAL),
             "use_lord_souls": (self.use_lord_souls.get(), DescriptionState.NORMAL),
             "ascend_weapons": (self.ascend_weapons_bool.get(), DescriptionState.NORMAL),
+            "ascend_weapons_chance": (self.ascend_weapons_chance.get(), DescriptionState.NORMAL),
             "set_up_hints": (self.set_up_hints.get(), DescriptionState.NORMAL),
             "keys_not_in_dlc": (self.keys_not_in_dlc.get(), DescriptionState.NORMAL),
             "no_black_knight_weapons": (self.no_black_knight_weapons.get(), DescriptionState.NORMAL),
@@ -606,6 +643,16 @@ class MainGUI:
         else:
             self.gui_diff.config(state="normal")
 
+        if self.soul_diff.get() == rngopts.RandOptSoulItemsDifficulty.TRANSPOSE:
+            self.gui_boss_soul_transpose_chance.config(state="readonly")
+        else:
+            self.gui_boss_soul_transpose_chance.config(state="disabled")
+
+        if self.ascend_weapons_bool.get():
+            self.gui_ascend_weapons_chance.config(state="readonly")
+        else:
+            self.gui_ascend_weapons_chance.config(state="disabled")
+
         if self.game_version.get() == rngopts.RandOptGameVersion.REMASTERED:
             self.hint_check.config(state="normal")
         else:
@@ -619,7 +666,8 @@ class MainGUI:
          self.soul_diff.get(), self.start_items_diff.get(), self.game_version.get(),
          self.npc_armor_bool.get(), self.ascend_weapons_bool.get(), self.keys_not_in_dlc.get(),
          self.set_up_hints.get(), self.no_black_knight_weapons.get(), self.reroll_seed.get(),
-         self.npc_weapons_bool.get())
+         self.npc_weapons_bool.get(), self.boss_soul_transpose_chance.get(),
+         self.ascend_weapons_chance.get())
 
         if self.save_options.get():
             ini_parser.save_ini(INI_FILE, options)        #save options right before creating seed
@@ -651,8 +699,8 @@ class MainGUI:
         seed = self.seed_string.get()
         return seed is None or len(seed) < 1 or self.entry_state.with_placeholder
 
-    def prepare_seed_for_randomization(self):
-        if self.reroll_seed.get() or self.is_seed_empty():
+    def prepare_seed_for_randomization(self, honor_reroll=True):
+        if (honor_reroll and self.reroll_seed.get()) or self.is_seed_empty():
             self.get_new_seed()
         
     def get_syncnum_string(self, random_source):
@@ -662,7 +710,7 @@ class MainGUI:
         
     def export_seed_info(self, syncnum=None, use_randomized_data=None):
         if use_randomized_data is None:
-            self.prepare_seed_for_randomization()
+            self.prepare_seed_for_randomization(honor_reroll=False)
         if self.is_seed_empty():
             self.seed_entry.config(bg = "light salmon")
             return
