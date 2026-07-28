@@ -83,16 +83,18 @@ DESC_DICT = {
         rngopts.RandOptLordvesselLocation.FIRELINK: "* The Lordvessel is at Firelink Shrine.\n   Difficulty is easy.\n"},
     "use_lord_souls": {True: "* The 4 Lord Souls ARE included in the randomized keys.\n   Difficulty ranges from much easier to much harder.\n", 
         False: "* The 4 Lord Souls ARE NOT included in the randomized keys.\n   Difficulty is standard. Lord Souls are dropped by their normal bosses.\n"},
-    "ascend_weapons": {True: "* Normal weapons have a 25% chance to be ascended with a random ember.\n",
+    "ascend_weapons": {True: "* Normal weapons have a 5% chance to be ascended with a random ember.\n",
         False: "* Normal weapons drop as expected.\n"},
     "set_up_hints": {True: "* The dev messages visibile with Seek Guidance will have \n   hints automatically added in.\n", 
         False: "* There are no hints that are added to the seed via Seek Guidance.\n\n"},
     "keys_not_in_dlc": {True: "* Key items will NOT be in DLC (Painted World, Artorias of the Abyss).\n",
         False: "* Key items can be in DLC (Painted World, Artorias of the Abyss).\n"},
     "no_black_knight_weapons": {True: "* Black Knight weapons replaced by Titanite Chunks and Slabs.\n",
-        False: "* Black Knight weapons are available for use.\n"}
+        False: "* Black Knight weapons are available for use.\n"},
+    "npc_weapons": {True: "* NPC weapons, shields, catalysts, talismans, and pyromancy flames ARE randomized.\n",
+        False: "* NPC weapons, shields, catalysts, talismans, and pyromancy flames are not changed.\n"}
 }
-DESC_ORDER = ["diff", "key_diff", "souls_diff", "keys_not_in_dlc", "start_items", "fashion", "npc_armor", "use_lv", "use_lord_souls", "ascend_weapons", "set_up_hints", "no_black_knight_weapons"]
+DESC_ORDER = ["diff", "key_diff", "souls_diff", "keys_not_in_dlc", "start_items", "fashion", "npc_armor", "npc_weapons", "use_lv", "use_lord_souls", "ascend_weapons", "set_up_hints", "no_black_knight_weapons"]
 
 
 def resource_path(rel_path):
@@ -342,12 +344,21 @@ class MainGUI:
         self.no_black_knight_weapons_gui.grid(row=6, column=0, sticky='W')
         self.setup_hover_events(self.no_black_knight_weapons_gui, {"no_black_knight_weapons": None}, no_emph = True)
 
+        self.npc_weapons_bool = tk.BooleanVar()
+        self.npc_weapons_bool.set(init_options.getboolean("randomize_npc_weapons", fallback=False))
+        self.npc_weapons_bool.trace('w', lambda name, index, mode: self.update())
+        self.npc_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="NPC Weapon Mixup",
+         variable=self.npc_weapons_bool, onvalue=True, offvalue=False,
+         width=20, anchor=tk.W)
+        self.npc_weapons_check.grid(row=7, column=0, sticky='W')
+        self.setup_hover_events(self.npc_weapons_check, {"npc_weapons": None}, no_emph=True)
+
         self.export_button = tk.Button(self.root, text="Scramble Items &\nExport to GameParam", 
          padx=10, pady=10, command=self.export_to_gameparam)
-        self.export_button.grid(row=8, rowspan=3, column=4, padx=2, sticky='EW')
+        self.export_button.grid(row=9, rowspan=3, column=4, padx=2, sticky='EW')
         
         self.cheat_button = tk.Button(self.root, text="Write Seed Cheatsheet", command=self.export_seed_info)
-        self.cheat_button.grid(row=11, rowspan=1, column=4, sticky='EW', padx=2, pady=2)
+        self.cheat_button.grid(row=12, rowspan=1, column=4, sticky='EW', padx=2, pady=2)
 
         # Settings sync popup menu
         self.popup_menu = tk.Menu(self.root, tearoff=0)
@@ -370,6 +381,7 @@ class MainGUI:
             SettingsVariable(name='aw', variable=self.ascend_weapons_bool, options=DESC_DICT['ascend_weapons'].keys()),
             SettingsVariable(name='hints', variable=self.set_up_hints, options=DESC_DICT['set_up_hints'].keys()),
             SettingsVariable(name='nobkw', variable=self.no_black_knight_weapons, options=DESC_DICT['no_black_knight_weapons'].keys()),
+            SettingsVariable(name='npcw', variable=self.npc_weapons_bool, options=DESC_DICT['npc_weapons'].keys()),
         ], call_after_update=self.update_desc)
 
         self.update_desc()
@@ -510,6 +522,7 @@ class MainGUI:
             "start_items": (self.start_items_diff.get(), DescriptionState.NORMAL),
             "fashion": (self.fashion_bool.get(), DescriptionState.NORMAL),
             "npc_armor": (self.npc_armor_bool.get(), DescriptionState.NORMAL),
+            "npc_weapons": (self.npc_weapons_bool.get(), DescriptionState.NORMAL),
             "use_lv": (self.use_lordvessel.get(), DescriptionState.NORMAL),
             "use_lord_souls": (self.use_lord_souls.get(), DescriptionState.NORMAL),
             "ascend_weapons": (self.ascend_weapons_bool.get(), DescriptionState.NORMAL),
@@ -605,7 +618,8 @@ class MainGUI:
          self.key_diff.get(), self.use_lordvessel.get(), self.use_lord_souls.get(), 
          self.soul_diff.get(), self.start_items_diff.get(), self.game_version.get(),
          self.npc_armor_bool.get(), self.ascend_weapons_bool.get(), self.keys_not_in_dlc.get(),
-         self.set_up_hints.get(), self.no_black_knight_weapons.get(), self.reroll_seed.get())
+         self.set_up_hints.get(), self.no_black_knight_weapons.get(), self.reroll_seed.get(),
+         self.npc_weapons_bool.get())
 
         if self.save_options.get():
             ini_parser.save_ini(INI_FILE, options)        #save options right before creating seed

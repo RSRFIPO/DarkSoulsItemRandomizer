@@ -442,6 +442,8 @@ def build_table(rand_options, random_source, chr_init_data):
     else:
         given_cip = cip.ChrInitParam.load_from_file_content(chr_init_data)
     chr_s.randomize_chr_armor(given_cip, rand_options, random_source)
+    if rand_options.randomize_npc_weapons:
+        chr_s.randomize_chr_weapons(given_cip, rand_options, random_source)
     data_passed_from_chr_init = chr_s.randomize_starting_chr_weapons(given_cip, rand_options, random_source)
     
     for chr_init in given_cip.chr_inits:
@@ -517,4 +519,3 @@ if __name__ == "__main__":
     #sys.stdout.write(ilp_binary_export)
     #sys.stdout.write(slp_binary_export)
     #sys.stdout.flush()
-

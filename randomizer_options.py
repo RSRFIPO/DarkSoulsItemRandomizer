@@ -129,7 +129,7 @@ class RandomizerOptions:
     def __init__(self, difficulty, fashion_souls, key_placement, 
      use_lordvessel, use_lord_souls, soul_items_diff, start_items_diff,
      game_version, randomize_npc_armor, ascend_weapons, keys_not_in_dlc, set_up_hints,
-     no_black_knight_weapons, reroll_seed_each_run=False):
+     no_black_knight_weapons, reroll_seed_each_run=False, randomize_npc_weapons=False):
          self.difficulty = difficulty
          self.fashion_souls = fashion_souls
          self.key_placement = key_placement
@@ -146,6 +146,7 @@ class RandomizerOptions:
          self.better_start_spells = True
          self.no_black_knight_weapons = no_black_knight_weapons
          self.reroll_seed_each_run = reroll_seed_each_run
+         self.randomize_npc_weapons = randomize_npc_weapons
          
     def bool_option_to_string(self, b):
         if b:
@@ -168,5 +169,6 @@ class RandomizerOptions:
         return_string += "  No DLC: " + self.bool_option_to_string(self.keys_not_in_dlc) + "\n"
         return_string += "  Seek Guidance Hints: " + self.bool_option_to_string(self.set_up_hints) + "\n"
         return_string += "  No Black Knight Weapons: " + self.bool_option_to_string(self.no_black_knight_weapons) + "\n"
+        return_string += "  Randomize NPC Weapons: " + self.bool_option_to_string(self.randomize_npc_weapons) + "\n"
         return return_string
         
