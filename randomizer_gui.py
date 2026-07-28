@@ -148,12 +148,17 @@ class MainGUI:
         self.seed_entry = tk.Entry(self.root, font="TkFixedFont", textvariable=self.seed_string, width=70)
         self.entry_state = self.add_placeholder_to(self.seed_entry, 'Type a seed (or leave blank for a random seed)')
         self.seed_entry.grid(row=0, column=1, columnspan=2, ipady=2, ipadx=1, padx=2, sticky='EW')
+        self.reroll_seed = tk.BooleanVar()
+        self.reroll_seed.set(init_options.getboolean("reroll_seed_each_run", fallback=False))
+        self.reroll_seed_check = tk.Checkbutton(self.root, text="Reroll seed each run",
+         variable=self.reroll_seed, onvalue=True, offvalue=False, padx=2)
+        self.reroll_seed_check.grid(row=0, column=3, padx=2, sticky='W')
         self.sellout_button = tk.Button(self.root, text="?", bg="pale goldenrod",
          padx=2, pady=2, command=self.lift_sellout_area)
-        self.sellout_button.grid(row=0, column=4, padx=2, sticky='E')
+        self.sellout_button.grid(row=0, column=5, padx=2, sticky='E')
         self.normalize_button = tk.Button(self.root, text="Revert to vanilla",
          padx=2, pady=2, command=self.normalize_game)
-        self.normalize_button.grid(row=0, column=3, padx=2, sticky='E')
+        self.normalize_button.grid(row=0, column=4, padx=2, sticky='W')
         
         tk.Label(self.root, text="Dark Souls Game Version:").grid(row=1, column=0, columnspan=2, sticky='W', padx=2, ipady=1)
         self.game_version = tk.StringVar()
@@ -424,6 +429,7 @@ class MainGUI:
         self.msg_area.insert("end", "\t\teaglevis\n")
         self.msg_area.insert("end", "\t\tda66en\n")
         self.msg_area.insert("end", "\t\tPrimogenitor33\n")
+        self.msg_area.insert("end", "\t\tFIPO\n")
         self.msg_area.config(state="disabled")
         self.msg_area.lift()
         self.back_button.lift()
@@ -599,7 +605,7 @@ class MainGUI:
          self.key_diff.get(), self.use_lordvessel.get(), self.use_lord_souls.get(), 
          self.soul_diff.get(), self.start_items_diff.get(), self.game_version.get(),
          self.npc_armor_bool.get(), self.ascend_weapons_bool.get(), self.keys_not_in_dlc.get(),
-         self.set_up_hints.get(), self.no_black_knight_weapons.get())
+         self.set_up_hints.get(), self.no_black_knight_weapons.get(), self.reroll_seed.get())
 
         if self.save_options.get():
             ini_parser.save_ini(INI_FILE, options)        #save options right before creating seed
@@ -630,6 +636,10 @@ class MainGUI:
     def is_seed_empty(self):
         seed = self.seed_string.get()
         return seed is None or len(seed) < 1 or self.entry_state.with_placeholder
+
+    def prepare_seed_for_randomization(self):
+        if self.reroll_seed.get() or self.is_seed_empty():
+            self.get_new_seed()
         
     def get_syncnum_string(self, random_source):
         syncnum = "%07d" % random_source.randrange(10000000)
@@ -637,6 +647,9 @@ class MainGUI:
         return syncnum_str
         
     def export_seed_info(self, syncnum=None, use_randomized_data=None):
+        if use_randomized_data is None:
+            self.prepare_seed_for_randomization()
+        if self.is_seed_empty():
         if self.is_seed_empty():
             self.seed_entry.config(bg = "light salmon")
             return
@@ -846,8 +859,7 @@ class MainGUI:
             elif os.path.isfile(enmenubak_filepath) and not self.set_up_hints.get():
                 shutil.move(enmenubak_filepath, enmenubak_filepath)
                 
-            if self.is_seed_empty():
-                self.get_new_seed()
+            self.prepare_seed_for_randomization()
 
             for index, (file_id, filepath, filedata) in enumerate(content_list):
                 if (filepath == "N:\\FRPG\\data\\INTERROOT_win32\\param\\GameParam\\CharaInitParam.param" or

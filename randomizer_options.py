@@ -129,7 +129,7 @@ class RandomizerOptions:
     def __init__(self, difficulty, fashion_souls, key_placement, 
      use_lordvessel, use_lord_souls, soul_items_diff, start_items_diff,
      game_version, randomize_npc_armor, ascend_weapons, keys_not_in_dlc, set_up_hints,
-     no_black_knight_weapons):
+     no_black_knight_weapons, reroll_seed_each_run=False):
          self.difficulty = difficulty
          self.fashion_souls = fashion_souls
          self.key_placement = key_placement
@@ -145,6 +145,7 @@ class RandomizerOptions:
          self.no_online_items = True
          self.better_start_spells = True
          self.no_black_knight_weapons = no_black_knight_weapons
+         self.reroll_seed_each_run = reroll_seed_each_run
          
     def bool_option_to_string(self, b):
         if b:
