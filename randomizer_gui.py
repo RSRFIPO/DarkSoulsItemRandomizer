@@ -162,12 +162,17 @@ class MainGUI:
         self.reroll_seed_check = tk.Checkbutton(self.root, text="Reroll seed each run",
          variable=self.reroll_seed, onvalue=True, offvalue=False, padx=2)
         self.reroll_seed_check.grid(row=0, column=3, padx=2, sticky='W')
-        self.sellout_button = tk.Button(self.root, text="?", bg="pale goldenrod",
-         padx=2, pady=2, command=self.lift_sellout_area)
-        self.sellout_button.grid(row=0, column=5, padx=2, sticky='E')
-        self.normalize_button = tk.Button(self.root, text="Revert to vanilla",
+        self.top_button_frame = tk.Frame(self.root)
+        self.top_button_frame.grid(row=0, column=4, padx=2, sticky='W')
+        self.normalize_button = tk.Button(self.top_button_frame, text="Revert to vanilla",
          padx=2, pady=2, command=self.normalize_game)
-        self.normalize_button.grid(row=0, column=4, padx=2, sticky='W')
+        self.normalize_button.grid(row=0, column=0, padx=2, sticky='W')
+        self.save_options_button = tk.Button(self.top_button_frame, text="Save Defaults",
+         padx=2, pady=2, command=self.save_current_options)
+        self.save_options_button.grid(row=0, column=1, padx=2, sticky='W')
+        self.sellout_button = tk.Button(self.top_button_frame, text="?", bg="pale goldenrod",
+         padx=2, pady=2, command=self.lift_sellout_area)
+        self.sellout_button.grid(row=0, column=2, padx=2, sticky='W')
         
         tk.Label(self.root, text="Dark Souls Game Version:").grid(row=1, column=0, columnspan=2, sticky='W', padx=2, ipady=1)
         self.game_version = tk.StringVar()
@@ -195,13 +200,6 @@ class MainGUI:
         self.desc_area = tk.Text(self.root, width=76, height=25, state="disabled", background=self.root.cget('background'), wrap="word")
         self.desc_area.grid(row=2, column=0, columnspan=3, rowspan=10, padx=2, pady=2)
         
-        self.save_options = tk.BooleanVar()
-        self.save_options.set(False)
-        self.save_options_check = tk.Checkbutton(self.root, text="Save Settings as Default", 
-         variable=self.save_options, onvalue=True, offvalue=False, padx=2,
-         width=20, anchor=tk.W)
-        self.save_options_check.grid(row=1, column=3, columnspan=2)
-
         self.diff_frame = tk.LabelFrame(text="Difficulty:", bd=0)
         self.diff_frame.grid(row=2, column=3, sticky='NS', padx=2)
         #--
@@ -660,8 +658,8 @@ class MainGUI:
             self.hint_check.config(state="disabled")
         self.update_desc()
         
-    def randomize_data(self, chr_init_data):
-        options = rngopts.RandomizerOptions(self.diff.get(), self.fashion_bool.get(), 
+    def get_current_options(self):
+        return rngopts.RandomizerOptions(self.diff.get(), self.fashion_bool.get(), 
          self.key_diff.get(), self.use_lordvessel.get(), self.use_lord_souls.get(), 
          self.soul_diff.get(), self.start_items_diff.get(), self.game_version.get(),
          self.npc_armor_bool.get(), self.ascend_weapons_bool.get(), self.keys_not_in_dlc.get(),
@@ -669,8 +667,16 @@ class MainGUI:
          self.npc_weapons_bool.get(), self.boss_soul_transpose_chance.get(),
          self.ascend_weapons_chance.get())
 
-        if self.save_options.get():
-            ini_parser.save_ini(INI_FILE, options)        #save options right before creating seed
+    def save_current_options(self):
+        try:
+            ini_parser.save_ini(INI_FILE, self.get_current_options())
+            self.show_success("Settings have been saved as the default.")
+        except Exception as e:
+            logging.exception('Could not save default settings: {}'.format(e))
+            self.show_error("Could not save settings as default.")
+
+    def randomize_data(self, chr_init_data):
+        options = self.get_current_options()
 
         rng = random.Random()
         rng.seed(int(hashlib.sha256(self.seed_string.get().encode('utf-8')).hexdigest(), 16))
