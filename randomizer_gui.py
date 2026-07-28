@@ -31,7 +31,7 @@ INI_FILE = "randomizer.ini"
 
 MAX_SEED_LENGTH = 64
 
-VERSION_NUM = "0.8.1"
+VERSION_NUM = "0.9.0"
 # only add versions compatible RNG-wise, IE when fixing GUI stuff
 COMPATIBLE_VERSIONS = [VERSION_NUM, ]
 
