@@ -775,7 +775,7 @@ def randomize_chr_armor(chr_init_param, rand_options, random_source):
         for (chr_id, upgrade_level) in head_list:
             chr_init = chr_init_param.find_chr_by_id(chr_id)
             if chr_init == None:
-                log.warn("Attempted to randomize head armor of chr #" + str(chr_id) + 
+                log.warn("Attempted to randomize head armor of chr #" + str(chr_id) +
                  " but was not found in chr_init_param!")
                 continue
             head_to_use = -1
@@ -822,8 +822,6 @@ def randomize_chr_armor(chr_init_param, rand_options, random_source):
             if legs_to_use == -1 and not links.is_npc:
                 legs_to_use = 903000
             chr_init.armor_leg = legs_to_use
-
-
 
 class StartingClassWeaponShield:
     class POOL(Enum):
@@ -942,8 +940,142 @@ STARTING_WEAPONS_AND_SHIELDS = {
  1478000: StartingClassWeaponShield(12, 0, 0, 0, False, StartingClassWeaponShield.POOL.LEFT_HAND),
  9002000: StartingClassWeaponShield(10, 0, 0, 0, False, StartingClassWeaponShield.POOL.LEFT_HAND),
  9016000: StartingClassWeaponShield(15, 12, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
- 9019000: StartingClassWeaponShield(15, 10, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+9019000: StartingClassWeaponShield(15, 10, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
 }
+
+
+NPC_WEAPON_SUPPLEMENTAL_DATA = {
+ 209000: StartingClassWeaponShield(8, 8, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 304000: StartingClassWeaponShield(16, 10, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 350000: StartingClassWeaponShield(24, 10, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 351000: StartingClassWeaponShield(28, 10, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 451000: StartingClassWeaponShield(24, 13, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 603000: StartingClassWeaponShield(14, 20, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 604000: StartingClassWeaponShield(20, 16, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 702000: StartingClassWeaponShield(28, 0, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 703000: StartingClassWeaponShield(46, 0, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 851000: StartingClassWeaponShield(34, 0, 0, 50, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 854000: StartingClassWeaponShield(40, 0, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 1050000: StartingClassWeaponShield(13, 15, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 1201000: StartingClassWeaponShield(9, 14, 0, 0, False, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 1202000: StartingClassWeaponShield(9, 20, 0, 0, False, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 1300000: StartingClassWeaponShield(6, 0, 10, 0, False, StartingClassWeaponShield.POOL.BOTH),
+ 1301000: StartingClassWeaponShield(6, 0, 10, 0, False, StartingClassWeaponShield.POOL.BOTH),
+ 1302000: StartingClassWeaponShield(6, 0, 24, 0, False, StartingClassWeaponShield.POOL.BOTH),
+ 1303000: StartingClassWeaponShield(6, 0, 32, 0, False, StartingClassWeaponShield.POOL.BOTH),
+ 1306000: StartingClassWeaponShield(14, 0, 13, 0, False, StartingClassWeaponShield.POOL.BOTH),
+ 1330000: StartingClassWeaponShield(4, 0, 0, 0, False, StartingClassWeaponShield.POOL.BOTH),
+ 1361000: StartingClassWeaponShield(4, 0, 0, 14, False, StartingClassWeaponShield.POOL.BOTH),
+ 1362000: StartingClassWeaponShield(4, 0, 0, 10, False, StartingClassWeaponShield.POOL.BOTH),
+ 1363000: StartingClassWeaponShield(4, 0, 0, 10, False, StartingClassWeaponShield.POOL.BOTH),
+ 1365000: StartingClassWeaponShield(4, 0, 0, 14, False, StartingClassWeaponShield.POOL.BOTH),
+ 1366000: StartingClassWeaponShield(4, 0, 0, 24, False, StartingClassWeaponShield.POOL.BOTH),
+ 1367000: StartingClassWeaponShield(4, 0, 16, 0, False, StartingClassWeaponShield.POOL.BOTH),
+ 1501000: StartingClassWeaponShield(30, 0, 0, 0, False, StartingClassWeaponShield.POOL.LEFT_HAND),
+ 1505000: StartingClassWeaponShield(32, 0, 0, 0, False, StartingClassWeaponShield.POOL.LEFT_HAND),
+ 9001000: StartingClassWeaponShield(10, 0, 0, 0, False, StartingClassWeaponShield.POOL.LEFT_HAND),
+ 9003000: StartingClassWeaponShield(16, 0, 0, 0, False, StartingClassWeaponShield.POOL.LEFT_HAND),
+ 9010000: StartingClassWeaponShield(9, 25, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+ 9011000: StartingClassWeaponShield(6, 25, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
+}
+
+class NPCWeaponCategory:
+    MELEE = "melee"
+    SHIELD = "shield"
+    CATALYST = "catalyst"
+    PYROMANCY_FLAME = "pyromancy_flame"
+    TALISMAN = "talisman"
+    BOW = "bow"
+    CROSSBOW = "crossbow"
+    OTHER = "other"
+
+def get_npc_weapon_base_id(weapon_id):
+    if weapon_id in STARTING_WEAPONS_AND_SHIELDS or weapon_id in NPC_WEAPON_SUPPLEMENTAL_DATA:
+        return weapon_id
+    return weapon_id - (weapon_id % 1000)
+
+def get_npc_weapon_data(weapon_id):
+    base_id = get_npc_weapon_base_id(weapon_id)
+    if base_id in STARTING_WEAPONS_AND_SHIELDS:
+        return STARTING_WEAPONS_AND_SHIELDS[base_id]
+    return NPC_WEAPON_SUPPLEMENTAL_DATA.get(base_id)
+
+def get_npc_weapon_category(weapon_id):
+    base_id = get_npc_weapon_base_id(weapon_id)
+    if 1300000 <= base_id <= 1308999:
+        return NPCWeaponCategory.CATALYST
+    if 1330000 <= base_id <= 1332999:
+        return NPCWeaponCategory.PYROMANCY_FLAME
+    if 1360000 <= base_id <= 1367999:
+        return NPCWeaponCategory.TALISMAN
+    if 1200000 <= base_id <= 1204999:
+        return NPCWeaponCategory.BOW
+    if 1250000 <= base_id <= 1253999:
+        return NPCWeaponCategory.CROSSBOW
+    if 1396000 <= base_id <= 1505999 or 9001000 <= base_id <= 9003999:
+        return NPCWeaponCategory.SHIELD
+    if get_npc_weapon_data(weapon_id) is not None:
+        return NPCWeaponCategory.MELEE
+    return NPCWeaponCategory.OTHER
+
+def npc_can_use_weapon(chr_init, weapon_id):
+    weapon_data = get_npc_weapon_data(weapon_id)
+    if weapon_data is None:
+        return False
+    return (
+     weapon_data.req_str <= chr_init.base_str and
+     weapon_data.req_dex <= chr_init.base_dex and
+     weapon_data.req_int <= chr_init.base_int and
+     weapon_data.req_fth <= chr_init.base_fth)
+
+def get_randomizable_npc_chr_ids():
+    chr_ids = []
+    for links in CHR_ARMOR_LINKS:
+        if not links.is_npc:
+            continue
+        for chr_list in [links.head_list, links.chest_list, links.arms_list, links.legs_list]:
+            for (chr_id, _) in chr_list:
+                if chr_id not in chr_ids:
+                    chr_ids.append(chr_id)
+    return chr_ids
+
+def randomize_chr_weapons(chr_init_param, rand_options, random_source):
+    weapon_fields = ["wep_r1", "wep_r2", "wep_l1", "wep_l2"]
+    chr_inits = []
+    for chr_id in get_randomizable_npc_chr_ids():
+        chr_init = chr_init_param.find_chr_by_id(chr_id)
+        if chr_init == None:
+            log.warn("Attempted to randomize weapons of chr #" + str(chr_id) +
+             " but was not found in chr_init_param!")
+            continue
+        chr_inits.append(chr_init)
+
+    weapon_pools = {}
+    for chr_init in chr_inits:
+        for field in weapon_fields:
+            weapon_id = getattr(chr_init, field)
+            if weapon_id == -1:
+                continue
+            category = get_npc_weapon_category(weapon_id)
+            if category == NPCWeaponCategory.OTHER or get_npc_weapon_data(weapon_id) is None:
+                continue
+            if category not in weapon_pools:
+                weapon_pools[category] = []
+            if weapon_id not in weapon_pools[category]:
+                weapon_pools[category].append(weapon_id)
+
+    for chr_init in chr_inits:
+        for field in weapon_fields:
+            weapon_id = getattr(chr_init, field)
+            if weapon_id == -1:
+                continue
+            category = get_npc_weapon_category(weapon_id)
+            if category not in weapon_pools:
+                continue
+            choice_list = [choice for choice in weapon_pools[category]
+             if npc_can_use_weapon(chr_init, choice)]
+            if len(choice_list) > 0:
+                setattr(chr_init, field, random_source.choice(choice_list))
 
 
 CLASS_TO_CHR_INIT = {
@@ -1166,4 +1298,3 @@ if __name__ == "__main__":
         passed_data_as_string += "] "
     print(passed_data_as_string)
             
-
