@@ -31,7 +31,7 @@ INI_FILE = "randomizer.ini"
 
 MAX_SEED_LENGTH = 64
 
-VERSION_NUM = "0.9.2"
+VERSION_NUM = "0.9.3"
 # only add versions compatible RNG-wise, IE when fixing GUI stuff
 COMPATIBLE_VERSIONS = [VERSION_NUM, ]
 
@@ -98,10 +98,10 @@ DESC_DICT = {
         False: "* Key items can be in DLC (Painted World, Artorias of the Abyss).\n"},
     "no_black_knight_weapons": {True: "* Black Knight weapons replaced by Titanite Chunks and Slabs.\n",
         False: "* Black Knight weapons are available for use.\n"},
-    "npc_weapons": {True: "* NPC weapons, shields, catalysts, talismans, and pyromancy flames ARE randomized.\n",
-        False: "* NPC weapons, shields, catalysts, talismans, and pyromancy flames are not changed.\n"}
+    "npc_weapons": {True: "* NPCs wield randomly chosen weapons, shields, catalysts, and talismans instead of their normal equipment.\n",
+        False: "* NPCs have their familiar loadouts.\n"}
 }
-DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "keys_not_in_dlc", "start_items", "fashion", "npc_armor", "npc_weapons", "use_lv", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "no_black_knight_weapons"]
+DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "use_lv", "start_items", "fashion", "npc_armor", "npc_weapons", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "keys_not_in_dlc", "no_black_knight_weapons"]
 
 
 def resource_path(rel_path):
@@ -183,7 +183,7 @@ class MainGUI:
         self.game_version_menu.config(width=30)
         self.game_version_menu.grid(row=1, column=2, sticky='EW', padx=2)
         
-        self.msg_area = tk.Text(self.root, width=76, height=22, 
+        self.msg_area = tk.Text(self.root, width=76, height=25, 
                                 state="disabled", background=self.root.cget('background'), wrap="word")
         self.msg_area.grid(row=2, column=0, columnspan=3, rowspan=10, padx=2, pady=2, sticky='NS')
         self.msg_quit_button = tk.Button(self.root, text="Quit", command=self.quit_button)
@@ -192,7 +192,7 @@ class MainGUI:
         self.msg_continue_button.grid(row=7, column=1, columnspan=2, rowspan=2)
         self.back_button = tk.Button(self.root, text="Back", command=self.back_button)
         self.back_button.grid(row=7, column=1, columnspan=2, rowspan=2)
-        self.desc_area = tk.Text(self.root, width=76, height=22, state="disabled", background=self.root.cget('background'), wrap="word")
+        self.desc_area = tk.Text(self.root, width=76, height=25, state="disabled", background=self.root.cget('background'), wrap="word")
         self.desc_area.grid(row=2, column=0, columnspan=3, rowspan=10, padx=2, pady=2)
         
         self.save_options = tk.BooleanVar()
@@ -325,7 +325,7 @@ class MainGUI:
         self.lord_soul_check = tk.Checkbutton(self.misc_flags_frame, text="Senile Primordial Serpents", 
          variable=self.use_lord_souls, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.lord_soul_check.grid(row=2, column=0, sticky='W')
+        self.lord_soul_check.grid(row=3, column=0, sticky='W')
         self.setup_hover_events(self.lord_soul_check, {"use_lord_souls": None}, no_emph = True)
 
         self.ascend_weapons_bool = tk.BooleanVar()
@@ -334,7 +334,7 @@ class MainGUI:
         self.ascend_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="Eager Smiths", 
          variable=self.ascend_weapons_bool, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.ascend_weapons_check.grid(row=3, column=0, sticky='W')
+        self.ascend_weapons_check.grid(row=4, column=0, sticky='W')
         self.setup_hover_events(self.ascend_weapons_check, {"ascend_weapons": None}, no_emph = True)
         self.ascend_weapons_chance = tk.IntVar()
         self.ascend_weapons_chance_as_string = tk.StringVar()
@@ -347,7 +347,7 @@ class MainGUI:
                                             width=5,
                                             state="readonly")
         self.gui_ascend_weapons_chance.bind("<<ComboboxSelected>>", lambda _: self.ascend_weapons_chance.set(rngopts.RandOptAscendWeaponsChance.from_string(self.ascend_weapons_chance_as_string.get())))
-        self.gui_ascend_weapons_chance.grid(row=3, column=1, sticky='W')
+        self.gui_ascend_weapons_chance.grid(row=4, column=1, sticky='W')
         self.setup_hover_events(self.gui_ascend_weapons_chance, {"ascend_weapons_chance": None}, no_emph = True)
 
         self.set_up_hints = tk.BooleanVar()
@@ -356,7 +356,7 @@ class MainGUI:
         self.hint_check = tk.Checkbutton(self.misc_flags_frame, text="Seek Guidance Hints", 
          variable=self.set_up_hints, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.hint_check.grid(row=4, column=0, sticky='W')
+        self.hint_check.grid(row=5, column=0, sticky='W')
         self.setup_hover_events(self.hint_check, {"set_up_hints": None}, no_emph = True)
 
         self.keys_not_in_dlc = tk.BooleanVar()
@@ -365,7 +365,7 @@ class MainGUI:
         self.keys_not_in_dlc_check = tk.Checkbutton(self.misc_flags_frame, text="No DLC", 
          variable=self.keys_not_in_dlc, onvalue=True, offvalue=False,   #, padx=2,
          width=10, anchor=tk.W)
-        self.keys_not_in_dlc_check.grid(row=5, column=0, sticky='W')
+        self.keys_not_in_dlc_check.grid(row=6, column=0, sticky='W')
         self.setup_hover_events(self.keys_not_in_dlc_check, {"keys_not_in_dlc": None}, no_emph = True)
 
         self.no_black_knight_weapons = tk.BooleanVar()
@@ -374,7 +374,7 @@ class MainGUI:
         self.no_black_knight_weapons_gui = tk.Checkbutton(self.misc_flags_frame, text="No Black Knight Weapons", 
          variable=self.no_black_knight_weapons, onvalue=True, offvalue=False,   #, padx=2,
          width=20, anchor=tk.W)
-        self.no_black_knight_weapons_gui.grid(row=6, column=0, sticky='W')
+        self.no_black_knight_weapons_gui.grid(row=7, column=0, sticky='W')
         self.setup_hover_events(self.no_black_knight_weapons_gui, {"no_black_knight_weapons": None}, no_emph = True)
 
         self.npc_weapons_bool = tk.BooleanVar()
@@ -383,7 +383,7 @@ class MainGUI:
         self.npc_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="NPC Weapon Mixup",
          variable=self.npc_weapons_bool, onvalue=True, offvalue=False,
          width=20, anchor=tk.W)
-        self.npc_weapons_check.grid(row=7, column=0, sticky='W')
+        self.npc_weapons_check.grid(row=2, column=0, sticky='W')
         self.setup_hover_events(self.npc_weapons_check, {"npc_weapons": None}, no_emph=True)
 
         self.export_button = tk.Button(self.root, text="Scramble Items &\nExport to GameParam", 
