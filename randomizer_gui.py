@@ -650,7 +650,6 @@ class MainGUI:
         if use_randomized_data is None:
             self.prepare_seed_for_randomization()
         if self.is_seed_empty():
-        if self.is_seed_empty():
             self.seed_entry.config(bg = "light salmon")
             return
         if self.game_version.get() not in [rngopts.RandOptGameVersion.PTDE, rngopts.RandOptGameVersion.REMASTERED]:
