@@ -7,11 +7,11 @@
 * Run the Item Randomizer and select your options. When you are ready to randomize your items, click the Export button to automatically write the modified item
 configuration to `GameParam.parambnd` or `GameParam.parambnd.dcx`, depending on the game version. A backup copy will be created if it does not already exist. 
 A directory with the current date/time stamp will be created containing information about the item distribution, including a cheatsheet.
-* If you want to inspect a certain item distribution, but not modify the actual game files, you can instead input a seed and click the "Write Seed Info" button
-to generate the same type of folder as above, without modifying the current item distribution. Note that you *must* input a seed for this to work.
-* Having 'Save Settings To Default' will write settings to INI file when Export button is pressed.
-* To share settings and seeds with others, right click and choose 'Copy settings to Sync'.  A seed/settings string will be generated and placed in your clipboard, use paste (CTRL-V) to paste that string in chat, Discord, e-mails, etc.
-* To load settings shared with others, copy to the clipboard (CTRL+C) the seed/settings strings shared with you and then right click in the and coose 'Paste settings sync'.
+* If you want to inspect a certain item distribution, but not modify the actual game files, you can instead input a seed and click the "Write Seed Cheatsheet" button
+to generate the same type of folder as above, without modifying the current item distribution.
+* Click "Save Defaults" to immediately save the current settings to `randomizer.ini`.
+* To share settings and seeds with others, right click and choose "Copy settings sync". A seed/settings string will be generated and placed in your clipboard. Use paste (CTRL-V) to paste that string in chat, Discord, e-mails, etc.
+* To load settings shared with others, copy the seed/settings string to the clipboard (CTRL+C), then right click in the Randomizer and choose "Paste settings sync".
 
 *To restore the default item distribution automatically:*
 
@@ -46,6 +46,8 @@ The following is a brief description of each of the Item Randomizer's settings:
 Difficulty: Determines how much the Randomizer is biased against you. The more unfair it is, the more it attempts to hide desirable items (good weapons, lighter armor, keys)
 in harder-to-reach or less well-known locations.
 
+Reroll Seed Each Run: If active, clicking "Scramble Items & Export to GameParam" will generate a new seed before randomizing. "Write Seed Cheatsheet" will keep the currently shown seed unless the seed field is empty.
+
 Key Placement: Determines how the Randomizer places keys. On "Not Shuffled", key items are in their usual locations. On "Shuffled", key items are placed in any locations, provided they do
 not lead to a softlock where not all areas can be accessed before defeating Gwyn. On "Race Mode", key items are placed in a restricted set of locations, so that not every location needs
 to be checked for a key. The list of locations consists of boss drops, in chests, dropped by Black Knights, and in locations where key items (including embers) are normally.
@@ -54,7 +56,7 @@ are taken into account. This README contains a list of these skips and glitches 
 
 Soul Items: Determines how the Randomizer treats soul consumables. On "Shuffled", they are treated like any other item. On "Replaced", they are replaced with a random consumable before being shuffled.
 This reduces the number of soul consumables in the game, but can make item pickups more interesting, as otherwise you receive many soul consumables, which some players find boring.
-On "Transposed", each boss soul has a 75% chance to be replaced by a corresponding boss weapon.
+On "Transposed", each boss soul can be replaced by a corresponding boss weapon. The transposition chance can be set to 10%, 25%, 50%, or 75%.
 
 Starting Items: Determines what pool of weapons/shields the Randomizer draw from when choosing the player's starting left-hand and right-hand items.
 
@@ -63,17 +65,23 @@ Fashion Souls: If active, the many armor sets in game are split up, and each pie
 Laundromat Mixup: If active, most human NPCs will wear random armor instead of their usual sets. If Fashion Souls is not active, NPCs will wear randomly chosen full sets of armor. 
 If Fashion Souls is active, NPCs will wear independently chosen random pieces of armor.
 
+NPC Weapon Mixup: If active, NPC weapons, shields, catalysts, and talismans are randomized within the NPCs stats data.
+
 Lordvessel Randomized: If active, the Lordvessel will be shuffled like other key items, and Gwynevere will give the player a different item in place of the Lordvessel. Not compatible with not shuffling keys.
 
 Lordvessel @ Firelink: If active, the Lordvessel will always be in Firelink Shrine.  This can drastically cut down game time length.  Not compatible with not shuffling keys.
 
 Senile Primordial Serpents: If active, the four Lord Souls will be shuffled like other key items. Not compatible with not shuffling keys.
 
-Eager Smiths: If active, weapons capable of upgrading along the various ember paths (Chaos, Magic, Divine, etc.) have a 25% chance of dropping as a +0 version of one of these paths. A bit of an easier setting, but will allow for more diversity of viable weapons across playthroughs.
+Eager Smiths: If active, weapons capable of upgrading along the various ember paths (Chaos, Magic, Divine, etc.) can drop as a +0 version of one of these paths. The ascension chance can be set to 5%, 15%, or 25%. A bit of an easier setting, but will allow for more diversity of viable weapons across playthroughs.
 
 No DLC: If active, key items will NOT be in Painted World or Artorias of the Abyss DLC locations.  Also keys needed for those areas will not be placed outside of these areas, to prevent you from getting keys in sections that aren't needed.
 
 Seek Guidance Help: If active, useful hints replace the dev messages that appear when using the Seek Guidance miracle.  Petrus at the Firelink Shrine has the Seek Guidance miracle and a talisman for sale. 
+
+No Black Knight Weapons: If active, Black Knight weapons are replaced by Titanite Chunks and Slabs.
+
+
 
 **Race Mode Possible Key Locations**:
 
