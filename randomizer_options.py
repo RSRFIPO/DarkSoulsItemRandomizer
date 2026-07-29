@@ -188,7 +188,7 @@ class RandomizerOptions:
      game_version, randomize_npc_armor, ascend_weapons, keys_not_in_dlc, set_up_hints,
      no_black_knight_weapons, reroll_seed_each_run=False, randomize_npc_weapons=False,
      boss_soul_transpose_chance=RandOptBossSoulTransposeChance.CHANCE_75,
-     ascend_weapons_chance=RandOptAscendWeaponsChance.CHANCE_25):
+     ascend_weapons_chance=RandOptAscendWeaponsChance.CHANCE_25, dark_mode=False):
          self.difficulty = difficulty
          self.fashion_souls = fashion_souls
          self.key_placement = key_placement
@@ -208,6 +208,7 @@ class RandomizerOptions:
          self.randomize_npc_weapons = randomize_npc_weapons
          self.boss_soul_transpose_chance = RandOptBossSoulTransposeChance.verify(boss_soul_transpose_chance)
          self.ascend_weapons_chance = RandOptAscendWeaponsChance.verify(ascend_weapons_chance)
+         self.dark_mode = dark_mode
          
     def bool_option_to_string(self, b):
         if b:

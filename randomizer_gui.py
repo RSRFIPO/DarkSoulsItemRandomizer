@@ -103,6 +103,54 @@ DESC_DICT = {
 }
 DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "use_lv", "start_items", "fashion", "npc_armor", "npc_weapons", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "keys_not_in_dlc", "no_black_knight_weapons"]
 
+LIGHT_THEME = {
+    "window_bg": "SystemButtonFace",
+    "panel_bg": "SystemButtonFace",
+    "text_bg": "SystemButtonFace",
+    "entry_bg": "white",
+    "entry_fg": "black",
+    "fg": "black",
+    "button_bg": "SystemButtonFace",
+    "button_fg": "black",
+    "combo_button_bg": "#d0d0d0",
+    "combo_border": "#8a8a8a",
+    "active_bg": "SystemButtonFace",
+    "select_bg": "SystemHighlight",
+    "select_fg": "SystemHighlightText",
+    "disabled_fg": "gray50",
+    "placeholder_fg": "grey",
+    "deemph_fg": "grey",
+    "emph_fg": "red2",
+    "error_fg": "red",
+    "success_fg": "green",
+    "invalid_bg": "light salmon",
+    "help_bg": "pale goldenrod",
+}
+
+DARK_THEME = {
+    "window_bg": "#1b1b1f",
+    "panel_bg": "#1b1b1f",
+    "text_bg": "#232329",
+    "entry_bg": "#111216",
+    "entry_fg": "#e8e6df",
+    "fg": "#e8e6df",
+    "button_bg": "#303038",
+    "button_fg": "#f1eee7",
+    "combo_button_bg": "#3b3b45",
+    "combo_border": "#5a5a66",
+    "active_bg": "#3b3b45",
+    "select_bg": "#5f6f94",
+    "select_fg": "#ffffff",
+    "disabled_fg": "#8a8790",
+    "placeholder_fg": "#9b98a0",
+    "deemph_fg": "#9b98a0",
+    "emph_fg": "#ff8b7c",
+    "error_fg": "#ff6b6b",
+    "success_fg": "#79c47a",
+    "invalid_bg": "#6b3732",
+    "help_bg": "#77652e",
+}
+
 
 def resource_path(rel_path):
     try:
@@ -133,9 +181,10 @@ class DescriptionState:
             (desc_part_value, desc_part_format) = self.desc_specifiers[desc_part]
             text_part = DESC_DICT[desc_part][desc_part_value]
             self.text_area.insert("end", text_part, desc_part_format)
-        self.text_area.tag_config(DescriptionState.NORMAL, foreground="black")
-        self.text_area.tag_config(DescriptionState.DEEMPH, foreground="grey")
-        self.text_area.tag_config(DescriptionState.EMPH, foreground="red2")
+        theme = getattr(self.text_area, "theme_colors", LIGHT_THEME)
+        self.text_area.tag_config(DescriptionState.NORMAL, foreground=theme["fg"])
+        self.text_area.tag_config(DescriptionState.DEEMPH, foreground=theme["deemph_fg"])
+        self.text_area.tag_config(DescriptionState.EMPH, foreground=theme["emph_fg"])
         self.text_area.config(state="disabled")
 
 class MainGUI:
@@ -145,6 +194,8 @@ class MainGUI:
         self.has_hovered_desc = False
         self.root = tk.Tk()
         self.style = ttk.Style()
+        self.dark_mode = tk.BooleanVar()
+        self.dark_mode.set(init_options.getboolean("dark_mode", fallback=False))
         self.root.title("Dark Souls Item Randomizer v" + VERSION_NUM)
         self.root.resizable(False, False)
         img = tk.PhotoImage(file=resource_path('favicon.gif'))
@@ -170,9 +221,12 @@ class MainGUI:
         self.save_options_button = tk.Button(self.top_button_frame, text="Save Defaults",
          padx=2, pady=2, command=self.save_current_options)
         self.save_options_button.grid(row=0, column=1, padx=2, sticky='W')
+        self.dark_mode_check = tk.Checkbutton(self.top_button_frame, text="Dark mode",
+         variable=self.dark_mode, onvalue=True, offvalue=False, padx=2, command=self.apply_theme)
+        self.dark_mode_check.grid(row=0, column=2, padx=2, sticky='W')
         self.sellout_button = tk.Button(self.top_button_frame, text="?", bg="pale goldenrod",
          padx=2, pady=2, command=self.lift_sellout_area)
-        self.sellout_button.grid(row=0, column=2, padx=2, sticky='W')
+        self.sellout_button.grid(row=0, column=3, padx=2, sticky='W')
         
         tk.Label(self.root, text="Dark Souls Game Version:").grid(row=1, column=0, columnspan=2, sticky='W', padx=2, ipady=1)
         self.game_version = tk.StringVar()
@@ -180,11 +234,11 @@ class MainGUI:
         self.game_version_menu = ttk.Combobox(self.root, textvariable=self.game_version, state="readonly", 
             values=[rngopts.RandOptGameVersion.PTDE, rngopts.RandOptGameVersion.REMASTERED],
             style="GameVersion.TCombobox")
-        self.style.map('Highlight.GameVersion.TCombobox', fieldbackground=[('readonly','light salmon')])
-        self.style.map('Error.GameVersion.TCombobox', foreground=[('readonly','red')])
+        self.style.map('Highlight.GameVersion.TCombobox', fieldbackground=[('readonly', self.current_theme()["invalid_bg"])])
+        self.style.map('Error.GameVersion.TCombobox', foreground=[('readonly', self.current_theme()["error_fg"])])
         # Clear the highlighting of the combobox after user interaction,
         #  since it auto-highlights for some reason.
-        self.game_version_menu.bind("<<ComboboxSelected>>", lambda _: self.update_game_version())
+        self.game_version_menu.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event, self.update_game_version))
         self.game_version_menu.config(width=30)
         self.game_version_menu.grid(row=1, column=2, sticky='EW', padx=2)
         
@@ -213,7 +267,8 @@ class MainGUI:
                                             textvariable=self.diff_as_string,
                                             width=13,
                                             state="readonly")
-        self.gui_diff.bind("<<ComboboxSelected>>", lambda _: self.diff.set(rngopts.RandOptDifficulty.from_string(self.diff_as_string.get())))
+        self.gui_diff.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
+            lambda: self.diff.set(rngopts.RandOptDifficulty.from_string(self.diff_as_string.get()))))
         self.gui_diff.grid(row=0, column=0, sticky='W')
         self.setup_hover_events(self.gui_diff, {"diff": None}, no_emph = True)
        
@@ -231,7 +286,8 @@ class MainGUI:
                                             textvariable=self.key_diff_as_string,
                                             width=13,
                                             state="readonly")
-        self.gui_key_diff.bind("<<ComboboxSelected>>", lambda _: self.key_diff.set(rngopts.RandOptKeyDifficulty.from_string(self.key_diff_as_string.get())))
+        self.gui_key_diff.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
+            lambda: self.key_diff.set(rngopts.RandOptKeyDifficulty.from_string(self.key_diff_as_string.get()))))
         self.gui_key_diff.grid(row=0, column=0, sticky='W')
         self.setup_hover_events(self.gui_key_diff, {"key_diff": None}, no_emph = True)
 
@@ -248,7 +304,8 @@ class MainGUI:
                                             textvariable=self.soul_diff_as_string,
                                             width=13,
                                             state="readonly")
-        self.gui_soul_diff.bind("<<ComboboxSelected>>", lambda _: self.soul_diff.set(rngopts.RandOptSoulItemsDifficulty.from_string(self.soul_diff_as_string.get())))
+        self.gui_soul_diff.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
+            lambda: self.soul_diff.set(rngopts.RandOptSoulItemsDifficulty.from_string(self.soul_diff_as_string.get()))))
         self.gui_soul_diff.grid(row=0, column=0, sticky='W')
         self.setup_hover_events(self.gui_soul_diff, {"souls_diff": None}, no_emph = True)
         self.boss_soul_transpose_chance = tk.IntVar()
@@ -261,7 +318,8 @@ class MainGUI:
                                             textvariable=self.boss_soul_transpose_chance_as_string,
                                             width=13,
                                             state="readonly")
-        self.gui_boss_soul_transpose_chance.bind("<<ComboboxSelected>>", lambda _: self.boss_soul_transpose_chance.set(rngopts.RandOptBossSoulTransposeChance.from_string(self.boss_soul_transpose_chance_as_string.get())))
+        self.gui_boss_soul_transpose_chance.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
+            lambda: self.boss_soul_transpose_chance.set(rngopts.RandOptBossSoulTransposeChance.from_string(self.boss_soul_transpose_chance_as_string.get()))))
         self.gui_boss_soul_transpose_chance.grid(row=1, column=0, sticky='W')
         self.setup_hover_events(self.gui_boss_soul_transpose_chance, {"boss_soul_transpose_chance": None}, no_emph = True)
 
@@ -277,6 +335,7 @@ class MainGUI:
                                             width=13,
                                             state="readonly")
         self.gui_lordvessel.grid(row=0, column=0, sticky='W')
+        self.gui_lordvessel.bind("<<ComboboxSelected>>", self.combobox_selected)
         self.setup_hover_events(self.gui_lordvessel, {"use_lv": None}, no_emph = True)
 
         self.start_items_frame = tk.LabelFrame(text="Starting Items:", bd=0)  #wxy
@@ -292,7 +351,8 @@ class MainGUI:
                                             textvariable=self.start_items_diff_as_string,
                                             width=25,
                                             state="readonly")
-        self.gui_start_items_diff.bind("<<ComboboxSelected>>", lambda _: self.start_items_diff.set(rngopts.RandOptStartItemsDifficulty.from_string(self.start_items_diff_as_string.get())))
+        self.gui_start_items_diff.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
+            lambda: self.start_items_diff.set(rngopts.RandOptStartItemsDifficulty.from_string(self.start_items_diff_as_string.get()))))
         self.gui_start_items_diff.grid(row=0, column=0, sticky='W')
         self.setup_hover_events(self.gui_start_items_diff, {"start_items": None}, no_emph = True)
         
@@ -344,7 +404,8 @@ class MainGUI:
                                             textvariable=self.ascend_weapons_chance_as_string,
                                             width=5,
                                             state="readonly")
-        self.gui_ascend_weapons_chance.bind("<<ComboboxSelected>>", lambda _: self.ascend_weapons_chance.set(rngopts.RandOptAscendWeaponsChance.from_string(self.ascend_weapons_chance_as_string.get())))
+        self.gui_ascend_weapons_chance.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
+            lambda: self.ascend_weapons_chance.set(rngopts.RandOptAscendWeaponsChance.from_string(self.ascend_weapons_chance_as_string.get()))))
         self.gui_ascend_weapons_chance.grid(row=4, column=1, sticky='W')
         self.setup_hover_events(self.gui_ascend_weapons_chance, {"ascend_weapons_chance": None}, no_emph = True)
 
@@ -417,6 +478,7 @@ class MainGUI:
             SettingsVariable(name='npcw', variable=self.npc_weapons_bool, options=DESC_DICT['npc_weapons'].keys()),
         ], call_after_update=self.update_desc)
 
+        self.apply_theme()
         self.update_desc()
         self.detect_game_version()
         self.check_for_new_version()
@@ -426,6 +488,125 @@ class MainGUI:
         self.game_version_menu.selection_clear()
         if self.game_version.get() in [rngopts.RandOptGameVersion.PTDE, rngopts.RandOptGameVersion.REMASTERED]:
             self.game_version_menu.configure(style="GameVersion.TCombobox")
+
+    def combobox_selected(self, event, callback=None):
+        if callback is not None:
+            callback()
+        event.widget.selection_clear()
+        self.root.focus_set()
+
+    def current_theme(self):
+        return DARK_THEME if self.dark_mode.get() else LIGHT_THEME
+
+    def apply_theme(self):
+        theme = self.current_theme()
+        self.root.configure(bg=theme["window_bg"])
+        self.root.option_add("*TCombobox*Listbox.background", theme["entry_bg"])
+        self.root.option_add("*TCombobox*Listbox.foreground", theme["entry_fg"])
+        self.root.option_add("*TCombobox*Listbox.selectBackground", theme["select_bg"])
+        self.root.option_add("*TCombobox*Listbox.selectForeground", theme["select_fg"])
+        self.configure_ttk_styles(theme)
+        self.apply_theme_to_widget(self.root, theme)
+        if hasattr(self, "popup_menu"):
+            self.apply_theme_to_widget(self.popup_menu, theme)
+        if hasattr(self, "sellout_button"):
+            self.sellout_button.configure(bg=theme["help_bg"], fg=theme["button_fg"],
+                activebackground=theme["active_bg"], activeforeground=theme["button_fg"])
+        self.configure_message_tags()
+        self.configure_seed_entry_colors()
+        if hasattr(self, "desc_area"):
+            self.update_desc(respect_current_hover=False)
+
+    def configure_ttk_styles(self, theme):
+        try:
+            self.style.theme_use("clam")
+        except tk.TclError:
+            pass
+
+        combo_settings = {
+            "fieldbackground": theme["entry_bg"],
+            "background": theme["combo_button_bg"],
+            "foreground": theme["entry_fg"],
+            "selectbackground": theme["select_bg"],
+            "selectforeground": theme["select_fg"],
+            "arrowcolor": theme["fg"],
+            "bordercolor": theme["combo_border"],
+            "lightcolor": theme["combo_border"],
+            "darkcolor": theme["combo_border"],
+        }
+        for style_name in ("TCombobox", "GameVersion.TCombobox"):
+            self.style.configure(style_name, **combo_settings)
+            self.style.map(style_name,
+                fieldbackground=[("readonly", theme["entry_bg"]), ("disabled", theme["panel_bg"])],
+                foreground=[("readonly", theme["entry_fg"]), ("disabled", theme["disabled_fg"])],
+                background=[("readonly", theme["combo_button_bg"]), ("disabled", theme["button_bg"])])
+
+        self.style.configure("Highlight.GameVersion.TCombobox", **combo_settings)
+        self.style.map("Highlight.GameVersion.TCombobox",
+            fieldbackground=[("readonly", theme["invalid_bg"])],
+            foreground=[("readonly", theme["entry_fg"])])
+        self.style.configure("Error.GameVersion.TCombobox", **combo_settings)
+        self.style.map("Error.GameVersion.TCombobox",
+            fieldbackground=[("readonly", theme["entry_bg"])],
+            foreground=[("readonly", theme["error_fg"])])
+
+    def apply_theme_to_widget(self, widget, theme):
+        widget.theme_colors = theme
+        if isinstance(widget, ttk.Widget):
+            for child in widget.winfo_children():
+                self.apply_theme_to_widget(child, theme)
+            return
+
+        if isinstance(widget, (tk.Frame, tk.LabelFrame)):
+            widget.configure(bg=theme["panel_bg"])
+            if isinstance(widget, tk.LabelFrame):
+                widget.configure(fg=theme["fg"])
+        elif isinstance(widget, tk.Label):
+            widget.configure(bg=theme["panel_bg"], fg=theme["fg"])
+        elif isinstance(widget, tk.Checkbutton):
+            widget.configure(bg=theme["panel_bg"], fg=theme["fg"],
+                activebackground=theme["active_bg"], activeforeground=theme["fg"],
+                selectcolor=theme["entry_bg"], disabledforeground=theme["disabled_fg"])
+        elif isinstance(widget, tk.Button):
+            widget.configure(bg=theme["button_bg"], fg=theme["button_fg"],
+                activebackground=theme["active_bg"], activeforeground=theme["button_fg"],
+                disabledforeground=theme["disabled_fg"])
+        elif isinstance(widget, tk.Entry):
+            widget.configure(bg=theme["entry_bg"], fg=theme["entry_fg"],
+                insertbackground=theme["entry_fg"], selectbackground=theme["select_bg"],
+                selectforeground=theme["select_fg"])
+        elif isinstance(widget, tk.Text):
+            widget.configure(bg=theme["text_bg"], fg=theme["fg"],
+                insertbackground=theme["fg"], selectbackground=theme["select_bg"],
+                selectforeground=theme["select_fg"])
+        elif isinstance(widget, tk.Menu):
+            widget.configure(bg=theme["button_bg"], fg=theme["button_fg"],
+                activebackground=theme["active_bg"], activeforeground=theme["button_fg"])
+
+        for child in widget.winfo_children():
+            self.apply_theme_to_widget(child, theme)
+
+    def configure_message_tags(self):
+        theme = self.current_theme()
+        for text_area in (getattr(self, "msg_area", None), getattr(self, "desc_area", None)):
+            if text_area is not None:
+                text_area.theme_colors = theme
+        if hasattr(self, "msg_area"):
+            self.msg_area.tag_config("error_red", foreground=theme["error_fg"])
+            self.msg_area.tag_config("yay", foreground=theme["success_fg"])
+
+    def configure_seed_entry_colors(self):
+        if not hasattr(self, "seed_entry"):
+            return
+        theme = self.current_theme()
+        self.entry_state.normal_color = theme["entry_fg"]
+        self.entry_state.placeholder_color = theme["placeholder_fg"]
+        if self.entry_state.with_placeholder:
+            self.seed_entry.config(fg=self.entry_state.placeholder_color,
+                font=self.entry_state.placeholder_font)
+        else:
+            self.seed_entry.config(fg=self.entry_state.normal_color,
+                font=self.entry_state.normal_font)
         
     def detect_game_version(self):
         for filepath in DS1R_GAMEPARAM_PATH_LIST:
@@ -621,7 +802,7 @@ class MainGUI:
             self.keys_not_in_dlc_check.config(state="disabled")
         else:
             #self.lv_check.config(state="normal")
-            self.gui_lordvessel.config(state="normal")
+            self.gui_lordvessel.config(state="readonly")
             self.lord_soul_check.config(state="normal")
             self.keys_not_in_dlc_check.config(state="normal")
 
@@ -639,7 +820,7 @@ class MainGUI:
         if self.key_diff.get() == rngopts.RandOptKeyDifficulty.SPEEDRUN_MODE:
             self.gui_diff.config(state="disabled")
         else:
-            self.gui_diff.config(state="normal")
+            self.gui_diff.config(state="readonly")
 
         if self.soul_diff.get() == rngopts.RandOptSoulItemsDifficulty.TRANSPOSE:
             self.gui_boss_soul_transpose_chance.config(state="readonly")
@@ -665,7 +846,7 @@ class MainGUI:
          self.npc_armor_bool.get(), self.ascend_weapons_bool.get(), self.keys_not_in_dlc.get(),
          self.set_up_hints.get(), self.no_black_knight_weapons.get(), self.reroll_seed.get(),
          self.npc_weapons_bool.get(), self.boss_soul_transpose_chance.get(),
-         self.ascend_weapons_chance.get())
+         self.ascend_weapons_chance.get(), self.dark_mode.get())
 
     def save_current_options(self):
         try:
@@ -699,7 +880,7 @@ class MainGUI:
     def seed_changed(self):
         self.limit_seed_length()
         value = self.seed_string.get()
-        self.seed_entry.config(bg="white")
+        self.seed_entry.config(bg=self.current_theme()["entry_bg"])
         
     def is_seed_empty(self):
         seed = self.seed_string.get()
@@ -718,7 +899,7 @@ class MainGUI:
         if use_randomized_data is None:
             self.prepare_seed_for_randomization(honor_reroll=False)
         if self.is_seed_empty():
-            self.seed_entry.config(bg = "light salmon")
+            self.seed_entry.config(bg=self.current_theme()["invalid_bg"])
             return
         if self.game_version.get() not in [rngopts.RandOptGameVersion.PTDE, rngopts.RandOptGameVersion.REMASTERED]:
             self.game_version_menu.configure(style="Highlight.GameVersion.TCombobox")
@@ -791,7 +972,7 @@ class MainGUI:
             self.msg_area.insert("end", 'If you want to easily share this seed and settings with your friends, '
                                         'right click on this window and select "Copy settings sync". \n\n')
             self.msg_area.insert("end", "Click \"Back\" to begin again, or click \"Quit\" to exit.\n\n")
-            self.msg_area.tag_config("yay", foreground="green")
+            self.configure_message_tags()
             self.msg_area.config(state="disabled")
             self.msg_area.lift()
             self.back_button.lift()
@@ -839,7 +1020,7 @@ class MainGUI:
                 ' Check that this program is in the correct directory and GameParam.parambnd[.dcx] is present and retry.\n\n'
                 'Click "Continue" to continue in seed-information-only mode, or'
                 ' click "Quit" to exit.')
-            self.msg_area.tag_config("error_red", foreground="red")
+            self.configure_message_tags()
             self.msg_area.config(state="disabled")
             self.export_button.config(state="disabled")
             self.lift_msg_area()
@@ -852,7 +1033,7 @@ class MainGUI:
              " Check that this program is in the correct directory and menu.msgbnd[.dcx] is present and retry.\n\n" +
              "Click \"Continue\" to continue in seed-information-only mode, or" + 
              " click \"Quit\" to exit.")
-            self.msg_area.tag_config("error_red", foreground="red")
+            self.configure_message_tags()
             self.msg_area.config(state="disabled")
             self.export_button.config(state = "disabled")
             self.lift_msg_area()
@@ -882,7 +1063,7 @@ class MainGUI:
                    ': {0} is malformed or corrupted and cannot be parsed to export randomized items. If possible, restore '
                    '{0} from a backup copy.\n\nClick "Continue" to continue in seed-information-only mode, or '
                    'click "Quit" to exit.'.format(gp_filename))
-                self.msg_area.tag_config("error_red", foreground="red")
+                self.configure_message_tags()
                 self.msg_area.config(state="disabled")
                 self.export_button.config(state="disabled")
                 self.lift_msg_area()
@@ -909,7 +1090,7 @@ class MainGUI:
                     " parsed to inject hints. If possible, restore " + enmenu_filename + " from a backup copy.\n\n" +
                     "Click \"Continue\" to continue in seed-information-only mode, or" + 
                     " click \"Quit\" to exit.")
-                    self.msg_area.tag_config("error_red", foreground="red")
+                    self.configure_message_tags()
                     self.msg_area.config(state="disabled")
                     self.export_button.config(state = "disabled")
                     self.lift_msg_area()
@@ -994,7 +1175,7 @@ class MainGUI:
             self.msg_area.insert("end", 'If you want to easily share this seed and settings with your friends, '
                                         'right click on this window and select "Copy settings sync". \n\n')
             self.msg_area.insert("end", 'Click "Back" to begin again, or click "Quit" to exit.')
-            self.msg_area.tag_config("yay", foreground="green")
+            self.configure_message_tags()
             self.msg_area.config(state="disabled")
             self.msg_area.lift()
             self.back_button.lift()
@@ -1064,7 +1245,7 @@ class MainGUI:
                     "It is recommended that you update to the newest version. Old versions\n" + 
                     "will NOT be supported and may have bugs fixed in the latest release." +
                     "\n\nClick \"Continue\" to use the current version anyway, or click \"Quit\" to exit.")
-                    self.msg_area.tag_config("error_red", foreground="red")
+                    self.configure_message_tags()
                     self.msg_area.lift()
                     self.msg_continue_button.lift()
                     self.msg_quit_button.lift()
@@ -1114,7 +1295,7 @@ class MainGUI:
         self.msg_area.insert("end", "\n\n")
         self.msg_area.insert("end", "ERROR", "error_red")
         self.msg_area.insert("end", ": " + text)
-        self.msg_area.tag_config("error_red", foreground="red")
+        self.configure_message_tags()
         self.lift_msg_area()
 
     def show_success(self, text):
@@ -1123,7 +1304,7 @@ class MainGUI:
         self.msg_area.insert("end", "\n\n")
         self.msg_area.insert("end", "SUCCESS", "yay")
         self.msg_area.insert("end", ": " + text)
-        self.msg_area.tag_config("yay", foreground="green")
+        self.configure_message_tags()
         self.lift_msg_area()
 
 
