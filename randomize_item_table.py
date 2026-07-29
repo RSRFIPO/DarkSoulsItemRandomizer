@@ -445,6 +445,8 @@ def build_table(rand_options, random_source, chr_init_data):
     chr_s.randomize_chr_armor(given_cip, rand_options, random_source)
     if rand_options.randomize_npc_weapons:
         chr_s.randomize_chr_weapons(given_cip, rand_options, random_source)
+    if rand_options.randomize_starting_stats:
+        chr_s.randomize_starting_stats(given_cip, random_source)
     data_passed_from_chr_init = chr_s.randomize_starting_chr_weapons(given_cip, rand_options, random_source)
     if rand_options.randomize_starting_gifts:
         given_cip.randomized_gifts = gift_s.randomize_starting_gifts(given_cip, random_source)

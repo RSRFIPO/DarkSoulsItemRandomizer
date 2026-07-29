@@ -189,7 +189,7 @@ class RandomizerOptions:
      no_black_knight_weapons, reroll_seed_each_run=False, randomize_npc_weapons=False,
      boss_soul_transpose_chance=RandOptBossSoulTransposeChance.CHANCE_75,
      ascend_weapons_chance=RandOptAscendWeaponsChance.CHANCE_25, dark_mode=False,
-     randomize_starting_gifts=False):
+     randomize_starting_gifts=False, randomize_starting_stats=False):
          self.difficulty = difficulty
          self.fashion_souls = fashion_souls
          self.key_placement = key_placement
@@ -211,6 +211,7 @@ class RandomizerOptions:
          self.ascend_weapons_chance = RandOptAscendWeaponsChance.verify(ascend_weapons_chance)
          self.dark_mode = dark_mode
          self.randomize_starting_gifts = randomize_starting_gifts
+         self.randomize_starting_stats = randomize_starting_stats
          
     def bool_option_to_string(self, b):
         if b:
@@ -239,5 +240,6 @@ class RandomizerOptions:
         return_string += "  No Black Knight Weapons: " + self.bool_option_to_string(self.no_black_knight_weapons) + "\n"
         return_string += "  Randomize NPC Weapons: " + self.bool_option_to_string(self.randomize_npc_weapons) + "\n"
         return_string += "  Randomize Starting Gifts: " + self.bool_option_to_string(self.randomize_starting_gifts) + "\n"
+        return_string += "  Randomize Starting Stats: " + self.bool_option_to_string(self.randomize_starting_stats) + "\n"
         return return_string
         

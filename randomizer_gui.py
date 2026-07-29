@@ -32,7 +32,7 @@ INI_FILE = "randomizer.ini"
 
 MAX_SEED_LENGTH = 64
 
-VERSION_NUM = "1.0.0"
+VERSION_NUM = "1.0.1"
 # only add versions compatible RNG-wise, IE when fixing GUI stuff
 COMPATIBLE_VERSIONS = [VERSION_NUM, ]
 
@@ -102,9 +102,11 @@ DESC_DICT = {
     "npc_weapons": {True: "* NPCs wield randomly chosen weapons, shields, catalysts, and talismans instead of their normal equipment.\n",
         False: "* NPCs have their familiar loadouts.\n"},
     "starting_gifts": {True: "* Character starting gifts are randomized.\n   Ring gifts become other rings; non-ring gifts become non-ring gifts.\n",
-        False: "* Character starting gifts are unchanged.\n"}
+        False: "* Character starting gifts are unchanged.\n"},
+    "starting_stats": {True: "* Starting class stats are randomized from 5 to 16, except Deprived.\n   Each class keeps its vanilla stat total.\n",
+        False: "* Starting class stats are unchanged.\n"}
 }
-DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "use_lv", "start_items", "starting_gifts", "fashion", "npc_armor", "npc_weapons", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "keys_not_in_dlc", "no_black_knight_weapons"]
+DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "use_lv", "start_items", "starting_gifts", "starting_stats", "fashion", "npc_armor", "npc_weapons", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "keys_not_in_dlc", "no_black_knight_weapons"]
 
 LIGHT_THEME = {
     "window_bg": "SystemButtonFace",
@@ -371,13 +373,22 @@ class MainGUI:
         self.starting_gifts_check.grid(row=0, column=0, columnspan=2, sticky='W')
         self.setup_hover_events(self.starting_gifts_check, {"starting_gifts": None}, no_emph=True)
 
+        self.randomize_starting_stats = tk.BooleanVar()
+        self.randomize_starting_stats.set(init_options.getboolean("randomize_starting_stats", fallback=False))
+        self.randomize_starting_stats.trace('w', lambda name, index, mode: self.update())
+        self.starting_stats_check = tk.Checkbutton(self.misc_flags_frame, text="Randomize Starting Stats",
+         variable=self.randomize_starting_stats, onvalue=True, offvalue=False,
+         width=24, anchor=tk.W)
+        self.starting_stats_check.grid(row=1, column=0, columnspan=2, sticky='W')
+        self.setup_hover_events(self.starting_stats_check, {"starting_stats": None}, no_emph=True)
+
         self.fashion_bool = tk.BooleanVar()
         self.fashion_bool.set(ini_parser.get_option_value(init_options, "fashion_souls"))
         self.fashion_bool.trace('w', lambda name, index, mode: self.update())
         self.fashion_check = tk.Checkbutton(self.misc_flags_frame, text="Fashion Souls", 
          variable=self.fashion_bool, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.fashion_check.grid(row=1, column=0, sticky='W')
+        self.fashion_check.grid(row=2, column=0, sticky='W')
         self.setup_hover_events(self.fashion_check, {"fashion": None}, no_emph=True)
         
         self.npc_armor_bool = tk.BooleanVar()
@@ -386,7 +397,7 @@ class MainGUI:
         self.npc_armor_check = tk.Checkbutton(self.misc_flags_frame, text="Laundromat Mixup", 
          variable=self.npc_armor_bool, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.npc_armor_check.grid(row=2, column=0, sticky='W')
+        self.npc_armor_check.grid(row=3, column=0, sticky='W')
         self.setup_hover_events(self.npc_armor_check, {"npc_armor": None}, no_emph=True)
        
         self.use_lord_souls = tk.BooleanVar()
@@ -395,7 +406,7 @@ class MainGUI:
         self.lord_soul_check = tk.Checkbutton(self.misc_flags_frame, text="Senile Primordial Serpents", 
          variable=self.use_lord_souls, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.lord_soul_check.grid(row=4, column=0, sticky='W')
+        self.lord_soul_check.grid(row=5, column=0, sticky='W')
         self.setup_hover_events(self.lord_soul_check, {"use_lord_souls": None}, no_emph = True)
 
         self.ascend_weapons_bool = tk.BooleanVar()
@@ -404,7 +415,7 @@ class MainGUI:
         self.ascend_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="Eager Smiths", 
          variable=self.ascend_weapons_bool, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.ascend_weapons_check.grid(row=5, column=0, sticky='W')
+        self.ascend_weapons_check.grid(row=6, column=0, sticky='W')
         self.setup_hover_events(self.ascend_weapons_check, {"ascend_weapons": None}, no_emph = True)
         self.ascend_weapons_chance = tk.IntVar()
         self.ascend_weapons_chance_as_string = tk.StringVar()
@@ -418,7 +429,7 @@ class MainGUI:
                                             state="readonly")
         self.gui_ascend_weapons_chance.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
             lambda: self.ascend_weapons_chance.set(rngopts.RandOptAscendWeaponsChance.from_string(self.ascend_weapons_chance_as_string.get()))))
-        self.gui_ascend_weapons_chance.grid(row=5, column=1, sticky='W')
+        self.gui_ascend_weapons_chance.grid(row=6, column=1, sticky='W')
         self.setup_hover_events(self.gui_ascend_weapons_chance, {"ascend_weapons_chance": None}, no_emph = True)
 
         self.set_up_hints = tk.BooleanVar()
@@ -427,7 +438,7 @@ class MainGUI:
         self.hint_check = tk.Checkbutton(self.misc_flags_frame, text="Seek Guidance Hints", 
          variable=self.set_up_hints, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.hint_check.grid(row=6, column=0, sticky='W')
+        self.hint_check.grid(row=7, column=0, sticky='W')
         self.setup_hover_events(self.hint_check, {"set_up_hints": None}, no_emph = True)
 
         self.keys_not_in_dlc = tk.BooleanVar()
@@ -436,7 +447,7 @@ class MainGUI:
         self.keys_not_in_dlc_check = tk.Checkbutton(self.misc_flags_frame, text="No DLC", 
          variable=self.keys_not_in_dlc, onvalue=True, offvalue=False,   #, padx=2,
          width=10, anchor=tk.W)
-        self.keys_not_in_dlc_check.grid(row=7, column=0, sticky='W')
+        self.keys_not_in_dlc_check.grid(row=8, column=0, sticky='W')
         self.setup_hover_events(self.keys_not_in_dlc_check, {"keys_not_in_dlc": None}, no_emph = True)
 
         self.no_black_knight_weapons = tk.BooleanVar()
@@ -445,7 +456,7 @@ class MainGUI:
         self.no_black_knight_weapons_gui = tk.Checkbutton(self.misc_flags_frame, text="No Black Knight Weapons", 
          variable=self.no_black_knight_weapons, onvalue=True, offvalue=False,   #, padx=2,
          width=20, anchor=tk.W)
-        self.no_black_knight_weapons_gui.grid(row=8, column=0, sticky='W')
+        self.no_black_knight_weapons_gui.grid(row=9, column=0, sticky='W')
         self.setup_hover_events(self.no_black_knight_weapons_gui, {"no_black_knight_weapons": None}, no_emph = True)
 
         self.npc_weapons_bool = tk.BooleanVar()
@@ -454,7 +465,7 @@ class MainGUI:
         self.npc_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="NPC Weapon Mixup",
          variable=self.npc_weapons_bool, onvalue=True, offvalue=False,
          width=20, anchor=tk.W)
-        self.npc_weapons_check.grid(row=3, column=0, sticky='W')
+        self.npc_weapons_check.grid(row=4, column=0, sticky='W')
         self.setup_hover_events(self.npc_weapons_check, {"npc_weapons": None}, no_emph=True)
 
         self.export_button = tk.Button(self.root, text="Scramble Items &\nExport to GameParam", 
@@ -489,6 +500,7 @@ class MainGUI:
             SettingsVariable(name='nobkw', variable=self.no_black_knight_weapons, options=DESC_DICT['no_black_knight_weapons'].keys()),
             SettingsVariable(name='npcw', variable=self.npc_weapons_bool, options=DESC_DICT['npc_weapons'].keys()),
             SettingsVariable(name='gifts', variable=self.randomize_starting_gifts, options=DESC_DICT['starting_gifts'].keys()),
+            SettingsVariable(name='stats', variable=self.randomize_starting_stats, options=DESC_DICT['starting_stats'].keys()),
         ], call_after_update=self.update_desc)
 
         self.apply_theme()
@@ -762,6 +774,7 @@ class MainGUI:
             "npc_armor": (self.npc_armor_bool.get(), DescriptionState.NORMAL),
             "npc_weapons": (self.npc_weapons_bool.get(), DescriptionState.NORMAL),
             "starting_gifts": (self.randomize_starting_gifts.get(), DescriptionState.NORMAL),
+            "starting_stats": (self.randomize_starting_stats.get(), DescriptionState.NORMAL),
             "use_lv": (self.use_lordvessel.get(), DescriptionState.NORMAL),
             "use_lord_souls": (self.use_lord_souls.get(), DescriptionState.NORMAL),
             "ascend_weapons": (self.ascend_weapons_bool.get(), DescriptionState.NORMAL),
@@ -870,7 +883,8 @@ class MainGUI:
          self.npc_armor_bool.get(), self.ascend_weapons_bool.get(), self.keys_not_in_dlc.get(),
          self.set_up_hints.get(), self.no_black_knight_weapons.get(), self.reroll_seed.get(),
          self.npc_weapons_bool.get(), self.boss_soul_transpose_chance.get(),
-         self.ascend_weapons_chance.get(), self.dark_mode.get(), self.randomize_starting_gifts.get())
+         self.ascend_weapons_chance.get(), self.dark_mode.get(), self.randomize_starting_gifts.get(),
+         self.randomize_starting_stats.get())
 
     def save_current_options(self):
         try:

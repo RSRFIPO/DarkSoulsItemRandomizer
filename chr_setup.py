@@ -1091,6 +1091,62 @@ CLASS_TO_CHR_INIT = {
  "deprived":   (3009, 2009)
 }
 
+STARTING_CLASS_STAT_FIELDS = [
+ "base_vit",
+ "base_att",
+ "base_end",
+ "base_str",
+ "base_dex",
+ "base_int",
+ "base_fth",
+ "base_res"
+]
+
+STARTING_CLASS_MIN_STAT = 5
+STARTING_CLASS_MAX_STAT = 16
+
+def randomize_starting_stats_for_chr(chr_init, random_source):
+    original_stats = [getattr(chr_init, field) for field in STARTING_CLASS_STAT_FIELDS]
+    total_stats = sum(original_stats)
+    stat_count = len(STARTING_CLASS_STAT_FIELDS)
+
+    if (total_stats < STARTING_CLASS_MIN_STAT * stat_count or
+     total_stats > STARTING_CLASS_MAX_STAT * stat_count):
+        raise ValueError("Could not preserve starting class stat budget within configured min/max bounds.")
+
+    stats = []
+    remaining_total = total_stats
+    remaining_stats = stat_count
+    while remaining_stats > 0:
+        min_for_this_stat = max(STARTING_CLASS_MIN_STAT,
+         remaining_total - (remaining_stats - 1) * STARTING_CLASS_MAX_STAT)
+        max_for_this_stat = min(STARTING_CLASS_MAX_STAT,
+         remaining_total - (remaining_stats - 1) * STARTING_CLASS_MIN_STAT)
+        stat = random_source.randrange(min_for_this_stat, max_for_this_stat + 1)
+        stats.append(stat)
+        remaining_total -= stat
+        remaining_stats -= 1
+
+    random_source.shuffle(stats)
+    for (field, stat) in zip(STARTING_CLASS_STAT_FIELDS, stats):
+        setattr(chr_init, field, stat)
+
+def randomize_starting_stats(chr_init_param, random_source):
+    for class_name in CLASS_TO_CHR_INIT:
+        if class_name == "deprived":
+            continue
+        (display_class_init_id, start_class_init_id) = CLASS_TO_CHR_INIT[class_name]
+        display_class_init = chr_init_param.find_chr_by_id(display_class_init_id)
+        start_class_init = chr_init_param.find_chr_by_id(start_class_init_id)
+        if start_class_init == None:
+            log.warn("Attempted to randomize stats of starting class '" + class_name +
+             "' but chr #" + str(start_class_init_id) + " was not found in chr_init_param!")
+            continue
+        randomize_starting_stats_for_chr(start_class_init, random_source)
+        if display_class_init != None:
+            for field in STARTING_CLASS_STAT_FIELDS:
+                setattr(display_class_init, field, getattr(start_class_init, field))
+
 class StartingClassData:
     class CHR_INIT(Enum):
         WEP_R1  = 0
