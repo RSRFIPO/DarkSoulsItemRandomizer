@@ -247,7 +247,7 @@ class MainGUI:
         self.game_version_menu.config(width=30)
         self.game_version_menu.grid(row=1, column=2, sticky='EW', padx=2)
         
-        self.msg_area = tk.Text(self.root, width=76, height=31,
+        self.msg_area = tk.Text(self.root, width=76, height=30,
                                 state="disabled", background=self.root.cget('background'), wrap="word")
         self.msg_area.grid(row=2, column=0, columnspan=3, rowspan=14, padx=2, pady=2, sticky='NS')
         self.msg_quit_button = tk.Button(self.root, text="Quit", command=self.quit_button)
@@ -256,7 +256,7 @@ class MainGUI:
         self.msg_continue_button.grid(row=7, column=1, columnspan=2, rowspan=2)
         self.back_button = tk.Button(self.root, text="Back", command=self.back_button)
         self.back_button.grid(row=7, column=1, columnspan=2, rowspan=2)
-        self.desc_area = tk.Text(self.root, width=76, height=31, state="disabled", background=self.root.cget('background'), wrap="word")
+        self.desc_area = tk.Text(self.root, width=76, height=30, state="disabled", background=self.root.cget('background'), wrap="word")
         self.desc_area.grid(row=2, column=0, columnspan=3, rowspan=14, padx=2, pady=2)
         
         self.diff_frame = tk.LabelFrame(text="Difficulty:", bd=0)
@@ -368,8 +368,7 @@ class MainGUI:
         self.randomize_starting_gifts.set(init_options.getboolean("randomize_starting_gifts", fallback=False))
         self.randomize_starting_gifts.trace('w', lambda name, index, mode: self.update())
         self.starting_gifts_check = tk.Checkbutton(self.misc_flags_frame, text="Randomize Starting Gifts",
-         variable=self.randomize_starting_gifts, onvalue=True, offvalue=False,
-         width=24, anchor=tk.W)
+         variable=self.randomize_starting_gifts, onvalue=True, offvalue=False)
         self.starting_gifts_check.grid(row=0, column=0, columnspan=2, sticky='W')
         self.setup_hover_events(self.starting_gifts_check, {"starting_gifts": None}, no_emph=True)
 
@@ -378,7 +377,7 @@ class MainGUI:
         self.randomize_starting_stats.trace('w', lambda name, index, mode: self.update())
         self.starting_stats_check = tk.Checkbutton(self.misc_flags_frame, text="Randomize Starting Stats",
          variable=self.randomize_starting_stats, onvalue=True, offvalue=False,
-         width=24, anchor=tk.W, command=self.randomize_starting_stats_toggled)
+         command=self.randomize_starting_stats_toggled)
         self.starting_stats_check.grid(row=1, column=0, columnspan=2, sticky='W')
         self.setup_hover_events(self.starting_stats_check, {"starting_stats": None}, no_emph=True)
         self.starting_stats_check.configure(command=self.randomize_starting_stats_check_clicked)
@@ -387,8 +386,7 @@ class MainGUI:
         self.fashion_bool.set(ini_parser.get_option_value(init_options, "fashion_souls"))
         self.fashion_bool.trace('w', lambda name, index, mode: self.update())
         self.fashion_check = tk.Checkbutton(self.misc_flags_frame, text="Fashion Souls", 
-         variable=self.fashion_bool, onvalue=True, offvalue=False, padx=2,
-         width=20, anchor=tk.W)
+         variable=self.fashion_bool, onvalue=True, offvalue=False, padx=2)
         self.fashion_check.grid(row=2, column=0, sticky='W')
         self.setup_hover_events(self.fashion_check, {"fashion": None}, no_emph=True)
         
@@ -396,8 +394,7 @@ class MainGUI:
         self.npc_armor_bool.set(ini_parser.get_option_value(init_options, "randomize_npc_armor"))
         self.npc_armor_bool.trace('w', lambda name, index, mode: self.update())
         self.npc_armor_check = tk.Checkbutton(self.misc_flags_frame, text="Laundromat Mixup", 
-         variable=self.npc_armor_bool, onvalue=True, offvalue=False, padx=2,
-         width=20, anchor=tk.W)
+         variable=self.npc_armor_bool, onvalue=True, offvalue=False, padx=2)
         self.npc_armor_check.grid(row=3, column=0, sticky='W')
         self.setup_hover_events(self.npc_armor_check, {"npc_armor": None}, no_emph=True)
        
@@ -405,8 +402,7 @@ class MainGUI:
         self.use_lord_souls.set(ini_parser.get_option_value(init_options, "use_lord_souls"))
         self.use_lord_souls.trace('w', lambda name, index, mode: self.update())
         self.lord_soul_check = tk.Checkbutton(self.misc_flags_frame, text="Senile Primordial Serpents", 
-         variable=self.use_lord_souls, onvalue=True, offvalue=False, padx=2,
-         width=20, anchor=tk.W)
+         variable=self.use_lord_souls, onvalue=True, offvalue=False, padx=2)
         self.lord_soul_check.grid(row=5, column=0, sticky='W')
         self.setup_hover_events(self.lord_soul_check, {"use_lord_souls": None}, no_emph = True)
 
@@ -414,8 +410,7 @@ class MainGUI:
         self.ascend_weapons_bool.set(ini_parser.get_option_value(init_options, "ascend_weapons"))
         self.ascend_weapons_bool.trace('w', lambda name, index, mode: self.update())
         self.ascend_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="Eager Smiths", 
-         variable=self.ascend_weapons_bool, onvalue=True, offvalue=False, padx=2,
-         width=20, anchor=tk.W)
+         variable=self.ascend_weapons_bool, onvalue=True, offvalue=False, padx=2)
         self.ascend_weapons_check.grid(row=6, column=0, sticky='W')
         self.setup_hover_events(self.ascend_weapons_check, {"ascend_weapons": None}, no_emph = True)
         self.ascend_weapons_chance = tk.IntVar()
@@ -437,8 +432,7 @@ class MainGUI:
         self.set_up_hints.set(ini_parser.get_option_value(init_options, "set_up_hints"))
         self.set_up_hints.trace('w', lambda name, index, mode: self.update())
         self.hint_check = tk.Checkbutton(self.misc_flags_frame, text="Seek Guidance Hints", 
-         variable=self.set_up_hints, onvalue=True, offvalue=False, padx=2,
-         width=20, anchor=tk.W)
+         variable=self.set_up_hints, onvalue=True, offvalue=False, padx=2)
         self.hint_check.grid(row=7, column=0, sticky='W')
         self.setup_hover_events(self.hint_check, {"set_up_hints": None}, no_emph = True)
 
@@ -446,8 +440,7 @@ class MainGUI:
         self.keys_not_in_dlc.set(ini_parser.get_option_value(init_options, "keys_not_in_dlc"))
         self.keys_not_in_dlc.trace('w', lambda name, index, mode: self.update())
         self.keys_not_in_dlc_check = tk.Checkbutton(self.misc_flags_frame, text="No DLC", 
-         variable=self.keys_not_in_dlc, onvalue=True, offvalue=False,   #, padx=2,
-         width=10, anchor=tk.W)
+         variable=self.keys_not_in_dlc, onvalue=True, offvalue=False)   #, padx=2
         self.keys_not_in_dlc_check.grid(row=8, column=0, sticky='W')
         self.setup_hover_events(self.keys_not_in_dlc_check, {"keys_not_in_dlc": None}, no_emph = True)
 
@@ -455,8 +448,7 @@ class MainGUI:
         self.no_black_knight_weapons.set(ini_parser.get_option_value(init_options, "no_black_knight_weapons"))
         self.no_black_knight_weapons.trace('w', lambda name, index, mode: self.update())
         self.no_black_knight_weapons_gui = tk.Checkbutton(self.misc_flags_frame, text="No Black Knight Weapons", 
-         variable=self.no_black_knight_weapons, onvalue=True, offvalue=False,   #, padx=2,
-         width=20, anchor=tk.W)
+         variable=self.no_black_knight_weapons, onvalue=True, offvalue=False)   #, padx=2
         self.no_black_knight_weapons_gui.grid(row=9, column=0, sticky='W')
         self.setup_hover_events(self.no_black_knight_weapons_gui, {"no_black_knight_weapons": None}, no_emph = True)
 
@@ -464,8 +456,7 @@ class MainGUI:
         self.npc_weapons_bool.set(init_options.getboolean("randomize_npc_weapons", fallback=False))
         self.npc_weapons_bool.trace('w', lambda name, index, mode: self.update())
         self.npc_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="NPC Weapon Mixup",
-         variable=self.npc_weapons_bool, onvalue=True, offvalue=False,
-         width=20, anchor=tk.W)
+         variable=self.npc_weapons_bool, onvalue=True, offvalue=False)
         self.npc_weapons_check.grid(row=4, column=0, sticky='W')
         self.setup_hover_events(self.npc_weapons_check, {"npc_weapons": None}, no_emph=True)
 
