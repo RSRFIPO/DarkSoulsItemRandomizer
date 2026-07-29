@@ -16,6 +16,7 @@ from distutils.version import LooseVersion
 
 import randomizer_options as rngopts
 import randomize_item_table
+import starting_gifts_setup as gift_s
 import bnd_rebuilder
 import dcx_handler
 from fmg_handler import FMGHandler
@@ -31,7 +32,7 @@ INI_FILE = "randomizer.ini"
 
 MAX_SEED_LENGTH = 64
 
-VERSION_NUM = "0.9.4"
+VERSION_NUM = "1.0.0"
 # only add versions compatible RNG-wise, IE when fixing GUI stuff
 COMPATIBLE_VERSIONS = [VERSION_NUM, ]
 
@@ -99,9 +100,11 @@ DESC_DICT = {
     "no_black_knight_weapons": {True: "* Black Knight weapons replaced by Titanite Chunks and Slabs.\n",
         False: "* Black Knight weapons are available for use.\n"},
     "npc_weapons": {True: "* NPCs wield randomly chosen weapons, shields, catalysts, and talismans instead of their normal equipment.\n",
-        False: "* NPCs have their familiar loadouts.\n"}
+        False: "* NPCs have their familiar loadouts.\n"},
+    "starting_gifts": {True: "* Character starting gifts are randomized.\n   Ring gifts become other rings; non-ring gifts become non-ring gifts.\n",
+        False: "* Character starting gifts are unchanged.\n"}
 }
-DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "use_lv", "start_items", "fashion", "npc_armor", "npc_weapons", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "keys_not_in_dlc", "no_black_knight_weapons"]
+DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "use_lv", "start_items", "starting_gifts", "fashion", "npc_armor", "npc_weapons", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "keys_not_in_dlc", "no_black_knight_weapons"]
 
 LIGHT_THEME = {
     "window_bg": "SystemButtonFace",
@@ -242,17 +245,17 @@ class MainGUI:
         self.game_version_menu.config(width=30)
         self.game_version_menu.grid(row=1, column=2, sticky='EW', padx=2)
         
-        self.msg_area = tk.Text(self.root, width=76, height=25, 
+        self.msg_area = tk.Text(self.root, width=76, height=29,
                                 state="disabled", background=self.root.cget('background'), wrap="word")
-        self.msg_area.grid(row=2, column=0, columnspan=3, rowspan=10, padx=2, pady=2, sticky='NS')
+        self.msg_area.grid(row=2, column=0, columnspan=3, rowspan=12, padx=2, pady=2, sticky='NS')
         self.msg_quit_button = tk.Button(self.root, text="Quit", command=self.quit_button)
         self.msg_quit_button.grid(row=9, column=1, columnspan=2, rowspan=2)
         self.msg_continue_button = tk.Button(self.root, text="Continue", command=self.continue_button)
         self.msg_continue_button.grid(row=7, column=1, columnspan=2, rowspan=2)
         self.back_button = tk.Button(self.root, text="Back", command=self.back_button)
         self.back_button.grid(row=7, column=1, columnspan=2, rowspan=2)
-        self.desc_area = tk.Text(self.root, width=76, height=25, state="disabled", background=self.root.cget('background'), wrap="word")
-        self.desc_area.grid(row=2, column=0, columnspan=3, rowspan=10, padx=2, pady=2)
+        self.desc_area = tk.Text(self.root, width=76, height=29, state="disabled", background=self.root.cget('background'), wrap="word")
+        self.desc_area.grid(row=2, column=0, columnspan=3, rowspan=12, padx=2, pady=2)
         
         self.diff_frame = tk.LabelFrame(text="Difficulty:", bd=0)
         self.diff_frame.grid(row=2, column=3, sticky='NS', padx=2)
@@ -359,13 +362,22 @@ class MainGUI:
         self.misc_flags_frame = tk.LabelFrame(text="Other Settings:", bd=0)  #wxy
         self.misc_flags_frame.grid(row=3, column=4, rowspan=5, sticky='NS', padx=2)
         #--
+        self.randomize_starting_gifts = tk.BooleanVar()
+        self.randomize_starting_gifts.set(init_options.getboolean("randomize_starting_gifts", fallback=False))
+        self.randomize_starting_gifts.trace('w', lambda name, index, mode: self.update())
+        self.starting_gifts_check = tk.Checkbutton(self.misc_flags_frame, text="Randomize Starting Gifts",
+         variable=self.randomize_starting_gifts, onvalue=True, offvalue=False,
+         width=24, anchor=tk.W)
+        self.starting_gifts_check.grid(row=0, column=0, columnspan=2, sticky='W')
+        self.setup_hover_events(self.starting_gifts_check, {"starting_gifts": None}, no_emph=True)
+
         self.fashion_bool = tk.BooleanVar()
         self.fashion_bool.set(ini_parser.get_option_value(init_options, "fashion_souls"))
         self.fashion_bool.trace('w', lambda name, index, mode: self.update())
         self.fashion_check = tk.Checkbutton(self.misc_flags_frame, text="Fashion Souls", 
          variable=self.fashion_bool, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.fashion_check.grid(row=0, column=0, sticky='W')
+        self.fashion_check.grid(row=1, column=0, sticky='W')
         self.setup_hover_events(self.fashion_check, {"fashion": None}, no_emph=True)
         
         self.npc_armor_bool = tk.BooleanVar()
@@ -374,7 +386,7 @@ class MainGUI:
         self.npc_armor_check = tk.Checkbutton(self.misc_flags_frame, text="Laundromat Mixup", 
          variable=self.npc_armor_bool, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.npc_armor_check.grid(row=1, column=0, sticky='W')
+        self.npc_armor_check.grid(row=2, column=0, sticky='W')
         self.setup_hover_events(self.npc_armor_check, {"npc_armor": None}, no_emph=True)
        
         self.use_lord_souls = tk.BooleanVar()
@@ -383,7 +395,7 @@ class MainGUI:
         self.lord_soul_check = tk.Checkbutton(self.misc_flags_frame, text="Senile Primordial Serpents", 
          variable=self.use_lord_souls, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.lord_soul_check.grid(row=3, column=0, sticky='W')
+        self.lord_soul_check.grid(row=4, column=0, sticky='W')
         self.setup_hover_events(self.lord_soul_check, {"use_lord_souls": None}, no_emph = True)
 
         self.ascend_weapons_bool = tk.BooleanVar()
@@ -392,7 +404,7 @@ class MainGUI:
         self.ascend_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="Eager Smiths", 
          variable=self.ascend_weapons_bool, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.ascend_weapons_check.grid(row=4, column=0, sticky='W')
+        self.ascend_weapons_check.grid(row=5, column=0, sticky='W')
         self.setup_hover_events(self.ascend_weapons_check, {"ascend_weapons": None}, no_emph = True)
         self.ascend_weapons_chance = tk.IntVar()
         self.ascend_weapons_chance_as_string = tk.StringVar()
@@ -406,7 +418,7 @@ class MainGUI:
                                             state="readonly")
         self.gui_ascend_weapons_chance.bind("<<ComboboxSelected>>", lambda event: self.combobox_selected(event,
             lambda: self.ascend_weapons_chance.set(rngopts.RandOptAscendWeaponsChance.from_string(self.ascend_weapons_chance_as_string.get()))))
-        self.gui_ascend_weapons_chance.grid(row=4, column=1, sticky='W')
+        self.gui_ascend_weapons_chance.grid(row=5, column=1, sticky='W')
         self.setup_hover_events(self.gui_ascend_weapons_chance, {"ascend_weapons_chance": None}, no_emph = True)
 
         self.set_up_hints = tk.BooleanVar()
@@ -415,7 +427,7 @@ class MainGUI:
         self.hint_check = tk.Checkbutton(self.misc_flags_frame, text="Seek Guidance Hints", 
          variable=self.set_up_hints, onvalue=True, offvalue=False, padx=2,
          width=20, anchor=tk.W)
-        self.hint_check.grid(row=5, column=0, sticky='W')
+        self.hint_check.grid(row=6, column=0, sticky='W')
         self.setup_hover_events(self.hint_check, {"set_up_hints": None}, no_emph = True)
 
         self.keys_not_in_dlc = tk.BooleanVar()
@@ -424,7 +436,7 @@ class MainGUI:
         self.keys_not_in_dlc_check = tk.Checkbutton(self.misc_flags_frame, text="No DLC", 
          variable=self.keys_not_in_dlc, onvalue=True, offvalue=False,   #, padx=2,
          width=10, anchor=tk.W)
-        self.keys_not_in_dlc_check.grid(row=6, column=0, sticky='W')
+        self.keys_not_in_dlc_check.grid(row=7, column=0, sticky='W')
         self.setup_hover_events(self.keys_not_in_dlc_check, {"keys_not_in_dlc": None}, no_emph = True)
 
         self.no_black_knight_weapons = tk.BooleanVar()
@@ -433,7 +445,7 @@ class MainGUI:
         self.no_black_knight_weapons_gui = tk.Checkbutton(self.misc_flags_frame, text="No Black Knight Weapons", 
          variable=self.no_black_knight_weapons, onvalue=True, offvalue=False,   #, padx=2,
          width=20, anchor=tk.W)
-        self.no_black_knight_weapons_gui.grid(row=7, column=0, sticky='W')
+        self.no_black_knight_weapons_gui.grid(row=8, column=0, sticky='W')
         self.setup_hover_events(self.no_black_knight_weapons_gui, {"no_black_knight_weapons": None}, no_emph = True)
 
         self.npc_weapons_bool = tk.BooleanVar()
@@ -442,7 +454,7 @@ class MainGUI:
         self.npc_weapons_check = tk.Checkbutton(self.misc_flags_frame, text="NPC Weapon Mixup",
          variable=self.npc_weapons_bool, onvalue=True, offvalue=False,
          width=20, anchor=tk.W)
-        self.npc_weapons_check.grid(row=2, column=0, sticky='W')
+        self.npc_weapons_check.grid(row=3, column=0, sticky='W')
         self.setup_hover_events(self.npc_weapons_check, {"npc_weapons": None}, no_emph=True)
 
         self.export_button = tk.Button(self.root, text="Scramble Items &\nExport to GameParam", 
@@ -476,6 +488,7 @@ class MainGUI:
             SettingsVariable(name='hints', variable=self.set_up_hints, options=DESC_DICT['set_up_hints'].keys()),
             SettingsVariable(name='nobkw', variable=self.no_black_knight_weapons, options=DESC_DICT['no_black_knight_weapons'].keys()),
             SettingsVariable(name='npcw', variable=self.npc_weapons_bool, options=DESC_DICT['npc_weapons'].keys()),
+            SettingsVariable(name='gifts', variable=self.randomize_starting_gifts, options=DESC_DICT['starting_gifts'].keys()),
         ], call_after_update=self.update_desc)
 
         self.apply_theme()
@@ -607,6 +620,16 @@ class MainGUI:
         else:
             self.seed_entry.config(fg=self.entry_state.normal_color,
                 font=self.entry_state.normal_font)
+
+    def update_starting_gift_menu_messages(self, enmenu_content_list, randomized_gifts):
+        updated_count = 0
+        for index, (file_id, filepath, filedata) in enumerate(enmenu_content_list):
+            fmg_data = FMGHandler(FMGHandler.load_from_file_content(filedata))
+            fmg_update_count = gift_s.update_gift_messages(fmg_data.messages, randomized_gifts)
+            if fmg_update_count > 0:
+                enmenu_content_list[index] = (file_id, filepath, fmg_data.export_as_binary())
+                updated_count += fmg_update_count
+        return updated_count
         
     def detect_game_version(self):
         for filepath in DS1R_GAMEPARAM_PATH_LIST:
@@ -738,6 +761,7 @@ class MainGUI:
             "fashion": (self.fashion_bool.get(), DescriptionState.NORMAL),
             "npc_armor": (self.npc_armor_bool.get(), DescriptionState.NORMAL),
             "npc_weapons": (self.npc_weapons_bool.get(), DescriptionState.NORMAL),
+            "starting_gifts": (self.randomize_starting_gifts.get(), DescriptionState.NORMAL),
             "use_lv": (self.use_lordvessel.get(), DescriptionState.NORMAL),
             "use_lord_souls": (self.use_lord_souls.get(), DescriptionState.NORMAL),
             "ascend_weapons": (self.ascend_weapons_bool.get(), DescriptionState.NORMAL),
@@ -846,7 +870,7 @@ class MainGUI:
          self.npc_armor_bool.get(), self.ascend_weapons_bool.get(), self.keys_not_in_dlc.get(),
          self.set_up_hints.get(), self.no_black_knight_weapons.get(), self.reroll_seed.get(),
          self.npc_weapons_bool.get(), self.boss_soul_transpose_chance.get(),
-         self.ascend_weapons_chance.get(), self.dark_mode.get())
+         self.ascend_weapons_chance.get(), self.dark_mode.get(), self.randomize_starting_gifts.get())
 
     def save_current_options(self):
         try:
@@ -936,6 +960,9 @@ class MainGUI:
             + "\nSyncNum: " + (syncnum if syncnum != None else "?") \
             + "\n\nSettings Sync:\n" + self.settings_string_io.construct().decode()
 
+        if options.randomize_starting_gifts and hasattr(randomized_chr_data, "randomized_gifts"):
+            seed_info += "\n\n" + gift_s.assignments_as_string(randomized_chr_data.randomized_gifts)
+
 
         ITEMLOT_FILEPATH = os.path.join(new_dirpath, "ItemLotParam.param")
         SHOPLINEUP_FILEPATH = os.path.join(new_dirpath, "ShopLineupParam.param")
@@ -990,8 +1017,12 @@ class MainGUI:
         else:
             paths_to_search = []
         
+        needs_menu_file = self.randomize_starting_gifts.get() or (
+            self.game_version.get() == rngopts.RandOptGameVersion.REMASTERED and self.set_up_hints.get())
+
         # find our gameparam file
-        has_gameparam = False
+        gameparam_filepath = None
+        gameparambak_filepath = None
         for filepath in paths_to_search:
             normed_path = os.path.normpath(os.path.join(os.getcwd(), filepath))
             if os.path.isfile(normed_path):
@@ -1001,6 +1032,8 @@ class MainGUI:
 
         # find our menu text file
         has_engmenu = False
+        enmenu_filepath = None
+        enmenubak_filepath = None
         for filepath in menu_paths:
             normed_path = os.path.normpath(os.path.join(os.getcwd(), filepath))
             if os.path.isfile(normed_path):
@@ -1024,7 +1057,8 @@ class MainGUI:
             self.msg_area.config(state="disabled")
             self.export_button.config(state="disabled")
             self.lift_msg_area()
-        if not has_engmenu and self.set_up_hints.get():
+            return
+        if not has_engmenu and needs_menu_file:
             self.msg_area.config(state="normal")
             self.msg_area.delete(1.0, "end")
             self.msg_area.insert("end", "\n\n")
@@ -1037,6 +1071,7 @@ class MainGUI:
             self.msg_area.config(state="disabled")
             self.export_button.config(state = "disabled")
             self.lift_msg_area()
+            return
         else:
             if is_remastered:
                 gp_filename = "GameParam.parambnd.dcx"
@@ -1044,6 +1079,11 @@ class MainGUI:
             else:
                 gp_filename = "GameParam.parambnd"
                 enmenu_filename = "menu.msgbnd"
+
+            if os.path.isfile(gameparambak_filepath):
+                shutil.copy2(gameparambak_filepath, gameparam_filepath)
+            if has_engmenu and os.path.isfile(enmenubak_filepath):
+                shutil.copy2(enmenubak_filepath, enmenu_filepath)
             
             # open our gameparam file
             with open(gameparam_filepath, "rb") as f:
@@ -1071,7 +1111,7 @@ class MainGUI:
             
             # open our menu text file
             # TODO: Consolidate this instead of duplicating
-            if is_remastered and self.set_up_hints.get():
+            if needs_menu_file:
                 with open(enmenu_filepath, "rb") as f:
                     enmenu_content = f.read()
                 try:
@@ -1101,11 +1141,8 @@ class MainGUI:
                 shutil.copy2(gameparam_filepath, gameparambak_filepath)
 
             # Back up menu.msgbnd if needed.
-            if not os.path.isfile(enmenubak_filepath):
+            if needs_menu_file and not os.path.isfile(enmenubak_filepath):
                 shutil.copy2(enmenu_filepath, enmenubak_filepath)
-            # Copy our default msgbnd back if we're not building hints
-            elif os.path.isfile(enmenubak_filepath) and not self.set_up_hints.get():
-                shutil.move(enmenubak_filepath, enmenubak_filepath)
                 
             self.prepare_seed_for_randomization()
 
@@ -1132,6 +1169,13 @@ class MainGUI:
                 item_table.hint_builder.ConstructHintList(rng)
 
             syncnum = self.get_syncnum_string(rng)
+
+            if options.randomize_starting_gifts:
+                gift_update_count = self.update_starting_gift_menu_messages(
+                    enmenu_content_list, randomized_chr_data.randomized_gifts)
+                if gift_update_count == 0:
+                    self.show_error("Could not find starting gift menu text to update.")
+                    return
         
             for index, (file_id, filepath, filedata) in enumerate(content_list):
                 if (filepath == "N:\\FRPG\\data\\INTERROOT_win32\\param\\GameParam\\ItemLotParam.param" or
@@ -1150,7 +1194,7 @@ class MainGUI:
                 f.write(new_content)
             
             # Write out our menu text if we need to
-            if is_remastered:
+            if needs_menu_file:
                 if options.set_up_hints:
                     for index, (file_id, filepath, filedata) in enumerate(enmenu_content_list):
                         if (filepath == "N:\\FRPG\\data\\Msg\\Data_ENGLISH\\Blood_writing_.fmg"):
@@ -1161,7 +1205,13 @@ class MainGUI:
                     if is_remastered:
                         new_content = dcx_handler.compress_dcx_content(new_content)
                     with open(enmenu_filepath, "wb") as f:
-                        f.write(new_content)            
+                        f.write(new_content)
+                elif options.randomize_starting_gifts:
+                    new_content = bnd_rebuilder.repack_bnd(enmenu_content_list)
+                    if is_remastered:
+                        new_content = dcx_handler.compress_dcx_content(new_content)
+                    with open(enmenu_filepath, "wb") as f:
+                        f.write(new_content)
            
             seed_folder = self.export_seed_info(syncnum, (options, randomized_data, rng))
                 

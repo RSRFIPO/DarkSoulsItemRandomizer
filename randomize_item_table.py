@@ -9,6 +9,7 @@ import shops_setup as shop_s
 import item_table as item_t
 import chr_setup as chr_s
 import chr_init_param as cip
+import starting_gifts_setup as gift_s
 
 import copy
 
@@ -445,6 +446,8 @@ def build_table(rand_options, random_source, chr_init_data):
     if rand_options.randomize_npc_weapons:
         chr_s.randomize_chr_weapons(given_cip, rand_options, random_source)
     data_passed_from_chr_init = chr_s.randomize_starting_chr_weapons(given_cip, rand_options, random_source)
+    if rand_options.randomize_starting_gifts:
+        given_cip.randomized_gifts = gift_s.randomize_starting_gifts(given_cip, random_source)
     
     for chr_init in given_cip.chr_inits:
         print(chr_init.to_string())
