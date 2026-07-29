@@ -103,7 +103,7 @@ DESC_DICT = {
         False: "* NPCs have their familiar loadouts.\n"},
     "starting_gifts": {True: "* Character starting gifts are randomized.\n   Ring gifts become other rings; non-ring gifts become non-ring gifts.\n",
         False: "* Character starting gifts are unchanged.\n"},
-    "starting_stats": {True: "* Starting class stats are randomized from 5 to 16, except Deprived.\n   Each class keeps its vanilla stat total.\n",
+    "starting_stats": {True: "* Starting class stats are randomized from 8 to 15, except Deprived.\n   Each class keeps its vanilla stat total.\n",
         False: "* Starting class stats are unchanged.\n"}
 }
 DESC_ORDER = ["diff", "key_diff", "souls_diff", "boss_soul_transpose_chance", "use_lv", "start_items", "starting_gifts", "starting_stats", "fashion", "npc_armor", "npc_weapons", "use_lord_souls", "ascend_weapons", "ascend_weapons_chance", "set_up_hints", "keys_not_in_dlc", "no_black_knight_weapons"]
@@ -247,17 +247,17 @@ class MainGUI:
         self.game_version_menu.config(width=30)
         self.game_version_menu.grid(row=1, column=2, sticky='EW', padx=2)
         
-        self.msg_area = tk.Text(self.root, width=76, height=29,
+        self.msg_area = tk.Text(self.root, width=76, height=31,
                                 state="disabled", background=self.root.cget('background'), wrap="word")
-        self.msg_area.grid(row=2, column=0, columnspan=3, rowspan=12, padx=2, pady=2, sticky='NS')
+        self.msg_area.grid(row=2, column=0, columnspan=3, rowspan=14, padx=2, pady=2, sticky='NS')
         self.msg_quit_button = tk.Button(self.root, text="Quit", command=self.quit_button)
         self.msg_quit_button.grid(row=9, column=1, columnspan=2, rowspan=2)
         self.msg_continue_button = tk.Button(self.root, text="Continue", command=self.continue_button)
         self.msg_continue_button.grid(row=7, column=1, columnspan=2, rowspan=2)
         self.back_button = tk.Button(self.root, text="Back", command=self.back_button)
         self.back_button.grid(row=7, column=1, columnspan=2, rowspan=2)
-        self.desc_area = tk.Text(self.root, width=76, height=29, state="disabled", background=self.root.cget('background'), wrap="word")
-        self.desc_area.grid(row=2, column=0, columnspan=3, rowspan=12, padx=2, pady=2)
+        self.desc_area = tk.Text(self.root, width=76, height=31, state="disabled", background=self.root.cget('background'), wrap="word")
+        self.desc_area.grid(row=2, column=0, columnspan=3, rowspan=14, padx=2, pady=2)
         
         self.diff_frame = tk.LabelFrame(text="Difficulty:", bd=0)
         self.diff_frame.grid(row=2, column=3, sticky='NS', padx=2)
@@ -362,7 +362,7 @@ class MainGUI:
         self.setup_hover_events(self.gui_start_items_diff, {"start_items": None}, no_emph = True)
         
         self.misc_flags_frame = tk.LabelFrame(text="Other Settings:", bd=0)  #wxy
-        self.misc_flags_frame.grid(row=3, column=4, rowspan=5, sticky='NS', padx=2)
+        self.misc_flags_frame.grid(row=3, column=4, rowspan=8, sticky='NS', padx=2)
         #--
         self.randomize_starting_gifts = tk.BooleanVar()
         self.randomize_starting_gifts.set(init_options.getboolean("randomize_starting_gifts", fallback=False))
@@ -470,10 +470,10 @@ class MainGUI:
 
         self.export_button = tk.Button(self.root, text="Scramble Items &\nExport to GameParam", 
          padx=10, pady=10, command=self.export_to_gameparam)
-        self.export_button.grid(row=9, rowspan=3, column=4, padx=2, sticky='EW')
+        self.export_button.grid(row=11, rowspan=3, column=4, padx=2, sticky='EW')
         
         self.cheat_button = tk.Button(self.root, text="Write Seed Cheatsheet", command=self.export_seed_info)
-        self.cheat_button.grid(row=12, rowspan=1, column=4, sticky='EW', padx=2, pady=2)
+        self.cheat_button.grid(row=14, rowspan=1, column=4, sticky='EW', padx=2, pady=2)
 
         # Settings sync popup menu
         self.popup_menu = tk.Menu(self.root, tearoff=0)

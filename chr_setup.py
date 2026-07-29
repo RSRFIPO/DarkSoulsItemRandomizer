@@ -1102,8 +1102,8 @@ STARTING_CLASS_STAT_FIELDS = [
  "base_res"
 ]
 
-STARTING_CLASS_MIN_STAT = 5
-STARTING_CLASS_MAX_STAT = 16
+STARTING_CLASS_MIN_STAT = 8
+STARTING_CLASS_MAX_STAT = 15
 
 def randomize_starting_stats_for_chr(chr_init, random_source):
     original_stats = [getattr(chr_init, field) for field in STARTING_CLASS_STAT_FIELDS]

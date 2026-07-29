@@ -1,6 +1,6 @@
 1.0.1
 - Added `Randomize Starting Stats` option.
-- Starting stats are randomized from 5 to 16 while preserving each class's vanilla stat total.
+- Starting stats are randomized from 8 to 15 while preserving each class's vanilla stat total.
 - Deprived is left unchanged.
 
 1.0.0
