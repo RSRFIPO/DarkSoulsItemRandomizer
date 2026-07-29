@@ -378,9 +378,10 @@ class MainGUI:
         self.randomize_starting_stats.trace('w', lambda name, index, mode: self.update())
         self.starting_stats_check = tk.Checkbutton(self.misc_flags_frame, text="Randomize Starting Stats",
          variable=self.randomize_starting_stats, onvalue=True, offvalue=False,
-         width=24, anchor=tk.W)
+         width=24, anchor=tk.W, command=self.randomize_starting_stats_toggled)
         self.starting_stats_check.grid(row=1, column=0, columnspan=2, sticky='W')
         self.setup_hover_events(self.starting_stats_check, {"starting_stats": None}, no_emph=True)
+        self.starting_stats_check.configure(command=self.randomize_starting_stats_check_clicked)
 
         self.fashion_bool = tk.BooleanVar()
         self.fashion_bool.set(ini_parser.get_option_value(init_options, "fashion_souls"))
@@ -519,6 +520,20 @@ class MainGUI:
             callback()
         event.widget.selection_clear()
         self.root.focus_set()
+
+    def randomize_starting_stats_toggled(self):
+        if self.randomize_starting_stats.get():
+            tkMB.showwarning(
+                "Randomize Starting Stats",
+                "Reverting back to the vanilla game and going online without first deleting "
+                "characters with modified stats from the randomizer can cause you to get banned "
+                "from the game.\n\nMake sure to delete any characters with randomized stats before "
+                "reverting to vanilla and going online."
+            )
+
+    def randomize_starting_stats_check_clicked(self):
+        self.randomize_starting_stats_toggled()
+        self.update_desc_for_hover({"starting_stats": None}, no_emph=True)
 
     def current_theme(self):
         return DARK_THEME if self.dark_mode.get() else LIGHT_THEME
