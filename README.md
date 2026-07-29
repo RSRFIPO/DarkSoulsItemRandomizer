@@ -60,6 +60,8 @@ On "Transposed", each boss soul can be replaced by a corresponding boss weapon. 
 
 Starting Items: Determines what pool of weapons/shields the Randomizer draw from when choosing the player's starting left-hand and right-hand items.
 
+Randomize Starting Gifts: If active, the character creation gifts are randomized. Ring gifts are chosen from a separate ring-only gift pool, while non-ring gifts are chosen from a separate non-ring gift pool. The starting gift pool is separate from the normal item pool, so an item chosen as a starting gift can still appear in the world if it is also part of the normal item pool.
+
 Fashion Souls: If active, the many armor sets in game are split up, and each piece is placed separately.
 
 Laundromat Mixup: If active, most human NPCs will wear random armor instead of their usual sets. If Fashion Souls is not active, NPCs will wear randomly chosen full sets of armor. 
@@ -422,6 +424,10 @@ Anor Londo|"Try Projectile"|Right inside the door in the Chamber of the Princess
 Valley of Drakes|"Ring Ahead"|Before the bridge with the wyverns, approaching from the Darkroot elevator.|
 Demon Ruins|"Safe Zone Ahead"|In Centipede Demon room, to the right on approach to patch of ground out of the lava.|
 Crystal Cave|"Path Ahead"|On the first invisible bridge.|
+
+**Acknowledgments:**
+
+The starting gift randomization logic in this project is adapted from [ArsonAssassin's Dark Souls Remastered Archipelago Randomizer](https://github.com/tathxo/DSAP), licensed under the MIT License. See the comment header in `starting_gifts_setup.py` for the full license text.
 
 **For Developers:**
 

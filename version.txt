@@ -1,3 +1,36 @@
+1.0.0
+- Bumped version to 1.0.0.
+- Added dark mode support to the GUI.
+- Added `Randomize Starting Gifts` option.
+- Added curated starting gift pools for non-ring gifts and ring gifts.
+- Added randomized starting gift output to seed info.
+- Added menu text updates so randomized gifts show correct names and descriptions in character creation.
+- Reordered GUI options so `Randomize Starting Gifts` appears above `Fashion Souls`.
+- Reordered option descriptions to match the GUI layout.
+- Expanded the GUI description area to reduce hover text cutoff.
+- Starting gift randomization now restores game/menu files from backups before each export, preventing old randomized gift data from leaking into later seeds.
+- Curated gift names/descriptions to fit the Dark Souls character creation UI.
+- Fixed dropdowns allowing typed/erased input by making them read-only.
+- Fixed dropdown text remaining selected after choosing an option.
+- Improved light theme combobox/dropdown border visibility.
+- Fixed starting gifts not reverting to vanilla when the option was unchecked after a randomized gift run.
+- Fixed menu backup handling that previously contained a no-op self-move.
+
+0.9.3
+- Replaced the old Save Settings as Default checkbox with a Save Defaults button that saves immediately.
+- Adjusted the GUI layout to reduce unused space and make option ordering clearer.
+- Reordered and polished randomizer option descriptions so they match the GUI layout.
+- Increased the description area height so all option descriptions are visible.
+
+0.9.2
+- Added selectable chance options for Transposed boss souls: 10%, 25%, 50%, or 75%.
+- Added selectable chance options for Eager Smiths: 5%, 15%, or 25%.
+- Fixed a bug where Write Seed Cheatsheet could generate info for a newly rerolled seed instead of the seed currently shown.
+
+0.9.0
+- Added the Reroll Seed Each Run option, no need to clear the seed from the text box to get a new seed going before scrambling items.
+- Added NPC Weapon Mixup, which randomizes NPC weapons, shields, catalysts, and talismans within the NPCs stats data.
+
 0.8.1
 - When searching for Dark Souls game files to randomize, stop searching the list after it is found.  This prioritizes the relative path, meaning if you put the randomizer EXE in the same folder as the Dark Souls folder you want to randomize it will not accidentally grab another folder on the machine if you have several Dark Souls installed. (@Primogenitor33)
 
