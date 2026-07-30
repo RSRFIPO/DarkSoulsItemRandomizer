@@ -62,6 +62,8 @@ Starting Items: Determines what pool of weapons/shields the Randomizer draw from
 
 Randomize Starting Gifts: If active, the character creation gifts are randomized. Ring gifts are chosen from a separate ring-only gift pool, while non-ring gifts are chosen from a separate non-ring gift pool. The starting gift pool is separate from the normal item pool, so an item chosen as a starting gift can still appear in the world if it is also part of the normal item pool.
 
+Randomize Starting Stats: If active, starting class stats are randomized from 8 to 15 while preserving each class's vanilla stat total. Deprived is left unchanged.
+
 Fashion Souls: If active, the many armor sets in game are split up, and each piece is placed separately.
 
 Laundromat Mixup: If active, most human NPCs will wear random armor instead of their usual sets. If Fashion Souls is not active, NPCs will wear randomly chosen full sets of armor. 
