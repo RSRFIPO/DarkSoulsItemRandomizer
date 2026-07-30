@@ -32,9 +32,9 @@ INI_FILE = "randomizer.ini"
 
 MAX_SEED_LENGTH = 64
 
-VERSION_NUM = "1.0.1"
+VERSION_NUM = "1.0.2"
 # only add versions compatible RNG-wise, IE when fixing GUI stuff
-COMPATIBLE_VERSIONS = [VERSION_NUM, ]
+COMPATIBLE_VERSIONS = [VERSION_NUM, "1.0.1"]
 
 #PTDE_GAMEPARAM_PATH_LIST = ["./GameParam.parambnd", "./param/GameParam/GameParam.parambnd", "C:\Program Files (x86)\Steam\steamapps\common\Dark Souls Prepare to Die Edition\DATA\param\GameParam\GameParam.parambnd", "C:\Programs\Steam\steamapps\common\Dark Souls Prepare to Die Edition\DATA\param\GameParam\GameParam.parambnd"]
 #DS1R_GAMEPARAM_PATH_LIST = ["./GameParam.parambnd.dcx", "./param/GameParam/GameParam.parambnd.dcx", "D:\SteamLibrary\steamapps\common\DARK SOULS REMASTERED\param\GameParam\GameParam.parambnd.dcx", "D:\Program Files (x86)\Steam\steamapps\common\DARK SOULS REMASTERED\param\GameParam\GameParam.parambnd.dcx", "C:\programs\Steam\steamapps\common\DARK SOULS REMASTERED\param\GameParam\GameParam.parambnd.dcx"]
@@ -513,7 +513,8 @@ class MainGUI:
         self.root.focus_set()
 
     def randomize_starting_stats_toggled(self):
-        if self.randomize_starting_stats.get():
+        if (self.randomize_starting_stats.get() and
+         self.game_version.get() == rngopts.RandOptGameVersion.REMASTERED):
             tkMB.showwarning(
                 "Randomize Starting Stats",
                 "Reverting back to the vanilla game and going online without first deleting "

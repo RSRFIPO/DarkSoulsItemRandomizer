@@ -1,5 +1,12 @@
 import struct
 
+
+class BNDPath(str):
+    def __new__(cls, value, raw_bytes=None):
+        obj = str.__new__(cls, value)
+        obj.raw_bytes = raw_bytes
+        return obj
+
 def consume_byte(content, offset, byte, length=1):
     """Consume length bytes from content, starting at offset. If they
      are not all byte, raises a ValueError.
@@ -17,13 +24,22 @@ def extract_strz(content, offset):
     while content[offset:offset+1] != b'\x00':
         extracted = extracted + content[offset:offset+1]
         offset += 1
-    return extracted.decode('utf-8')
+    try:
+        return BNDPath(extracted.decode('utf-8'), extracted)
+    except UnicodeDecodeError:
+        return BNDPath(extracted.decode('cp932'), extracted)
+
+def encode_bnd_path(filepath):
+    raw_bytes = getattr(filepath, "raw_bytes", None)
+    if raw_bytes is not None:
+        return raw_bytes
+    return filepath.encode('utf-8')
     
 def appears_bnd(content):
     """Checks if the magic bytes at the start of content indicate that it
     is a BND3-packed file.
     """
-    return content[0:4] == "BND3"
+    return content[0:4] == b"BND3"
 
 def unpack_bnd(content):
     """Unpacks the *bnd file content from a BND3-packed file.
@@ -100,7 +116,7 @@ def repack_bnd(content_list):
     num_of_records = len(content_list)
     
     # Compute total size taken up by all filenames, including the null-termination byte.
-    total_filedata_size = sum([len(entry[1]) + 1 for entry in content_list])
+    total_filedata_size = sum([len(encode_bnd_path(entry[1])) + 1 for entry in content_list])
     
     filename_offset = HEADER_SIZE + RECORD_SIZE * num_of_records
     filename_end_offset = filename_offset + total_filedata_size
@@ -113,6 +129,7 @@ def repack_bnd(content_list):
     packed_filedata = b''
     
     for (file_id, filepath, filedata) in content_list:
+        filepath_bytes = encode_bnd_path(filepath)
         # Pad each filedata to the nearest multiple of 16, to match the
         #  format of the original file.
         size_of_pad = offset_to_next_multiple(filedata_offset, 16)
@@ -121,8 +138,8 @@ def repack_bnd(content_list):
         
         packed_records += struct.pack("<IIIIII", RECORD_SEP, len(filedata), 
          filedata_offset, file_id, filename_offset, len(filedata))
-        packed_filenames += filepath.encode('utf-8') + b"\x00"
-        filename_offset += len(filepath) + 1
+        packed_filenames += filepath_bytes + b"\x00"
+        filename_offset += len(filepath_bytes) + 1
         packed_filedata += filedata
         filedata_offset += len(filedata)
     return HEADER + packed_records + packed_filenames + packed_filedata
