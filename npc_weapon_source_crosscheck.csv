@@ -1,0 +1,242 @@
+id,gist_name,local_name,status,steam_name,steam_category,req_str,req_dex,req_int,req_fth,model,wepmotionCategory,spAtkcategory,behaviorVariationId,notes
+100000,Dagger,Dagger,exact_match,Dagger,Daggers,5,8,0,0,WP_A_0100,20,0,2000,
+101000,Parrying Dagger,Parrying Dagger,exact_match,Parrying dagger,Daggers,5,14,0,0,WP_A_0107,20,71,2000,
+102000,Ghost Blade,Ghost Blade,exact_match,Ghost Blade,Daggers,5,0,0,0,WP_A_0103,20,120,2003,
+103000,Bandit's Knife,Bandit's Knife,exact_match,Bandit's Knife,Daggers,6,12,0,0,WP_A_0101,20,72,2001,
+104000,Priscilla's Dagger,Priscilla's Dagger,exact_match,Priscilla's Dagger,Daggers,6,20,0,0,WP_A_0104,20,73,2002,
+199000,徘徊短剣,,excluded_unused_japanese_name,,,,,,,WP_A_2001,20,0,2000,
+200000,Shortsword,Shortsword,exact_match,Shortsword,Straight Swords,8,10,0,0,WP_A_0207,23,0,2300,
+201000,Longsword,Longsword,exact_match,Longsword,Straight Swords,10,10,0,0,WP_A_0201,23,0,2300,
+202000,Broadsword,Broadsword,exact_match,Broadsword,Straight Swords,10,10,0,0,WP_A_0204,23,53,2301,
+203000,Broken Straight Sword,Broken Straight Sword,exact_match,Broken Straight Sword,Straight Swords,8,8,0,0,WP_A_0200,23,0,2300,
+204000,Balder Side Sword,Balder Side Sword,exact_match,Balder Side Sword,Straight Swords,10,14,0,0,WP_A_0202,23,54,2302,
+205000,Crystal Straight Sword,Crystal Straight Sword,exact_match,Crystal Straight Sword,Straight Swords,16,10,0,0,WP_A_0203,23,0,2300,
+206000,Sunlight Straight Sword,Sunlight Straight Sword,exact_match,Sunlight Straight Sword,Straight Swords,12,12,0,0,WP_A_0231,23,0,2300,
+207000,Barbed Straight Sword,Barbed Straight Sword,exact_match,Barbed Straight Sword,Straight Swords,10,10,0,0,WP_A_0264,23,53,2301,
+208000,Silv. Knight Str. Sword,Silv. Knight Str. Sword,alias_match,Silver Knight Straight Sword,Straight Swords,16,22,0,0,WP_A_0212,23,55,2303,
+209000,Astora's Straight Sword,Astora's Straight Sword,exact_match,Astora's Straight Sword,Straight Swords,10,10,0,14,WP_A_0271,23,0,2300,
+210000,Darksword,Darksword,exact_match,Darksword,Straight Swords,16,16,0,0,WP_A_0260,23,57,2304,
+211000,Drake Sword,Drake Sword,exact_match,Drake Sword,Straight Swords,16,10,0,0,WP_A_0291,23,58,2305,
+212000,Straight Sword Hilt,Straight Sword Hilt,exact_match,Straight Sword Hilt,Straight Swords,6,6,0,0,WP_A_0272,23,53,2301,
+299000,徘徊直剣,,excluded_unused_japanese_name,,,,,,,WP_A_2002,23,0,2300,
+300000,Bastard Sword,Bastard Sword,exact_match,Bаstard Sword,Greatswords,16,10,0,0,WP_A_0206,25,0,2500,
+301000,Claymore,Claymore,exact_match,Claymore,Greatswords,16,10,0,0,WP_A_0266,25,74,2505,
+302000,Man-serpent Greatsword,Man-serpent Greatsword,exact_match,Man-Serpent Greatsword,Greatswords,24,0,0,0,WP_A_0210,25,0,2500,
+303000,Flamberge,Flamberge,exact_match,Flamberge,Greatswords,16,14,0,0,WP_A_0211,25,75,2502,
+304000,Crystal Greatsword,Crystal Greatsword,exact_match,Crystal Greatsword,Greatswords,20,10,0,0,WP_A_0263,25,0,2500,
+306000,Stone Greatsword,Stone Greatsword,exact_match,Stone Greatsword,Greatswords,40,10,0,0,WP_A_0220,25,77,2503,
+307000,Greatsword of Artorias,Greatsword of Artorias,exact_match,Greatsword of Artorias,Greatswords,24,18,20,20,WP_A_0267,25,78,2506,
+309000,Moonlight Greatsword,Moonlight Greatsword,exact_match,Moonlight Greatsword,Greatswords,16,10,28,0,WP_A_0258,25,79,2504,
+310000,Black Knight Sword,Black Knight Sword,exact_match,Black Knight Sword,Greatswords,20,18,0,0,WP_A_0259,25,80,2501,
+311000,Greatsword of Artorias,Greatsword of Artorias,exact_match,Greatsword of Artorias,Greatswords,24,18,20,20,WP_A_0269,25,78,2506,
+312000,Greatsword of Artorias,Greatsword of Artorias,exact_match,Greatsword of Artorias,Greatswords,24,18,20,20,WP_A_0269,25,78,2506,
+314000,Great Lord Greatsword,Great Lord Greatsword,exact_match,Great Lord Greatsword,Greatswords,20,10,0,0,WP_A_0268,25,97,2507,
+315000,Great Lord Greatsword,Great Lord Greatsword,exact_match,Great Lord Greatsword,Greatswords,20,10,0,0,WP_A_0268,25,97,2507,
+350000,Zweihander,Zweihander,exact_match,Zweihander,Ultra Greatswords,24,10,0,0,WP_A_0208,26,0,2600,
+351000,Greatsword,Greatsword,exact_match,Greatsword,Ultra Greatswords,28,10,0,0,WP_A_0251,26,95,2602,
+352000,Demon Great Machete,Demon Great Machete,exact_match,Demon Great Machete,Ultra Greatswords,40,0,0,0,WP_A_0270,26,96,2603,
+354000,Dragon Greatsword,Dragon Greatsword,exact_match,Dragon Greatsword,Ultra Greatswords,50,10,0,0,WP_A_0281,26,98,2601,
+355000,Black Knight Greatsword,Black Knight Greatsword,exact_match,Black Knight Greatsword,Ultra Greatswords,32,18,0,0,WP_A_0221,26,128,2604,
+398000,徘徊大剣,,excluded_unused_japanese_name,,,,,,,WP_A_2003,25,0,2500,
+399000,徘徊特大剣,,excluded_unused_japanese_name,,,,,,,WP_A_2004,26,0,2600,
+400000,Scimitar,Scimitar,exact_match,Scimitar,Curved Swords,7,13,0,0,WP_A_0400,28,0,2800,
+401000,Falchion,Falchion,exact_match,Falchion,Curved Swords,9,13,0,0,WP_A_0401,28,0,2800,
+402000,Shotel,Shotel,exact_match,Shotel,Curved Swords,9,14,0,0,WP_A_0403,28,99,2801,
+403000,Jagged Ghost Blade,Jagged Ghost Blade,exact_match,Jagged Ghost Blade,Curved Swords,7,0,0,0,WP_A_0102,28,100,2802,
+405000,Painting Guardian Sword,Painting Guardian Sword,exact_match,Painting Guardian Sword,Curved Swords,7,20,0,0,WP_A_0406,28,101,2803,
+406000,Quelaag's Furysword,Quelaag's Furysword,exact_match,Quelaag's Furysword,Curved Swords,11,13,0,0,WP_A_0213,28,56,2804,
+450000,Server,Server,exact_match,Server,Curved Greatswords,24,13,0,0,WP_A_0280,25,51,5100,
+451000,Murakumo,Murakumo,exact_match,Murakumo,Curved Greatswords,28,13,0,0,WP_A_0284,25,51,5100,
+453000,Gravelord Sword,Gravelord Sword,exact_match,Gravelord Sword,Curved Greatswords,24,13,0,0,WP_A_0282,25,116,5101,
+498000,徘徊曲剣,,excluded_unused_japanese_name,,,,,,,WP_A_2006,28,0,2800,
+499000,徘徊大曲剣,,excluded_unused_japanese_name,,,,,,,WP_A_2007,25,51,5100,
+500000,Uchigatana,Uchigatana,exact_match,Uchigatana,Katanas,14,14,0,0,WP_A_0402,29,0,2900,
+501000,Washing Pole,Washing Pole,exact_match,Washing Pole,Katanas,20,16,0,0,WP_A_0450,29,0,2900,
+502000,Iaito,Iaito,exact_match,Iaito,Katanas,14,20,0,0,WP_A_0452,29,89,2901,
+503000,Chaos Blade,Chaos Blade,exact_match,Chaos Blade,Katanas,16,14,0,0,WP_A_0451,29,90,2902,
+599000,徘徊刀,,excluded_unused_japanese_name,,,,,,,WP_A_2008,29,0,2900,
+600000,Mail Breaker,Mail Breaker,exact_match,Mail Breaker,Piercing Swords,5,12,0,0,WP_A_0106,27,119,2701,
+601000,Rapier,Rapier,exact_match,Rapier,Piercing Swords,7,12,0,0,WP_A_0300,27,0,2700,
+602000,Estoc,Estoc,exact_match,Estoc,Piercing Swords,10,12,0,0,WP_A_0301,27,113,2702,
+603000,Velka's Rapier,Velka's Rapier,exact_match,Velka's Rapier,Piercing Swords,8,16,16,0,WP_A_0230,27,114,2703,
+604000,Ricard's Rapier,Ricard's Rapier,exact_match,Ricard's Rapier,Piercing Swords,8,20,0,0,WP_A_0302,27,115,2704,
+699000,徘徊刺剣,,excluded_unused_japanese_name,,,,,,,WP_A_2005,27,0,2700,
+700000,Hand Axe,Hand Axe,exact_match,Hand Axe,Axes,8,8,0,0,WP_A_0502,30,102,3001,
+701000,Battle Axe,Battle Axe,exact_match,Battle Axe,Axes,12,8,0,0,WP_A_0505,30,0,3000,
+702000,Crescent Axe,Crescent Axe,exact_match,Crescent Axe,Axes,18,12,0,16,WP_A_0503,32,118,3000,
+703000,Butcher Knife,Butcher Knife,exact_match,Butcher Knife,Axes,24,0,0,0,WP_A_0252,30,103,3003,
+704000,Golem Axe,Golem Axe,exact_match,Golem Axe,Axes,36,8,0,0,WP_A_0508,30,104,3002,
+705000,Gargoyle Tail Axe,Gargoyle Tail Axe,exact_match,Gargoyle Tail Axe,Axes,14,14,0,0,WP_A_0509,30,125,3004,
+750000,Greataxe,Greataxe,exact_match,Greataxe,Great Axes,32,8,0,0,WP_A_0504,32,0,3200,
+751000,Demon's Greataxe,Demon's Greataxe,exact_match,Demon's Greataxe,Great Axes,46,0,0,0,WP_A_0651,32,105,3202,
+752000,Dragon King Greataxe,Dragon King Greataxe,exact_match,Dragon King Greataxe,Great Axes,50,8,0,0,WP_A_0506,32,106,3201,
+753000,Black Knight Greataxe,Black Knight Greataxe,exact_match,Black Knight Greataxe,Great Axes,36,18,0,0,WP_A_0507,32,107,3203,
+798000,徘徊斧,,excluded_unused_japanese_name,,,,,,,WP_A_2009,30,0,3000,
+799000,徘徊大斧,,excluded_unused_japanese_name,,,,,,,WP_A_2010,32,0,3200,
+800000,Club,Club,exact_match,Club,Hammers,10,10,0,0,WP_A_0600,33,0,3302,
+801000,Mace,Mace,exact_match,Mace,Hammers,12,0,0,0,WP_A_0606,33,59,3300,
+802000,Morning Star,Morning Star,exact_match,Morning Star,Hammers,11,0,0,0,WP_A_0603,33,59,3300,
+803000,Warpick,Warpick,exact_match,Warpick,Hammers,11,10,0,0,WP_A_0604,33,60,3301,
+804000,Pickaxe,Pickaxe,exact_match,Pickaxe,Hammers,14,0,0,0,WP_A_0605,33,61,3303,
+809000,Reinforced Club,Reinforced Club,exact_match,Reinforced Club,Hammers,12,0,0,0,WP_A_0602,33,0,3302,
+810000,Blacksmith Hammer,Blacksmith Hammer,exact_match,Blacksmith Hammer,Hammers,14,0,0,0,WP_A_0656,33,59,3300,
+811000,Blacksmith Giant Hammer,Blacksmith Giant Hammer,exact_match,Blacksmith Giant Hammer,Hammers,16,0,0,0,WP_A_0657,33,0,3302,
+812000,Hammer of Vamos,Hammer of Vamos,exact_match,Hammer of Vamos,Hammers,14,0,0,0,WP_A_0658,33,59,3300,
+850000,Great Club,Great Club,exact_match,Great Club,Great Hammers,28,0,0,0,WP_A_0607,35,69,3501,
+851000,Grant,Grant,exact_match,Grant,Great Hammers,50,0,0,30,WP_A_0608,35,62,3500,
+852000,Demon's Great Hammer,Demon's Great Hammer,exact_match,Demon's Great Hammer,Great Hammers,46,0,0,0,WP_A_0654,35,0,3500,
+854000,Dragon Tooth,Dragon Tooth,exact_match,Dragon Tooth,Great Hammers,40,0,0,0,WP_A_0655,35,0,3500,
+855000,Large Club,Large Club,exact_match,Large Club,Great Hammers,26,0,0,0,WP_A_0659,35,124,3502,
+856000,Smough's Hammer,Smough's Hammer,exact_match,Smough's Hammer,Great Hammers,58,0,0,0,WP_A_0652,35,70,3503,
+857000,Smough's Hammer,Smough's Hammer,exact_match,Smough's Hammer,Great Hammers,58,0,0,0,WP_A_0652,35,70,3503,
+898000,徘徊槌,,excluded_unused_japanese_name,,,,,,,WP_A_2011,33,0,3300,
+899000,徘徊大槌,,excluded_unused_japanese_name,,,,,,,WP_A_2012,35,0,3500,
+900000,Fists,Fists,excluded_bare_fists,,,,,,,WP_A_1005,42,0,4201,
+901000,Caestus,Caestus,exact_match,Caestus,Fist & Claw,5,8,0,0,WP_A_1000,42,0,4200,
+902000,Claw,Claw,alias_match,Claws,Fist & Claw,6,14,0,0,WP_A_1002,42,86,4202,
+903000,Dragon Bone Fist,Dragon Bone Fist,exact_match,Dragon Bone Fist,Fist & Claw,20,0,0,0,WP_A_1003,42,87,4204,
+904000,Dark Hand,Dark Hand,exact_match,Dark Hand,Fist & Claw,10,10,0,0,WP_A_1004,42,123,4203,
+999000,徘徊拳,,excluded_unused_japanese_name,,,,,,,WP_A_2013,42,0,4200,
+1000000,Spear,Spear,exact_match,Spear,Spears,11,10,0,0,WP_A_0700,36,0,3600,
+1001000,Winged Spear,Winged Spear,exact_match,Winged Spear,Spears,13,15,0,0,WP_A_0702,36,0,3600,
+1002000,Partizan,Partizan,exact_match,Partizan,Spears,13,12,0,0,WP_A_0703,36,63,3604,
+1003000,Demon's Spear,Demon's Spear,exact_match,Demon's Spear,Spears,12,10,0,0,WP_A_0710,36,64,3605,
+1004000,Channeler's Trident,Channeler's Trident,exact_match,Channeler's Trident,Spears,16,16,24,0,WP_A_0720,36,65,3602,
+1006000,Silver Knight Spear,Silver Knight Spear,exact_match,Silver Knight Spear,Spears,16,22,0,0,WP_A_1101,36,66,3606,
+1050000,Pike,Pike,exact_match,Pike,Spears,24,10,0,0,WP_A_1100,36,67,3601,
+1051000,Dragonslayer Spear,Dragonslayer Spear,exact_match,Dragonslayer Spear,Spears,24,24,0,0,WP_A_1102,36,68,3603,
+1052000,Moonlight Butterfly Horn,Moonlight Butterfly Horn,exact_match,Moonlight Butterfly Horn,Spears,12,0,14,0,WP_A_1103,36,0,3600,
+1053000,Moonlight Butterfly Horn,Moonlight Butterfly Horn,exact_match,Moonlight Butterfly Horn,Spears,12,0,14,0,WP_A_1103,36,0,3600,
+1054000,Dragonslayer Spear,Dragonslayer Spear,exact_match,Dragonslayer Spear,Spears,24,24,0,0,WP_A_1102,36,68,3603,
+1099000,徘徊槍,,excluded_unused_japanese_name,,,,,,,WP_A_2014,36,0,3600,
+1100000,Halberd,Halberd,exact_match,Halberd,Halberds,16,12,0,0,WP_A_0804,38,108,3800,
+1101000,Giant's Halberd,Giant's Halberd,exact_match,Giant's Halberd,Halberds,36,12,0,0,WP_A_0805,38,110,3803,
+1102000,Titanite Catch Pole,Titanite Catch Pole,exact_match,Titanite Catch Pole,Halberds,16,14,0,0,WP_A_0730,38,111,3804,
+1103000,Gargoyle's Halberd,Gargoyle's Halberd,exact_match,Gargoyle's Halberd,Halberds,16,12,0,0,WP_A_0811,38,0,3800,
+1105000,Black Knight Halberd,Black Knight Halberd,exact_match,Black Knight Halberd,Halberds,32,18,0,0,WP_A_0731,38,112,3805,
+1106000,Lucerne,Lucerne,exact_match,Lucerne,Halberds,15,12,0,0,WP_A_0802,38,109,3802,
+1107000,Scythe,Scythe,exact_match,Scythe,Halberds,14,12,0,0,WP_A_0803,38,0,3801,
+1150000,Great Scythe,Great Scythe,exact_match,Great Scythe,Halberds,14,14,0,0,WP_A_0801,38,50,5000,
+1151000,Lifehunt Scythe,Lifehunt Scythe,exact_match,Lifehunt Scythe,Halberds,16,14,0,0,WP_A_0810,38,50,5000,
+1199000,徘徊竿状,,excluded_unused_japanese_name,,,,,,,WP_A_2015,38,0,3800,
+1200000,Short Bow,Short Bow,exact_match,Short Bow,Bows,7,12,0,0,WP_A_1300,44,81,4400,
+1201000,Longbow,Longbow,exact_match,Longbow,Bows,9,14,0,0,WP_A_1301,44,0,4400,
+1202000,Black Bow of Pharis,Black Bow of Pharis,exact_match,Black Bow of Pharis,Bows,9,18,0,0,WP_A_1304,44,82,4400,
+1203000,Dragonslayer Greatbow,Dragonslayer Greatbow,exact_match,Dragonslayer Greatbow,Greatbows,20,20,0,0,WP_A_1360,44,83,4400,
+1204000,Composite Bow,Composite Bow,exact_match,Composite Bow,Bows,11,12,0,0,WP_A_1302,44,81,4400,
+1205000,Darkmoon Bow,Darkmoon Bow,exact_match,Darkmoon Bow,Bows,7,16,0,16,WP_A_1305,44,81,4400,
+1250000,Light Crossbow,Light Crossbow,exact_match,Light Crossbow,Crossbows,10,8,0,0,WP_A_1401,46,0,4600,
+1251000,Heavy Crossbow,Heavy Crossbow,exact_match,Heavy Crossbow,Crossbows,14,8,0,0,WP_A_1402,46,129,4600,
+1252000,Avelyn,Avelyn,exact_match,Avelyn,Crossbows,16,14,0,0,WP_A_1405,46,84,4600,
+1253000,Sniper Crossbow,Sniper Crossbow,exact_match,Sniper Crossbow,Crossbows,20,16,0,0,WP_A_1404,46,85,4600,
+1298000,徘徊弓,,excluded_unused_japanese_name,,,,,,,WP_A_2016,44,0,4400,
+1299000,徘徊弩,,excluded_unused_japanese_name,,,,,,,WP_A_2017,46,0,4600,
+1300000,Sorcerer's Catalyst,Sorcerer's Catalyst,exact_match,Sorcerer's Catalyst,Catalysts,6,0,10,0,WP_A_0910,41,0,4101,
+1301000,Beatrice's Catalyst,Beatrice's Catalyst,exact_match,Beatrice's Catalyst,Catalysts,6,0,10,0,WP_A_0912,41,0,4101,
+1302000,Tin Banishment Catalyst,Tin Banishment Catalyst,exact_match,Tin Banishment Catalyst,Catalysts,10,10,12,0,WP_A_0721,41,127,4102,
+1303000,Logan's Catalyst,Logan's Catalyst,exact_match,Logan's Catalyst,Catalysts,6,0,24,0,WP_A_0901,41,0,4101,
+1304000,Tin Darkmoon Catalyst,Tin Darkmoon Catalyst,exact_match,Tin Darkmoon Catalyst,Catalysts,4,0,0,16,WP_A_0913,41,0,4101,
+1305000,Oolacile Ivory Catalyst,Oolacile Ivory Catalyst,exact_match,Oolacile Ivory Catalyst,Catalysts,6,0,10,0,WP_A_0914,41,0,4101,
+1306000,Tin Crystallization Ctlyst.,Tin Crystallization Ctlyst.,alias_match,Tin Crystallization Catalyst,Catalysts,4,0,32,0,WP_A_0915,41,127,4102,
+1307000,Demon's Catalyst,Demon's Catalyst,exact_match,Demon's Catalyst,Catalysts,12,10,10,0,WP_A_0653,41,127,4102,
+1308000,Izalith Catalyst,Izalith Catalyst,exact_match,Izalith Catalyst,Catalysts,6,0,14,0,WP_A_0916,41,0,4101,
+1330000,Pyromancy Flame,Pyromancy Flame,exact_match,Pyromancy Flame,Flames,4,0,0,0,WP_A_0911,41,52,4100,excluded_from_npc_weapon_pool
+1331000,Pyromancy Flame+10,Pyromancy Flame+10,alias_match,Ascended Pyromancy Flame,Flames,4,0,0,0,WP_A_0911,41,52,4100,excluded_from_npc_weapon_pool
+1332000,Pyromancy Flame,Pyromancy Flame,exact_match,Pyromancy Flame,Flames,4,0,0,0,WP_A_0911,41,52,4100,excluded_from_npc_weapon_pool
+1360000,Talisman,Talisman,exact_match,Talisman,Talismans,4,0,0,10,WP_A_0902,41,52,4100,
+1361000,Canvas Talisman,Canvas Talisman,exact_match,Canvas Talisman,Talismans,4,0,0,14,WP_A_0903,41,52,4100,
+1362000,Thorolund Talisman,Thorolund Talisman,exact_match,Thorolund Talisman,Talismans,4,0,0,10,WP_A_0904,41,52,4100,
+1363000,Ivory Talisman,Ivory Talisman,exact_match,Ivory Talisman,Talismans,4,0,0,16,WP_A_0905,41,52,4100,
+1365000,Sunlight Talisman,Sunlight Talisman,exact_match,Sunlight Talisman,Talismans,4,0,0,14,WP_A_0907,41,52,4100,
+1366000,Darkmoon Talisman,Darkmoon Talisman,exact_match,Darkmoon Talisman,Talismans,4,0,0,24,WP_A_0908,41,52,4100,
+1367000,Velka's Talisman,Velka's Talisman,exact_match,Velka's Talisman,Talismans,4,0,16,0,WP_A_0909,41,52,4100,
+1396000,Skull Lantern,Skull Lantern,unmatched_no_steam_stats,,,,,,,WP_A_1801,41,121,4103,
+1397000,徘徊杖,,excluded_unused_japanese_name,,,,,,,WP_A_2018,41,0,4100,
+1398000,徘徊触媒,,excluded_unused_japanese_name,,,,,,,WP_A_2019,41,52,4100,
+1399000,徘徊タリスマン,,excluded_unused_japanese_name,,,,,,,WP_A_2020,41,52,4100,
+1400000,East-West Shield,East-West Shield,shield_match,Large Leather Shield,Small Shields,7,0,0,0,WP_A_1521,48,0,4800,matched_from_shield_guide
+1401000,Wooden Shield,Wooden Shield,shield_match,Target Shield,Small Shields,8,11,0,0,WP_A_1522,48,0,4800,matched_from_shield_guide
+1402000,Large Leather Shield,Large Leather Shield,shield_match,Buckler,Small Shields,7,13,0,0,WP_A_1524,48,0,4800,matched_from_shield_guide
+1403000,Small Leather Shield,Small Leather Shield,shield_match,Small Leather Shield,Small Shields,5,0,0,0,WP_A_1525,48,0,4801,matched_from_shield_guide
+1404000,Target Shield,Target Shield,shield_match,Effigy Shield,Small Shields,10,0,0,16,WP_A_1501,48,91,4801,matched_from_shield_guide
+1405000,Buckler,Buckler,shield_match,Crystal Ring Shield,Small Shields,10,0,0,0,WP_A_1528,48,91,4801,matched_from_shield_guide
+1406000,Cracked Round Shield,Cracked Round Shield,shield_match,Cracked Round Shield,Small Shields,6,0,0,0,WP_A_1503,48,0,4801,matched_from_shield_guide
+1408000,Leather Shield,Leather Shield,shield_match,Leather Shield,Small Shields,7,0,0,0,WP_A_1526,48,0,4801,matched_from_shield_guide
+1409000,Plank Shield,Plank Shield,shield_match,Plank Shield,Small Shields,7,0,0,0,WP_A_1523,48,0,4801,matched_from_shield_guide
+1410000,Caduceus Round Shield,Caduceus Round Shield,shield_match,Caduceus Round Shield,Small Shields,6,0,0,0,WP_A_1538,48,0,4801,matched_from_shield_guide
+1411000,Crystal Ring Shield,Crystal Ring Shield,shield_match,Crystal Ring Shield,Small Shields,10,0,0,0,WP_A_1531,48,92,4802,matched_from_shield_guide
+1412000,Crystal Ring Shield,Crystal Ring Shield,shield_match,Crystal Ring Shield,Small Shields,10,0,0,0,WP_A_1531,48,92,4802,matched_from_shield_guide
+1413000,Crystal Ring Shield,Crystal Ring Shield,shield_match,Crystal Ring Shield,Small Shields,10,0,0,0,WP_A_1531,48,92,4802,matched_from_shield_guide
+1414000,Crystal Ring Shield,Crystal Ring Shield,shield_match,Crystal Ring Shield,Small Shields,10,0,0,0,WP_A_1531,48,92,4802,matched_from_shield_guide
+1450000,Heater Shield,Heater Shield,shield_match,Heater Shield,Standard Shields,8,0,0,0,WP_A_1515,48,0,4800,matched_from_shield_guide
+1451000,Knight Shield,Knight Shield,shield_match,Knight Shield,Standard Shields,10,0,0,0,WP_A_1516,48,0,4800,matched_from_shield_guide
+1452000,Tower Kite Shield,Tower Kite Shield,shield_match,Tower Kite Shield,Standard Shields,10,0,0,0,WP_A_1513,48,0,4800,matched_from_shield_guide
+1453000,Grass Crest Shield,Grass Crest Shield,shield_match,Grass Crest Shield,Standard Shields,10,0,0,0,WP_A_1517,48,0,4800,matched_from_shield_guide
+1454000,Hollow Soldier Shield,Hollow Soldier Shield,shield_match,Hollow Soldier Shield,Standard Shields,11,0,0,0,WP_A_1502,48,0,4800,matched_from_shield_guide
+1455000,Balder Shield,Balder Shield,shield_match,Balder Shield,Standard Shields,12,0,0,0,WP_A_1504,48,0,4800,matched_from_shield_guide
+1456000,Crest Shield,Crest Shield,shield_match,Crest Shield,Standard Shields,10,0,0,0,WP_A_1535,48,0,4800,matched_from_shield_guide
+1457000,Dragon Crest Shield,Dragon Crest Shield,shield_match,Dragon Crest Shield,Standard Shields,10,0,0,0,WP_A_1541,48,0,4800,matched_from_shield_guide
+1460000,Warrior's Round Shield,Warrior's Round Shield,shield_match,Warrior's Round Shield,Standard Shields,6,0,0,0,WP_A_1536,48,0,4801,matched_from_shield_guide
+1461000,Iron Round Shield,Iron Round Shield,shield_match,Iron Round Shield,Standard Shields,14,0,0,0,WP_A_1519,48,0,4800,matched_from_shield_guide
+1462000,Spider Shield,Spider Shield,shield_match,Spider Shield,Standard Shields,10,0,0,0,WP_A_1520,48,0,4800,matched_from_shield_guide
+1470000,Spiked Shield,Spiked Shield,shield_match,Spiked Shield,Standard Shields,10,12,0,0,WP_A_1507,48,93,4803,matched_from_shield_guide
+1471000,Crystal Shield,Crystal Shield,shield_match,Crystal Shield,Standard Shields,14,0,0,0,WP_A_1509,48,93,4800,matched_from_shield_guide
+1472000,Sunlight Shield,Sunlight Shield,shield_match,Sunlight Shield,Standard Shields,12,0,0,0,WP_A_1511,48,0,4800,matched_from_shield_guide
+1473000,Silver Knight Shield,Silver Knight Shield,shield_match,Silver Knight Shield,Standard Shields,14,0,0,0,WP_A_1533,48,0,4800,matched_from_shield_guide
+1474000,Black Knight Shield,Black Knight Shield,shield_match,Black Knight Shield,Standard Shields,16,0,0,0,WP_A_1514,48,0,4800,matched_from_shield_guide
+1475000,Pierce Shield,Pierce Shield,shield_match,Pierce Shield,Standard Shields,11,14,0,0,WP_A_1530,48,93,4803,matched_from_shield_guide
+1476000,Red and White Round Shield,Red and White Round Shield,shield_match,Red and White Round Shield,Standard Shields,6,0,0,0,WP_A_1518,48,0,4801,matched_from_shield_guide
+1477000,Caduceus Kite Shield,Caduceus Kite Shield,shield_match,Caduceus Kite Shield,Standard Shields,10,0,0,0,WP_A_1537,48,0,4800,matched_from_shield_guide
+1478000,Gargoyle's Shield,Gargoyle's Shield,shield_match,Gargoyle's Shield,Standard Shields,12,0,0,0,WP_A_1539,48,0,4800,matched_from_shield_guide
+1498000,徘徊小盾,,excluded_unused_japanese_name,,,,,,,WP_A_2022,48,0,4800,
+1499000,徘徊中盾,,excluded_unused_japanese_name,,,,,,,WP_A_2023,48,0,4800,
+1500000,Eagle Shield,Eagle Shield,shield_match,Eagle Shield,Greatshields,16,0,0,0,WP_A_1529,47,0,4701,matched_from_shield_guide
+1501000,Tower Shield,Tower Shield,shield_match,Tower Shield,Greatshields,30,0,0,0,WP_A_1505,47,0,4700,matched_from_shield_guide
+1502000,Giant Shield,Giant Shield,shield_match,Giant Shield,Greatshields,36,0,0,0,WP_A_1527,47,0,4700,matched_from_shield_guide
+1503000,Stone Greatshield,Stone Greatshield,shield_match,Stone Greatshield,Greatshields,38,0,0,0,WP_A_1510,47,0,4700,matched_from_shield_guide
+1505000,Havel's Greatshield,Havel's Greatshield,shield_match,Havel's Greatshield,Greatshields,50,0,0,0,WP_A_1532,47,94,4700,matched_from_shield_guide
+1506000,Bonewheel Shield,Bonewheel Shield,shield_match,Bonewheel Shield,Greatshields,30,0,0,0,WP_A_1540,47,126,4702,matched_from_shield_guide
+1507000,Greatshield of Artorias,Greatshield of Artorias,shield_match,Greatshield of Artorias,Greatshields,34,0,0,0,WP_A_1534,47,0,4700,matched_from_shield_guide
+1508000,Greatshield of Artorias,Greatshield of Artorias,shield_match,Greatshield of Artorias,Greatshields,34,0,0,0,WP_A_1534,47,0,4700,matched_from_shield_guide
+1509000,Greatshield of Artorias,Greatshield of Artorias,shield_match,Greatshield of Artorias,Greatshields,34,0,0,0,WP_A_1534,47,0,4700,matched_from_shield_guide
+1510000,Greatshield of Artorias,Greatshield of Artorias,shield_match,Greatshield of Artorias,Greatshields,34,0,0,0,WP_A_1534,47,0,4700,matched_from_shield_guide
+1599000,徘徊大盾,,excluded_unused_japanese_name,,,,,,,WP_A_2024,47,0,4700,
+1600000,Whip,Whip,exact_match,Whip,Whips,7,14,0,0,WP_A_1200,43,0,4300,
+1601000,Notched Whip,Notched Whip,exact_match,Notched Whip,Whips,10,10,0,0,WP_A_1201,43,0,4300,
+1699000,徘徊ムチ,,excluded_unused_japanese_name,,,,,,,WP_A_2021,43,0,4300,
+2000000,Standard Arrow,Standard Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1000,
+2001000,Large Arrow,Large Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1001,
+2002000,Feather Arrow,Feather Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1002,
+2003000,Fire Arrow,Fire Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1003,
+2004000,Poison Arrow,Poison Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1004,
+2005000,Moonlight Arrow,Moonlight Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1005,
+2006000,Wooden Arrow,Wooden Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1006,
+2007000,Dragonslayer Arrow,Dragonslayer Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1007,
+2008000,Gough's Great Arrow,Gough's Great Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_1399,0,0,1008,
+2099000,Arrow,Arrow,excluded_ammo_or_non_weapon,,,,,,,WP_A_2025,0,0,1000,
+2100000,Standard Bolt,Standard Bolt,excluded_ammo_or_non_weapon,,,,,,,WP_A_1700,0,0,1100,
+2101000,Heavy Bolt,Heavy Bolt,excluded_ammo_or_non_weapon,,,,,,,WP_A_1700,0,0,1101,
+2102000,Sniper Bolt,Sniper Bolt,excluded_ammo_or_non_weapon,,,,,,,WP_A_1700,0,0,1102,
+2103000,Wood Bolt,Wood Bolt,excluded_ammo_or_non_weapon,,,,,,,WP_A_1700,0,0,1103,
+2104000,Lightning Bolt,Lightning Bolt,excluded_ammo_or_non_weapon,,,,,,,WP_A_1700,0,0,1104,
+2199000,Bolt,Bolt,excluded_ammo_or_non_weapon,,,,,,,WP_A_2026,0,0,1100,
+9000000,Effigy Shield,Effigy Shield,shield_match,Effigy Shield,Small Shields,10,0,0,16,WP_A_1542,48,0,4801,matched_from_shield_guide
+9001000,Sanctus,Sanctus,shield_match,Sanctus,Standard Shields,10,0,0,18,WP_A_1543,48,0,4800,matched_from_shield_guide
+9002000,Bloodshield,Bloodshield,shield_match,Bloodshield,Standard Shields,10,0,0,0,WP_A_1544,48,0,4800,matched_from_shield_guide
+9003000,Black Iron Greatshield,Black Iron Greatshield,shield_match,Black Iron Greatshield,Greatshields,34,0,0,0,WP_A_1545,47,0,4700,matched_from_shield_guide
+9004000,デザインコンテスト用盾Ｅ,,excluded_unused_japanese_name,,,,,,,WP_A_1546,48,0,4800,
+9005000,デザインコンテスト用盾Ｆ,,excluded_unused_japanese_name,,,,,,,WP_A_1547,48,0,4800,
+9006000,デザインコンテスト用盾Ｇ,,excluded_unused_japanese_name,,,,,,,WP_A_1548,48,0,4800,
+9007000,デザインコンテスト用盾Ｈ,,excluded_unused_japanese_name,,,,,,,WP_A_1549,48,0,4800,
+9010000,Gold Tracer,Gold Tracer,exact_match,Gold Tracer,Curved Swords,9,25,0,0,WP_A_0110,28,132,2805,
+9011000,Dark Silver Tracer,Dark Silver Tracer,exact_match,Dark Silver Tracer,Daggers,5,25,0,0,WP_A_0111,20,130,2004,
+9012000,Abyss Greatsword,Abyss Greatsword,exact_match,Abyss Greatsword,Greatswords,22,18,18,18,WP_A_0274,25,131,2508,
+9013000,Abyss Greatsword,Abyss Greatsword,exact_match,Abyss Greatsword,Greatswords,22,18,18,18,WP_A_0274,25,131,2508,
+9014000,Cleansing Greatshield,Cleansing Greatshield,shield_match,Cleansing Greatshield,Greatshields,31,0,0,0,WP_A_1550,47,0,4700,matched_from_shield_guide
+9015000,Stone Greataxe,Stone Greataxe,exact_match,Stone Greataxe,Great Axes,48,10,0,0,WP_A_0510,32,133,3204,
+9016000,Four-pronged Plow,Four-pronged Plow,exact_match,Four-pronged Plow,Spears,15,12,0,0,WP_A_0740,36,134,3607,
+9017000,Manus Catalyst,Manus Catalyst,exact_match,Manus Catalyst,Catalysts,10,10,0,0,WP_A_0921,41,136,4104,
+9018000,Oolacile Catalyst,Oolacile Catalyst,exact_match,Oolacile Catalyst,Catalysts,6,0,10,0,WP_A_0920,41,0,4101,
+9019000,Guardian Tail,Guardian Tail,exact_match,Guardian Tail,Whips,15,10,0,0,WP_A_1210,43,0,4300,
+9020000,Obsidian Greatsword,Obsidian Greatsword,exact_match,Obsidian Greatsword,Greatswords,20,16,0,0,WP_A_0240,25,135,2509,
+9021000,Gough's Greatbow,Gough's Greatbow,exact_match,Gough's Greatbow,Greatbows,27,20,0,0,WP_A_1361,44,83,4400,

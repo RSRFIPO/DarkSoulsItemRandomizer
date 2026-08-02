@@ -9,6 +9,8 @@ import math
 import chr_init_param as cip
 import randomizer_options as rng_opt
 import items_setup as item_s
+import npc_weapon_categories as npc_wep_cat
+import npc_weapon_data as npc_wep_data
 
 
 class ChrInitStats:
@@ -979,18 +981,10 @@ NPC_WEAPON_SUPPLEMENTAL_DATA = {
  9011000: StartingClassWeaponShield(6, 25, 0, 0, True, StartingClassWeaponShield.POOL.RIGHT_HAND),
 }
 
-class NPCWeaponCategory:
-    MELEE = "melee"
-    SHIELD = "shield"
-    CATALYST = "catalyst"
-    PYROMANCY_FLAME = "pyromancy_flame"
-    TALISMAN = "talisman"
-    BOW = "bow"
-    CROSSBOW = "crossbow"
-    OTHER = "other"
-
 def get_npc_weapon_base_id(weapon_id):
-    if weapon_id in STARTING_WEAPONS_AND_SHIELDS or weapon_id in NPC_WEAPON_SUPPLEMENTAL_DATA:
+    if (weapon_id in STARTING_WEAPONS_AND_SHIELDS or
+     weapon_id in NPC_WEAPON_SUPPLEMENTAL_DATA or
+     weapon_id in npc_wep_data.NPC_WEAPON_POOL):
         return weapon_id
     return weapon_id - (weapon_id % 1000)
 
@@ -998,25 +992,20 @@ def get_npc_weapon_data(weapon_id):
     base_id = get_npc_weapon_base_id(weapon_id)
     if base_id in STARTING_WEAPONS_AND_SHIELDS:
         return STARTING_WEAPONS_AND_SHIELDS[base_id]
-    return NPC_WEAPON_SUPPLEMENTAL_DATA.get(base_id)
+    if base_id in NPC_WEAPON_SUPPLEMENTAL_DATA:
+        return NPC_WEAPON_SUPPLEMENTAL_DATA[base_id]
+    if base_id in npc_wep_data.NPC_WEAPON_POOL:
+        (_, req_str, req_dex, req_int, req_fth) = npc_wep_data.NPC_WEAPON_POOL[base_id]
+        return StartingClassWeaponShield(
+         req_str, req_dex, req_int, req_fth, True,
+         StartingClassWeaponShield.POOL.BOTH)
+    return None
 
 def get_npc_weapon_category(weapon_id):
     base_id = get_npc_weapon_base_id(weapon_id)
-    if 1300000 <= base_id <= 1308999:
-        return NPCWeaponCategory.CATALYST
-    if 1330000 <= base_id <= 1332999:
-        return NPCWeaponCategory.PYROMANCY_FLAME
-    if 1360000 <= base_id <= 1367999:
-        return NPCWeaponCategory.TALISMAN
-    if 1200000 <= base_id <= 1204999:
-        return NPCWeaponCategory.BOW
-    if 1250000 <= base_id <= 1253999:
-        return NPCWeaponCategory.CROSSBOW
-    if 1396000 <= base_id <= 1505999 or 9001000 <= base_id <= 9003999:
-        return NPCWeaponCategory.SHIELD
-    if get_npc_weapon_data(weapon_id) is not None:
-        return NPCWeaponCategory.MELEE
-    return NPCWeaponCategory.OTHER
+    if base_id in npc_wep_data.NPC_WEAPON_POOL:
+        return npc_wep_data.NPC_WEAPON_POOL[base_id][0]
+    return npc_wep_cat.get_npc_weapon_category_from_base_id(base_id)
 
 def npc_can_use_weapon(chr_init, weapon_id):
     weapon_data = get_npc_weapon_data(weapon_id)
@@ -1027,6 +1016,10 @@ def npc_can_use_weapon(chr_init, weapon_id):
      weapon_data.req_dex <= chr_init.base_dex and
      weapon_data.req_int <= chr_init.base_int and
      weapon_data.req_fth <= chr_init.base_fth)
+
+def get_npc_weapon_category_choices(chr_init, original_category):
+    return npc_wep_cat.get_npc_weapon_category_choices(
+     chr_init.chr_init_id, original_category)
 
 def get_randomizable_npc_chr_ids():
     chr_ids = []
@@ -1051,18 +1044,11 @@ def randomize_chr_weapons(chr_init_param, rand_options, random_source):
         chr_inits.append(chr_init)
 
     weapon_pools = {}
-    for chr_init in chr_inits:
-        for field in weapon_fields:
-            weapon_id = getattr(chr_init, field)
-            if weapon_id == -1:
-                continue
-            category = get_npc_weapon_category(weapon_id)
-            if category == NPCWeaponCategory.OTHER or get_npc_weapon_data(weapon_id) is None:
-                continue
-            if category not in weapon_pools:
-                weapon_pools[category] = []
-            if weapon_id not in weapon_pools[category]:
-                weapon_pools[category].append(weapon_id)
+    for (weapon_id, weapon_data) in npc_wep_data.NPC_WEAPON_POOL.items():
+        category = weapon_data[0]
+        if category not in weapon_pools:
+            weapon_pools[category] = []
+        weapon_pools[category].append(weapon_id)
 
     for chr_init in chr_inits:
         for field in weapon_fields:
@@ -1072,8 +1058,13 @@ def randomize_chr_weapons(chr_init_param, rand_options, random_source):
             category = get_npc_weapon_category(weapon_id)
             if category not in weapon_pools:
                 continue
-            choice_list = [choice for choice in weapon_pools[category]
-             if npc_can_use_weapon(chr_init, choice)]
+            choice_categories = get_npc_weapon_category_choices(chr_init, category)
+            choice_list = []
+            for choice_category in choice_categories:
+                if choice_category not in weapon_pools:
+                    continue
+                choice_list += [choice for choice in weapon_pools[choice_category]
+                 if npc_can_use_weapon(chr_init, choice)]
             if len(choice_list) > 0:
                 setattr(chr_init, field, random_source.choice(choice_list))
 
