@@ -536,7 +536,8 @@ VANILLA_CHRS = {
 
 class CharacterArmorLinks:
     def __init__(self, head_list, chest_list, arms_list, legs_list, 
-     is_npc = True, has_hat = True, special_hat = False):
+     is_npc = True, has_hat = True, special_hat = False, 
+     banned_head_armor = None):
         if head_list == None:
             self.head_list = []
         else:
@@ -560,12 +561,16 @@ class CharacterArmorLinks:
         self.is_npc = is_npc
         self.has_hat = has_hat
         self.special_hat = special_hat
+        if banned_head_armor == None:
+            self.banned_head_armor = []
+        else:
+            self.banned_head_armor = banned_head_armor
         
     @classmethod
     def from_same_list(cls, same_list, is_npc = True, has_hat = True, 
-     special_hat = False):
+     special_hat = False, banned_head_armor = None):
         return CharacterArmorLinks(same_list, same_list, same_list, 
-         same_list, is_npc, has_hat, special_hat)
+         same_list, is_npc, has_hat, special_hat, banned_head_armor)
 
 CHR_ARMOR_LINKS = [
  CharacterArmorLinks.from_same_list([(2000, 0), (3000, 0)], is_npc = False), # Starting Class Warrior
@@ -584,7 +589,7 @@ CHR_ARMOR_LINKS = [
                      [(6000, 2), (6002, 10), (6003, 10), (6004, 10), (6540, 2), (6542, 10), (6543, 10), (6544, 10)]),  # Solaire
  CharacterArmorLinks([(6004, 10)], None, None, None, special_hat = True), # Solaire's Sunlight Maggot
  CharacterArmorLinks.from_same_list([(6010, 10)]), # Darkmoon Knightess
- CharacterArmorLinks.from_same_list([(6020, 6), (6021, 0)]), # Oscar
+ CharacterArmorLinks.from_same_list([(6020, 6), (6021, 0)], banned_head_armor = [600000]), # Oscar
  CharacterArmorLinks([(6030, 10), (6031, 10), (6032, 10)],
                      [(6030, 10), (6031, 10)],
                      [(6030, 8), (6031, 10)],
@@ -751,7 +756,8 @@ def randomize_chr_armor(chr_init_param, rand_options, random_source):
             armor_sets = [s for s in ARMOR_SETS if (
              (not links.is_npc or s.npc_usable) and 
              (links.is_npc or s.player_usable) and 
-             (links.special_hat == s.special_hat))
+             (links.special_hat == s.special_hat) and
+             (s.head_armor not in links.banned_head_armor))
             ]
             
             head_choice = random_source.choice(armor_sets)
@@ -761,7 +767,8 @@ def randomize_chr_armor(chr_init_param, rand_options, random_source):
         else:
             head_armor_sets = [s for s in ARMOR_SETS if (
              (not links.is_npc or s.npc_usable) and 
-             (links.is_npc or s.player_usable))
+             (links.is_npc or s.player_usable) and
+             (s.head_armor not in links.banned_head_armor))
             ]
             other_armor_sets = [s for s in head_armor_sets if not s.special_hat]
             
