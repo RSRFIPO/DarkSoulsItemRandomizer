@@ -167,7 +167,9 @@ def get_npc_weapon_category_from_base_id(base_id):
         return NPCWeaponCategory.PYROMANCY_FLAME
     if 1360000 <= base_id <= 1367999:
         return NPCWeaponCategory.TALISMAN
-    if 1200000 <= base_id <= 1205999 or base_id == 9021000:
+    if base_id == 1203000 or base_id == 9021000:
+        return NPCWeaponCategory.OTHER
+    if 1200000 <= base_id <= 1205999:
         return NPCWeaponCategory.BOW
     if 1250000 <= base_id <= 1253999:
         return NPCWeaponCategory.CROSSBOW

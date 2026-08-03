@@ -14,7 +14,6 @@ NPC_WEAPON_POOL = {
  200000: (NPCWeaponCategory.STRAIGHT_SWORD, 8, 10, 0, 0), # Shortsword
  201000: (NPCWeaponCategory.STRAIGHT_SWORD, 10, 10, 0, 0), # Longsword
  202000: (NPCWeaponCategory.STRAIGHT_SWORD, 10, 10, 0, 0), # Broadsword
- 203000: (NPCWeaponCategory.STRAIGHT_SWORD, 8, 8, 0, 0), # Broken Straight Sword
  204000: (NPCWeaponCategory.STRAIGHT_SWORD, 10, 14, 0, 0), # Balder Side Sword
  205000: (NPCWeaponCategory.STRAIGHT_SWORD, 16, 10, 0, 0), # Crystal Straight Sword
  206000: (NPCWeaponCategory.STRAIGHT_SWORD, 12, 12, 0, 0), # Sunlight Straight Sword
@@ -23,7 +22,6 @@ NPC_WEAPON_POOL = {
  209000: (NPCWeaponCategory.STRAIGHT_SWORD, 10, 10, 0, 14), # Astora's Straight Sword
  210000: (NPCWeaponCategory.STRAIGHT_SWORD, 16, 16, 0, 0), # Darksword
  211000: (NPCWeaponCategory.STRAIGHT_SWORD, 16, 10, 0, 0), # Drake Sword
- 212000: (NPCWeaponCategory.STRAIGHT_SWORD, 6, 6, 0, 0), # Straight Sword Hilt
  300000: (NPCWeaponCategory.GREATSWORD, 16, 10, 0, 0), # Bastard Sword
  301000: (NPCWeaponCategory.GREATSWORD, 16, 10, 0, 0), # Claymore
  302000: (NPCWeaponCategory.GREATSWORD, 24, 0, 0, 0), # Man-serpent Greatsword
@@ -34,9 +32,7 @@ NPC_WEAPON_POOL = {
  309000: (NPCWeaponCategory.GREATSWORD, 16, 10, 28, 0), # Moonlight Greatsword
  310000: (NPCWeaponCategory.GREATSWORD, 20, 18, 0, 0), # Black Knight Sword
  311000: (NPCWeaponCategory.GREATSWORD, 24, 18, 20, 20), # Greatsword of Artorias
- 312000: (NPCWeaponCategory.GREATSWORD, 24, 18, 20, 20), # Greatsword of Artorias
  314000: (NPCWeaponCategory.GREATSWORD, 20, 10, 0, 0), # Great Lord Greatsword
- 315000: (NPCWeaponCategory.GREATSWORD, 20, 10, 0, 0), # Great Lord Greatsword
  350000: (NPCWeaponCategory.ULTRA_GREATSWORD, 24, 10, 0, 0), # Zweihander
  351000: (NPCWeaponCategory.ULTRA_GREATSWORD, 28, 10, 0, 0), # Greatsword
  352000: (NPCWeaponCategory.ULTRA_GREATSWORD, 40, 0, 0, 0), # Demon Great Machete
@@ -85,7 +81,6 @@ NPC_WEAPON_POOL = {
  854000: (NPCWeaponCategory.GREAT_HAMMER, 40, 0, 0, 0), # Dragon Tooth
  855000: (NPCWeaponCategory.GREAT_HAMMER, 26, 0, 0, 0), # Large Club
  856000: (NPCWeaponCategory.GREAT_HAMMER, 58, 0, 0, 0), # Smough's Hammer
- 857000: (NPCWeaponCategory.GREAT_HAMMER, 58, 0, 0, 0), # Smough's Hammer
  901000: (NPCWeaponCategory.FIST, 5, 8, 0, 0), # Caestus
  902000: (NPCWeaponCategory.FIST, 6, 14, 0, 0), # Claw
  903000: (NPCWeaponCategory.FIST, 20, 0, 0, 0), # Dragon Bone Fist
@@ -113,7 +108,6 @@ NPC_WEAPON_POOL = {
  1200000: (NPCWeaponCategory.BOW, 7, 12, 0, 0), # Short Bow
  1201000: (NPCWeaponCategory.BOW, 9, 14, 0, 0), # Longbow
  1202000: (NPCWeaponCategory.BOW, 9, 18, 0, 0), # Black Bow of Pharis
- 1203000: (NPCWeaponCategory.BOW, 20, 20, 0, 0), # Dragonslayer Greatbow
  1204000: (NPCWeaponCategory.BOW, 11, 12, 0, 0), # Composite Bow
  1205000: (NPCWeaponCategory.BOW, 7, 16, 0, 16), # Darkmoon Bow
  1250000: (NPCWeaponCategory.CROSSBOW, 10, 8, 0, 0), # Light Crossbow
@@ -147,9 +141,6 @@ NPC_WEAPON_POOL = {
  1409000: (NPCWeaponCategory.SHIELD, 7, 0, 0, 0), # Plank Shield
  1410000: (NPCWeaponCategory.SHIELD, 6, 0, 0, 0), # Caduceus Round Shield
  1411000: (NPCWeaponCategory.SHIELD, 10, 0, 0, 0), # Crystal Ring Shield
- 1412000: (NPCWeaponCategory.SHIELD, 10, 0, 0, 0), # Crystal Ring Shield
- 1413000: (NPCWeaponCategory.SHIELD, 10, 0, 0, 0), # Crystal Ring Shield
- 1414000: (NPCWeaponCategory.SHIELD, 10, 0, 0, 0), # Crystal Ring Shield
  1450000: (NPCWeaponCategory.SHIELD, 8, 0, 0, 0), # Heater Shield
  1451000: (NPCWeaponCategory.SHIELD, 10, 0, 0, 0), # Knight Shield
  1452000: (NPCWeaponCategory.SHIELD, 10, 0, 0, 0), # Tower Kite Shield
@@ -177,9 +168,6 @@ NPC_WEAPON_POOL = {
  1505000: (NPCWeaponCategory.SHIELD, 50, 0, 0, 0), # Havel's Greatshield
  1506000: (NPCWeaponCategory.SHIELD, 30, 0, 0, 0), # Bonewheel Shield
  1507000: (NPCWeaponCategory.SHIELD, 34, 0, 0, 0), # Greatshield of Artorias
- 1508000: (NPCWeaponCategory.SHIELD, 34, 0, 0, 0), # Greatshield of Artorias
- 1509000: (NPCWeaponCategory.SHIELD, 34, 0, 0, 0), # Greatshield of Artorias
- 1510000: (NPCWeaponCategory.SHIELD, 34, 0, 0, 0), # Greatshield of Artorias
  1600000: (NPCWeaponCategory.WHIP, 7, 14, 0, 0), # Whip
  1601000: (NPCWeaponCategory.WHIP, 10, 10, 0, 0), # Notched Whip
  9000000: (NPCWeaponCategory.SHIELD, 10, 0, 0, 16), # Effigy Shield
@@ -189,7 +177,6 @@ NPC_WEAPON_POOL = {
  9010000: (NPCWeaponCategory.CURVED_SWORD, 9, 25, 0, 0), # Gold Tracer
  9011000: (NPCWeaponCategory.DAGGER, 5, 25, 0, 0), # Dark Silver Tracer
  9012000: (NPCWeaponCategory.GREATSWORD, 22, 18, 18, 18), # Abyss Greatsword
- 9013000: (NPCWeaponCategory.GREATSWORD, 22, 18, 18, 18), # Abyss Greatsword
  9014000: (NPCWeaponCategory.SHIELD, 31, 0, 0, 0), # Cleansing Greatshield
  9015000: (NPCWeaponCategory.GREATAXE, 48, 10, 0, 0), # Stone Greataxe
  9016000: (NPCWeaponCategory.SPEAR, 15, 12, 0, 0), # Four-pronged Plow
@@ -197,5 +184,4 @@ NPC_WEAPON_POOL = {
  9018000: (NPCWeaponCategory.CATALYST, 6, 0, 10, 0), # Oolacile Catalyst
  9019000: (NPCWeaponCategory.WHIP, 15, 10, 0, 0), # Guardian Tail
  9020000: (NPCWeaponCategory.GREATSWORD, 20, 16, 0, 0), # Obsidian Greatsword
- 9021000: (NPCWeaponCategory.BOW, 27, 20, 0, 0), # Gough's Greatbow
 }
