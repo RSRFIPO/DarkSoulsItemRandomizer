@@ -427,6 +427,19 @@ Valley of Drakes|"Ring Ahead"|Before the bridge with the wyverns, approaching fr
 Demon Ruins|"Safe Zone Ahead"|In Centipede Demon room, to the right on approach to patch of ground out of the lava.|
 Crystal Cave|"Path Ahead"|On the first invisible bridge.|
 
+**Credits:**
+
+This project exists thanks to the developers who built and maintained the Dark Souls Item Randomizer before this fork:
+
+* hotpocketremix - original creator of the randomizer
+* caerulius
+* forstycup
+* AbscondWithAPie
+* AzetinnitezA
+* eaglevis
+* da66en
+* Primogenitor33
+
 **Acknowledgments:**
 
 The starting gift randomization logic in this project is adapted from [ArsonAssassin's Dark Souls Remastered Archipelago Randomizer](https://github.com/tathxo/DSAP), licensed under the MIT License. See the comment header in `starting_gifts_setup.py` for the full license text.
