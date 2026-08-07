@@ -995,6 +995,33 @@ def get_npc_weapon_base_id(weapon_id):
         return weapon_id
     return weapon_id - (weapon_id % 1000)
 
+NPC_WEAPON_UPGRADE_NORMAL = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+NPC_WEAPON_UPGRADE_UNIQUE = [0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5]
+NPC_WEAPON_MAX_UPGRADE_CACHE = {}
+
+def get_npc_weapon_upgrade_level(weapon_id):
+    return min(weapon_id % 100, len(NPC_WEAPON_UPGRADE_NORMAL) - 1)
+
+def get_npc_weapon_max_upgrade(base_id):
+    if base_id in NPC_WEAPON_MAX_UPGRADE_CACHE:
+        return NPC_WEAPON_MAX_UPGRADE_CACHE[base_id]
+    import item_lot_formatter as ilf
+    max_upgrade = 0
+    for upgrade_level in range(1, len(NPC_WEAPON_UPGRADE_NORMAL)):
+        if base_id + upgrade_level in ilf.WEAPONS:
+            max_upgrade = upgrade_level
+    NPC_WEAPON_MAX_UPGRADE_CACHE[base_id] = max_upgrade
+    return max_upgrade
+
+def apply_npc_weapon_upgrade_level(base_id, upgrade_level):
+    upgrade_level = min(upgrade_level, len(NPC_WEAPON_UPGRADE_NORMAL) - 1)
+    max_upgrade = get_npc_weapon_max_upgrade(base_id)
+    if max_upgrade >= NPC_WEAPON_UPGRADE_NORMAL[-1]:
+        return base_id + NPC_WEAPON_UPGRADE_NORMAL[upgrade_level]
+    if max_upgrade >= NPC_WEAPON_UPGRADE_UNIQUE[-1]:
+        return base_id + NPC_WEAPON_UPGRADE_UNIQUE[upgrade_level]
+    return base_id
+
 def get_npc_weapon_data(weapon_id):
     base_id = get_npc_weapon_base_id(weapon_id)
     if base_id in STARTING_WEAPONS_AND_SHIELDS:
@@ -1073,7 +1100,10 @@ def randomize_chr_weapons(chr_init_param, rand_options, random_source):
                 choice_list += [choice for choice in weapon_pools[choice_category]
                  if npc_can_use_weapon(chr_init, choice)]
             if len(choice_list) > 0:
-                setattr(chr_init, field, random_source.choice(choice_list))
+                upgrade_level = get_npc_weapon_upgrade_level(weapon_id)
+                choice = random_source.choice(choice_list)
+                setattr(chr_init, field,
+                 apply_npc_weapon_upgrade_level(choice, upgrade_level))
 
 
 CLASS_TO_CHR_INIT = {
