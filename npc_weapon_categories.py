@@ -64,70 +64,70 @@ NPC_HAMMER_CATEGORIES = [
 ]
 
 NPC_WEAPON_CATEGORY_PROFILES = {
- 6000: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6002: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6003: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6004: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6540: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6542: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6543: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6544: NPC_SWORD_CATEGORIES + NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6010: [NPCWeaponCategory.PIERCING_SWORD] + NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER],
- 6020: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6021: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6030: NPC_CURVED_SWORD_CATEGORIES + [NPCWeaponCategory.DAGGER],
- 6031: NPC_CURVED_SWORD_CATEGORIES + [NPCWeaponCategory.DAGGER],
- 6032: NPC_CURVED_SWORD_CATEGORIES + [NPCWeaponCategory.DAGGER],
- 6040: [NPCWeaponCategory.PIERCING_SWORD] + NPC_CURVED_SWORD_CATEGORIES,
- 6041: [NPCWeaponCategory.PIERCING_SWORD] + NPC_CURVED_SWORD_CATEGORIES,
- 6080: NPC_HAMMER_CATEGORIES + NPC_AXE_CATEGORIES,
- 6090: NPC_HAMMER_CATEGORIES + NPC_AXE_CATEGORIES,
- 6091: NPC_HAMMER_CATEGORIES + NPC_AXE_CATEGORIES,
- 6100: NPC_AXE_CATEGORIES,
- 6101: NPC_AXE_CATEGORIES,
- 6130: NPC_AXE_CATEGORIES + [NPCWeaponCategory.KATANA, NPCWeaponCategory.SPEAR],
- 6131: NPC_AXE_CATEGORIES + [NPCWeaponCategory.KATANA, NPCWeaponCategory.SPEAR],
- 6180: [NPCWeaponCategory.DAGGER, NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.SPEAR, NPCWeaponCategory.KATANA],
- 6250: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6260: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.CURVED_GREATSWORD],
- 6270: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.KATANA],
- 6271: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.KATANA],
- 6280: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6281: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6282: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6283: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6284: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6290: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6291: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6300: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER],
- 6301: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER],
- 6591: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER],
- 6310: [NPCWeaponCategory.CURVED_GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREATSWORD],
- 6320: [NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD],
- 6321: [NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD],
- 6370: [NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.DAGGER],
- 6420: [NPCWeaponCategory.KATANA, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.CURVED_SWORD],
- 6490: [NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD],
- 6510: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD],
- 6530: [NPCWeaponCategory.AXE, NPCWeaponCategory.GREATAXE],
- 6531: [NPCWeaponCategory.AXE, NPCWeaponCategory.GREATAXE],
- 6550: [NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.ULTRA_GREATSWORD],
- 6551: [NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.ULTRA_GREATSWORD],
- 6560: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD],
- 6561: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD],
- 6562: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD],
- 6580: [NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.ULTRA_GREATSWORD],
- 6600: [NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.CURVED_SWORD],
- 6610: [NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.HALBERD],
- 6640: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.CURVED_GREATSWORD],
- 6650: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD],
- 6740: [NPCWeaponCategory.DAGGER, NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.HALBERD],
- 6801: NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6802: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD],
- 6803: NPC_CURVED_SWORD_CATEGORIES,
- 6804: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.SPEAR, NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.DAGGER],
- 6805: NPC_HAMMER_CATEGORIES + [NPCWeaponCategory.SPEAR],
- 6806: [NPCWeaponCategory.DAGGER, NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.KATANA]
+ 6000: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6002: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6003: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6004: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire's Sunlight Maggot
+ 6540: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6542: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6543: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6544: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6010: [NPCWeaponCategory.PIERCING_SWORD] + NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Darkmoon Knightess
+ 6020: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Oscar
+ 6021: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Oscar
+ 6030: NPC_CURVED_SWORD_CATEGORIES + [NPCWeaponCategory.DAGGER], # Logan
+ 6031: NPC_CURVED_SWORD_CATEGORIES + [NPCWeaponCategory.DAGGER], # Logan
+ 6032: NPC_CURVED_SWORD_CATEGORIES + [NPCWeaponCategory.DAGGER], # Logan
+ 6040: [NPCWeaponCategory.PIERCING_SWORD] + NPC_CURVED_SWORD_CATEGORIES, # Griggs
+ 6041: [NPCWeaponCategory.PIERCING_SWORD] + NPC_CURVED_SWORD_CATEGORIES, # Griggs
+ 6080: NPC_HAMMER_CATEGORIES + NPC_AXE_CATEGORIES, # Petrus
+ 6090: NPC_HAMMER_CATEGORIES + NPC_AXE_CATEGORIES, # Vince
+ 6091: NPC_HAMMER_CATEGORIES + NPC_AXE_CATEGORIES, # Vince
+ 6100: NPC_AXE_CATEGORIES, # Nico
+ 6101: NPC_AXE_CATEGORIES, # Nico
+ 6130: NPC_AXE_CATEGORIES + [NPCWeaponCategory.KATANA, NPCWeaponCategory.SPEAR], # Laurentius
+ 6131: NPC_AXE_CATEGORIES + [NPCWeaponCategory.KATANA, NPCWeaponCategory.SPEAR], # Laurentius
+ 6180: [NPCWeaponCategory.DAGGER, NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.SPEAR, NPCWeaponCategory.KATANA], # Ingward
+ 6250: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Crestfallen Merchant
+ 6260: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.CURVED_GREATSWORD], # Domhnall
+ 6270: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.KATANA], # Crestfallen Warrior
+ 6271: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.KATANA], # Crestfallen Warrior
+ 6280: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Siegmeyer
+ 6281: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Siegmeyer
+ 6282: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Siegmeyer
+ 6283: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Siegmeyer
+ 6284: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Siegmeyer
+ 6290: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Sieglinde
+ 6291: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Sieglinde
+ 6300: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Lautrec
+ 6301: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Lautrec
+ 6591: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Lautrec
+ 6310: [NPCWeaponCategory.CURVED_GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREATSWORD], # Shiva
+ 6320: [NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD], # Patches
+ 6321: [NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD], # Patches
+ 6370: [NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.DAGGER], # Oswald
+ 6420: [NPCWeaponCategory.KATANA, NPCWeaponCategory.CURVED_SWORD], # Ninja
+ 6490: [NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD], # Lautrec's Pike Friend
+ 6510: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Tarkus
+ 6530: [NPCWeaponCategory.AXE, NPCWeaponCategory.GREATAXE], # Mildred
+ 6531: [NPCWeaponCategory.AXE, NPCWeaponCategory.GREATAXE], # Mildred
+ 6550: [NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.ULTRA_GREATSWORD], # Leeroy
+ 6551: [NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.ULTRA_GREATSWORD], # Leeroy
+ 6560: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD], # Kirk
+ 6561: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD], # Kirk
+ 6562: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATSWORD], # Kirk
+ 6580: [NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.ULTRA_GREATSWORD], # Havel
+ 6600: [NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.CURVED_SWORD], # Ricard
+ 6610: [NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.HALBERD], # Crystal Knight
+ 6640: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.CURVED_GREATSWORD], # Berenike Darkmoon
+ 6650: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD], # Balder Darkmoon
+ 6740: [NPCWeaponCategory.DAGGER, NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.KATANA], # Ciaran
+ 6801: NPC_AXE_CATEGORIES + [NPCWeaponCategory.HALBERD], # Forest Bandit
+ 6802: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Forest Knight
+ 6803: NPC_CURVED_SWORD_CATEGORIES, # Pharis
+ 6804: [NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.SPEAR, NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.DAGGER], # Forest Mage
+ 6805: NPC_HAMMER_CATEGORIES + [NPCWeaponCategory.SPEAR], # Forest Cleric
+ 6806: [NPCWeaponCategory.DAGGER, NPCWeaponCategory.PIERCING_SWORD, NPCWeaponCategory.KATANA] # Forest Thief
 }
 
 def get_npc_weapon_category_from_base_id(base_id):
