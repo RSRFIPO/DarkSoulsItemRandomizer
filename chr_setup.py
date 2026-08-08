@@ -586,10 +586,10 @@ CHR_ARMOR_LINKS = [
  CharacterArmorLinks.from_same_list([(2007, 0), (3007, 0)], is_npc = False), # Starting Class Pyromancer
  CharacterArmorLinks.from_same_list([(2008, 0), (3008, 0)], is_npc = False, has_hat = False), # Starting Class Cleric
  CharacterArmorLinks([(2009, 0), (3009, 0)], None, None, None, is_npc = False, special_hat = True), # Starting Class Deprived
- CharacterArmorLinks([(6000, 2), (6002, 10), (6003, 10), (6540, 2), (6542, 10), (6543, 10), (6544, 10)], 
-                     [(6000, 2), (6002, 10), (6003, 10), (6004, 10), (6540, 2), (6542, 10), (6543, 10), (6544, 10)], 
-                     [(6000, 2), (6002, 10), (6003, 10), (6004, 10), (6540, 2), (6542, 10), (6543, 10), (6544, 10)], 
-                     [(6000, 2), (6002, 10), (6003, 10), (6004, 10), (6540, 2), (6542, 10), (6543, 10), (6544, 10)]),  # Solaire
+ CharacterArmorLinks([(6000, 2), (6002, 10), (6003, 10), (6540, 2), (6541, 4), (6542, 10), (6543, 10), (6544, 10)], 
+                     [(6000, 2), (6002, 10), (6003, 10), (6004, 10), (6540, 2), (6541, 4), (6542, 10), (6543, 10), (6544, 10)], 
+                     [(6000, 2), (6002, 10), (6003, 10), (6004, 10), (6540, 2), (6541, 4), (6542, 10), (6543, 10), (6544, 10)], 
+                     [(6000, 2), (6002, 10), (6003, 10), (6004, 10), (6540, 2), (6541, 4), (6542, 10), (6543, 10), (6544, 10)]),  # Solaire
  CharacterArmorLinks([(6004, 10)], None, None, None, special_hat = True), # Solaire's Sunlight Maggot
  CharacterArmorLinks.from_same_list([(6010, 10)]), # Darkmoon Knightess
  CharacterArmorLinks.from_same_list([(6020, 6), (6021, 0)], banned_head_armor = [600000]), # Oscar
@@ -612,7 +612,7 @@ CHR_ARMOR_LINKS = [
  CharacterArmorLinks.from_same_list([(6270, 8), (6271, 0)], has_hat = False), # Crestfallen Warrior
  CharacterArmorLinks.from_same_list([(6280, 10), (6281, 10), (6282, 10), (6283, 10), (6284, 10)]), # Siegmeyer
  CharacterArmorLinks.from_same_list([(6290, 10), (6291, 10)]), # Sieglinde
- CharacterArmorLinks.from_same_list([(6300, 8), (6301, 10), (6591, 8)]), # Lautrec
+ CharacterArmorLinks.from_same_list([(6300, 8), (6301, 10), (6590, 8), (6591, 8)]), # Lautrec
  CharacterArmorLinks.from_same_list([(6310, 10)]), # Shiva
  CharacterArmorLinks.from_same_list([(6320, 10), (6321, 10)], has_hat = False), # Patches
  CharacterArmorLinks.from_same_list([(6370, 4)]), # Oswald

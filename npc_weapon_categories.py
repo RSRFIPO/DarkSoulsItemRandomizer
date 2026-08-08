@@ -69,6 +69,7 @@ NPC_WEAPON_CATEGORY_PROFILES = {
  6003: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
  6004: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire's Sunlight Maggot
  6540: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
+ 6541: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
  6542: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
  6543: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
  6544: NPC_SWORD_CATEGORIES + [NPCWeaponCategory.HALBERD], # Solaire
@@ -101,6 +102,7 @@ NPC_WEAPON_CATEGORY_PROFILES = {
  6291: [NPCWeaponCategory.ULTRA_GREATSWORD, NPCWeaponCategory.GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREAT_HAMMER, NPCWeaponCategory.CURVED_GREATSWORD], # Sieglinde
  6300: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Lautrec
  6301: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Lautrec
+ 6590: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Lautrec
  6591: [NPCWeaponCategory.CURVED_SWORD, NPCWeaponCategory.STRAIGHT_SWORD, NPCWeaponCategory.KATANA, NPCWeaponCategory.DAGGER], # Lautrec
  6310: [NPCWeaponCategory.CURVED_GREATSWORD, NPCWeaponCategory.GREATAXE, NPCWeaponCategory.GREATSWORD], # Shiva
  6320: [NPCWeaponCategory.SPEAR, NPCWeaponCategory.HALBERD], # Patches
