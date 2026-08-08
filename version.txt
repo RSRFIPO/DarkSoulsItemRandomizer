@@ -1,3 +1,16 @@
+1.0.4
+- Fixed randomized NPC weapon reinforcement scaling so unique +5 weapons map correctly to normal +15 weapons and vice versa.
+- Linked randomized weapon loadouts across NPC variants, matching armor variant behavior while keeping Kirk invasions unlinked for more variation.
+- Documented NPC IDs in weapon category profiles for documentation when making changes.
+
+1.0.3
+- Expanded the NPC weapon randomization pools using a curated weapon and shield list.
+- Added NPC specific weapon category profiles so each NPC can roll from curated weapon categories instead of a single global pool.
+- Refactored NPC weapon category/profile logic out of chr_setup.py into dedicated NPC weapon modules.
+- NPC melee weapon randomization now respects each NPC’s assigned weapon profile.
+- NPC weapon candidates are filtered by the NPC’s STR/DEX/INT/FTH requirements before assignment.
+- Greatbows are excluded from NPC weapon randomization because NPC bow users do not have great arrow ammo.
+
 1.0.2
 - Update version/changelog to 1.0.2
 - Fixed PTDE `menu.msgbnd` parsing for archives with legacy encoded filenames.

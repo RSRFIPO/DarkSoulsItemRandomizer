@@ -8,6 +8,7 @@ import math
 
 import chr_init_param as cip
 import randomizer_options as rng_opt
+import item_lot_formatter as item_lf
 import items_setup as item_s
 import npc_weapon_categories as npc_wep_cat
 import npc_weapon_data as npc_wep_data
@@ -995,31 +996,45 @@ def get_npc_weapon_base_id(weapon_id):
         return weapon_id
     return weapon_id - (weapon_id % 1000)
 
-NPC_WEAPON_UPGRADE_NORMAL = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-NPC_WEAPON_UPGRADE_UNIQUE = [0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5]
+NPC_WEAPON_NORMAL_UPGRADE_BY_TIER = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+NPC_WEAPON_UNIQUE_UPGRADE_BY_TIER = [0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5]
+NPC_WEAPON_MAX_UPGRADE_TIER = len(NPC_WEAPON_NORMAL_UPGRADE_BY_TIER) - 1
+NPC_WEAPON_NON_UPGRADEABLE_BASE_IDS = [
+ 205000,  # Crystal Straight Sword
+ 304000,  # Crystal Greatsword
+ 1471000, # Crystal Shield
+]
 NPC_WEAPON_MAX_UPGRADE_CACHE = {}
 
-def get_npc_weapon_upgrade_level(weapon_id):
-    return min(weapon_id % 100, len(NPC_WEAPON_UPGRADE_NORMAL) - 1)
+def get_npc_weapon_upgrade_tier(weapon_id):
+    base_id = get_npc_weapon_base_id(weapon_id)
+    source_max_upgrade = get_npc_weapon_max_upgrade(base_id)
+    if source_max_upgrade <= 0:
+        return 0
+    source_upgrade = min((weapon_id - base_id) % 100, source_max_upgrade)
+    return min(int(round(source_upgrade * NPC_WEAPON_MAX_UPGRADE_TIER /
+     source_max_upgrade)), NPC_WEAPON_MAX_UPGRADE_TIER)
 
 def get_npc_weapon_max_upgrade(base_id):
     if base_id in NPC_WEAPON_MAX_UPGRADE_CACHE:
         return NPC_WEAPON_MAX_UPGRADE_CACHE[base_id]
-    import item_lot_formatter as ilf
+    if base_id in NPC_WEAPON_NON_UPGRADEABLE_BASE_IDS:
+        NPC_WEAPON_MAX_UPGRADE_CACHE[base_id] = 0
+        return 0
     max_upgrade = 0
-    for upgrade_level in range(1, len(NPC_WEAPON_UPGRADE_NORMAL)):
-        if base_id + upgrade_level in ilf.WEAPONS:
+    for upgrade_level in range(1, NPC_WEAPON_MAX_UPGRADE_TIER + 1):
+        if base_id + upgrade_level in item_lf.WEAPONS:
             max_upgrade = upgrade_level
     NPC_WEAPON_MAX_UPGRADE_CACHE[base_id] = max_upgrade
     return max_upgrade
 
-def apply_npc_weapon_upgrade_level(base_id, upgrade_level):
-    upgrade_level = min(upgrade_level, len(NPC_WEAPON_UPGRADE_NORMAL) - 1)
+def apply_npc_weapon_upgrade_tier(base_id, upgrade_tier):
+    upgrade_tier = min(upgrade_tier, NPC_WEAPON_MAX_UPGRADE_TIER)
     max_upgrade = get_npc_weapon_max_upgrade(base_id)
-    if max_upgrade >= NPC_WEAPON_UPGRADE_NORMAL[-1]:
-        return base_id + NPC_WEAPON_UPGRADE_NORMAL[upgrade_level]
-    if max_upgrade >= NPC_WEAPON_UPGRADE_UNIQUE[-1]:
-        return base_id + NPC_WEAPON_UPGRADE_UNIQUE[upgrade_level]
+    if max_upgrade >= NPC_WEAPON_NORMAL_UPGRADE_BY_TIER[-1]:
+        return base_id + NPC_WEAPON_NORMAL_UPGRADE_BY_TIER[upgrade_tier]
+    if max_upgrade >= NPC_WEAPON_UNIQUE_UPGRADE_BY_TIER[-1]:
+        return base_id + NPC_WEAPON_UNIQUE_UPGRADE_BY_TIER[upgrade_tier]
     return base_id
 
 def get_npc_weapon_data(weapon_id):
@@ -1055,27 +1070,95 @@ def get_npc_weapon_category_choices(chr_init, original_category):
     return npc_wep_cat.get_npc_weapon_category_choices(
      chr_init.chr_init_id, original_category)
 
-def get_randomizable_npc_chr_ids():
+NPC_WEAPON_LINK_EXCLUDED_CHR_IDS = [6560, 6561, 6562] # Kirk
+
+def get_chr_ids_from_character_armor_links(links):
     chr_ids = []
+    for chr_list in [links.head_list, links.chest_list, links.arms_list, links.legs_list]:
+        for (chr_id, _) in chr_list:
+            if chr_id not in chr_ids:
+                chr_ids.append(chr_id)
+    return chr_ids
+
+def get_linked_randomizable_npc_chr_id_groups():
+    chr_id_groups = []
+    used_chr_ids = []
     for links in CHR_ARMOR_LINKS:
         if not links.is_npc:
             continue
-        for chr_list in [links.head_list, links.chest_list, links.arms_list, links.legs_list]:
-            for (chr_id, _) in chr_list:
-                if chr_id not in chr_ids:
-                    chr_ids.append(chr_id)
+
+        chr_ids = [chr_id for chr_id in get_chr_ids_from_character_armor_links(links)
+         if chr_id not in used_chr_ids]
+        if len(chr_ids) == 0:
+            continue
+
+        unlinked_chr_ids = [chr_id for chr_id in chr_ids
+         if chr_id in NPC_WEAPON_LINK_EXCLUDED_CHR_IDS]
+        linked_chr_ids = [chr_id for chr_id in chr_ids
+         if chr_id not in NPC_WEAPON_LINK_EXCLUDED_CHR_IDS]
+
+        for chr_id in unlinked_chr_ids:
+            chr_id_groups.append([chr_id])
+            used_chr_ids.append(chr_id)
+
+        if len(linked_chr_ids) > 0:
+            chr_id_groups.append(linked_chr_ids)
+            used_chr_ids += linked_chr_ids
+
+    return chr_id_groups
+
+def get_randomizable_npc_chr_ids():
+    chr_ids = []
+    for chr_id_group in get_linked_randomizable_npc_chr_id_groups():
+        for chr_id in chr_id_group:
+            if chr_id not in chr_ids:
+                chr_ids.append(chr_id)
     return chr_ids
+
+def randomize_chr_weapon_field(chr_inits, field, weapon_pools, random_source):
+    slot_chr_inits = [chr_init for chr_init in chr_inits
+     if getattr(chr_init, field) != -1]
+    if len(slot_chr_inits) == 0:
+        return
+
+    source_chr_init = slot_chr_inits[0]
+    source_weapon_id = getattr(source_chr_init, field)
+    category = get_npc_weapon_category(source_weapon_id)
+    if category not in weapon_pools:
+        return
+
+    choice_categories = get_npc_weapon_category_choices(source_chr_init, category)
+    choice_list = []
+    for choice_category in choice_categories:
+        if choice_category not in weapon_pools:
+            continue
+        choice_list += [choice for choice in weapon_pools[choice_category]
+         if all(npc_can_use_weapon(chr_init, choice) for chr_init in slot_chr_inits)]
+
+    if len(choice_list) == 0:
+        return
+
+    choice = random_source.choice(choice_list)
+    for chr_init in slot_chr_inits:
+        weapon_id = getattr(chr_init, field)
+        upgrade_tier = get_npc_weapon_upgrade_tier(weapon_id)
+        setattr(chr_init, field,
+         apply_npc_weapon_upgrade_tier(choice, upgrade_tier))
 
 def randomize_chr_weapons(chr_init_param, rand_options, random_source):
     weapon_fields = ["wep_r1", "wep_r2", "wep_l1", "wep_l2"]
-    chr_inits = []
-    for chr_id in get_randomizable_npc_chr_ids():
-        chr_init = chr_init_param.find_chr_by_id(chr_id)
-        if chr_init == None:
-            log.warn("Attempted to randomize weapons of chr #" + str(chr_id) +
-             " but was not found in chr_init_param!")
-            continue
-        chr_inits.append(chr_init)
+    chr_init_groups = []
+    for chr_id_group in get_linked_randomizable_npc_chr_id_groups():
+        chr_inits = []
+        for chr_id in chr_id_group:
+            chr_init = chr_init_param.find_chr_by_id(chr_id)
+            if chr_init == None:
+                log.warn("Attempted to randomize weapons of chr #" + str(chr_id) +
+                 " but was not found in chr_init_param!")
+                continue
+            chr_inits.append(chr_init)
+        if len(chr_inits) > 0:
+            chr_init_groups.append(chr_inits)
 
     weapon_pools = {}
     for (weapon_id, weapon_data) in npc_wep_data.NPC_WEAPON_POOL.items():
@@ -1084,26 +1167,9 @@ def randomize_chr_weapons(chr_init_param, rand_options, random_source):
             weapon_pools[category] = []
         weapon_pools[category].append(weapon_id)
 
-    for chr_init in chr_inits:
+    for chr_inits in chr_init_groups:
         for field in weapon_fields:
-            weapon_id = getattr(chr_init, field)
-            if weapon_id == -1:
-                continue
-            category = get_npc_weapon_category(weapon_id)
-            if category not in weapon_pools:
-                continue
-            choice_categories = get_npc_weapon_category_choices(chr_init, category)
-            choice_list = []
-            for choice_category in choice_categories:
-                if choice_category not in weapon_pools:
-                    continue
-                choice_list += [choice for choice in weapon_pools[choice_category]
-                 if npc_can_use_weapon(chr_init, choice)]
-            if len(choice_list) > 0:
-                upgrade_level = get_npc_weapon_upgrade_level(weapon_id)
-                choice = random_source.choice(choice_list)
-                setattr(chr_init, field,
-                 apply_npc_weapon_upgrade_level(choice, upgrade_level))
+            randomize_chr_weapon_field(chr_inits, field, weapon_pools, random_source)
 
 
 CLASS_TO_CHR_INIT = {
